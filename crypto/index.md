@@ -23,7 +23,7 @@ Version | | Publication
 -|-|-:
 [1.1.1][1-1-html] | [&darr; PDF][1-1-pdf] | October 2022
 1.1.0 | | February 2022
-1.0.1 | On [arm.com&#8599;][1-0-pdf] | August 2020
+[1.0.1][1-0-html]| [&darr; PDF][1-0-pdf] | August 2020
 1.0.0 | | Feburary 2020
 
 ## Extensions
@@ -35,7 +35,8 @@ PAKE | 1.1 Beta 0 | | February 2022
 
 [1-1-html]:             1.1/
 [1-1-pdf]:              1.1/IHI0086-PSA_Certified_Crypto_API-1.1.1.pdf
-[1-0-pdf]:              https://documentation-service.arm.com/static/5fae7799ca04df4095c1cab0
+[1-0-html]:             1.0/
+[1-0-pdf]:              1.0/IHI0086-PSA_Cryptography_API-1.0.1.pdf
 
 [pake-beta-html]:       1.1/ext-pake/
 [pake-beta-pdf]:        1.1/ext-pake/AES0058-PSA_Certified_Crypto_API-1.1_PAKE_Extension-bet.1.pdf
