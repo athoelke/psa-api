@@ -1,16 +1,22 @@
-/* Copyright 2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
- * SPDX-License-Identifier: CC-BY-SA-4.0
- */
-
 ---
 ---
 
 @import "{{ site.theme }}";
 
-header img {
+/* Copyright 2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
+ * SPDX-License-Identifier: CC-BY-SA-4.0
+ */
+
+ header img {
    width: 120px;
    margin: auto;
    display: block;
    padding-top: 20px;
    padding-bottom: 40px;
+}
+
+//strike-through, used for superseded publications
+del {
+   text-decoration:none;
+   color: #a8a8a8;
 }

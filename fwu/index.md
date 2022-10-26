@@ -28,7 +28,4 @@ Version | | Publication
 [1-0-html]:       1.0/
 [1-0-pdf]:        1.0/IHI0093-PSA_Certified_Firmware_Update_API-1.0-bet.0.pdf
 
-
-----
-
 *Copyright 2022, Arm Limited and/or its affiliates*

@@ -22,13 +22,11 @@ Test suites to verify a correct implementation can be found in the [PSA Certifie
 Version | | Publication
 -|-|-:
 [1.0.3][1-0-html] | [&darr; PDF][1-0-pdf] | October 2022
-1.0.2 | | February 2020
-1.0.1 | | August 2019
-1.0.0 | | June 2019
+~~1.0.2~~ | | February 2020
+~~1.0.1~~ | | August 2019
+~~1.0.0~~ | | June 2019
 
 [1-0-html]:             1.0/
 [1-0-pdf]:              1.0/IHI0087-PSA_Certified_Attestation_API-1.0.3.pdf
-
-----
 
 *Copyright 2022, Arm Limited and/or its affiliates*
