@@ -29,6 +29,4 @@ Prior to version 1.0.1, the PSA status codes were defined as part of the *PSA Fi
 [1-0-pdf]:              1.0/IHI0097-PSA_Certified_Status_code_API-1.0.1.pdf
 [ffm-1-0-pdf]:          https://developer.arm.com/-/media/Files/pdf/PlatformSecurityArchitecture/Architect/DEN0063-PSA_Firmware_Framework-1.0.0-2.pdf
 
-----
-
 *Copyright 2022, Arm Limited and/or its affiliates*
