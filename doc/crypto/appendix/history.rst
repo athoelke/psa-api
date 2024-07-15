@@ -33,6 +33,8 @@ Changes to the API
 
     See :secref:`asymmetric-key-encoding` and :secref:`appendix-specdef-key-values`.
 
+*   Added support for partial initialization of the implementation. See :secref:`library-init`.
+
 *   Added key-encapsulation functions, `psa_encapsulate()` and `psa_decapsulate()`.
 
     -   Added `PSA_ALG_ECIES_SEC1` as a key-encapsulation algorithm that implements the key agreement steps of ECIES.

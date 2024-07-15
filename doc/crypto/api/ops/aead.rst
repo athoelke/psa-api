@@ -289,7 +289,7 @@ Single-part AEAD functions
     .. retval:: PSA_ERROR_DATA_CORRUPT
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
 .. function:: psa_aead_decrypt
 
@@ -357,7 +357,7 @@ Single-part AEAD functions
     .. retval:: PSA_ERROR_DATA_CORRUPT
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
 Multi-part AEAD operations
 --------------------------
@@ -448,7 +448,7 @@ Multi-part AEAD operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be inactive.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INVALID_HANDLE
         ``key`` is not a valid key identifier.
     .. retval:: PSA_ERROR_NOT_PERMITTED
@@ -512,7 +512,7 @@ Multi-part AEAD operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be inactive.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INVALID_HANDLE
         ``key`` is not a valid key identifier.
     .. retval:: PSA_ERROR_NOT_PERMITTED
@@ -575,7 +575,7 @@ Multi-part AEAD operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be active, and `psa_aead_set_nonce()` and `psa_aead_generate_nonce()` must not have been called yet.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         ``ad_length`` or ``plaintext_length`` are too large for the chosen algorithm.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
@@ -618,7 +618,7 @@ Multi-part AEAD operations
 
         *   The operation state is not valid: it must be an active AEAD encryption operation, with no nonce set.
         *   The operation state is not valid: this is an algorithm which requires `psa_aead_set_lengths()` to be called before setting the nonce.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_BUFFER_TOO_SMALL
         The size of the ``nonce`` buffer is too small. `PSA_AEAD_NONCE_LENGTH()` or `PSA_AEAD_NONCE_MAX_SIZE` can be used to determine a sufficient buffer size.
     .. retval:: PSA_ERROR_INSUFFICIENT_ENTROPY
@@ -657,7 +657,7 @@ Multi-part AEAD operations
 
         *   The operation state is not valid: it must be active, with no nonce set.
         *   The operation state is not valid: this is an algorithm which requires `psa_aead_set_lengths()` to be called before setting the nonce.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         ``nonce_length`` is not valid for the chosen algorithm.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
@@ -703,7 +703,7 @@ Multi-part AEAD operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be active, have a nonce set, have lengths set if required by the algorithm, and `psa_aead_update()` must not have been called yet.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         Excess additional data: the total input length to `psa_aead_update_ad()` is greater than the additional data length that was previously specified with `psa_aead_set_lengths()`, or is too large for the chosen AEAD algorithm.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
@@ -762,7 +762,7 @@ Multi-part AEAD operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be active, have a nonce set, and have lengths set if required by the algorithm.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_BUFFER_TOO_SMALL
         The size of the ``output`` buffer is too small. `PSA_AEAD_UPDATE_OUTPUT_SIZE()` or `PSA_AEAD_UPDATE_OUTPUT_MAX_SIZE()` can be used to determine a sufficient buffer size.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
@@ -828,7 +828,7 @@ Multi-part AEAD operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be an active encryption operation with a nonce set.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_BUFFER_TOO_SMALL
         The size of the ``ciphertext`` or ``tag`` buffer is too small.
         `PSA_AEAD_FINISH_OUTPUT_SIZE()` or `PSA_AEAD_FINISH_OUTPUT_MAX_SIZE` can be used to determine the required ``ciphertext`` buffer size.
@@ -888,7 +888,7 @@ Multi-part AEAD operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be an active decryption operation with a nonce set.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_BUFFER_TOO_SMALL
         The size of the ``plaintext`` buffer is too small. `PSA_AEAD_VERIFY_OUTPUT_SIZE()` or `PSA_AEAD_VERIFY_OUTPUT_MAX_SIZE` can be used to determine a sufficient buffer size.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
@@ -934,7 +934,7 @@ Multi-part AEAD operations
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to `psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     Aborting an operation frees all associated resources except for the ``operation`` object itself. Once aborted, the operation object can be reused for another operation by calling `psa_aead_encrypt_setup()` or `psa_aead_decrypt_setup()` again.
 
