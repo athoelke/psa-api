@@ -1022,7 +1022,7 @@ Multi-part PAKE operations
     The shared secret is retrieved as a key.
     Its location, policy, and type are taken from ``attributes``.
 
-    The size of the returned key is always the bit-size of the PAKE shared secret, rounded up to a whole number of bytes. The size is of the shared secret is dependent on the PAKE algorithm and cipher suite.
+    The size of the returned key is always the bit-size of the PAKE shared secret, rounded up to a whole number of bytes. The size of the shared secret is dependent on the PAKE algorithm and cipher suite.
 
     This is the final call in a PAKE operation, which retrieves the shared secret as a key.
     It is recommended that this key is used as an input to a key derivation operation to produce additional cryptographic keys.
