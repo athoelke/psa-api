@@ -797,7 +797,7 @@ The curve type affects the key format, the key derivation procedure, and the alg
             *   -   Curve type
                 -   Compatible algorithms
             *   -   Weierstrass
-                -   Weierstrass curve key-pairs can be used in asymmetric signature and key agreement algorithms.
+                -   Weierstrass curve key-pairs can be used in asymmetric signature, key agreement, and key encapsulation algorithms.
 
                     `PSA_ALG_DETERMINISTIC_ECDSA`
 
@@ -806,10 +806,16 @@ The curve type affects the key format, the key derivation procedure, and the alg
                     `PSA_ALG_ECDSA_ANY`
 
                     `PSA_ALG_ECDH`
+
+                    `PSA_ALG_ECIES_SEC1`
+
             *   -   Montgomery
-                -   Montgomery curve key-pairs can only be used in key agreement algorithms.
+                -   Montgomery curve key-pairs can be used in key agreement and key encapsulation algorithms.
 
                     `PSA_ALG_ECDH`
+
+                    `PSA_ALG_ECIES_SEC1`
+
             *   -   Twisted Edwards
                 -   Twisted Edwards curve key-pairs can only be used in asymmetric signature algorithms.
 
@@ -920,7 +926,7 @@ The curve type affects the key format, the key derivation procedure, and the alg
             *   -   Curve type
                 -   Compatible algorithms
             *   -   Weierstrass
-                -   Weierstrass curve public keys can be used in asymmetric signature algorithms.
+                -   Weierstrass curve public keys can be used in asymmetric signature and key encapsulation algorithms.
 
                     `PSA_ALG_DETERMINISTIC_ECDSA`
 
@@ -928,8 +934,15 @@ The curve type affects the key format, the key derivation procedure, and the alg
 
                     `PSA_ALG_ECDSA_ANY`
 
+                    `PSA_ALG_ECIES_SEC1`
+
+            *   -   Montgomery
+                -   Montgomery curve public keys can only be used in key encapsulation algorithms.
+
+                    `PSA_ALG_ECIES_SEC1`
+
             *   -   Twisted Edwards
-                -   Twisted Edwards curve public key can only be used in asymmetric signature algorithms.
+                -   Twisted Edwards curve public keys can only be used in asymmetric signature algorithms.
 
                     `PSA_ALG_PURE_EDDSA`
 

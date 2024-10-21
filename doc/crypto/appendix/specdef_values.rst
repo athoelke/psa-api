@@ -84,6 +84,9 @@ Algorithm macros
     #define PSA_ALG_IS_ECDSA(alg) \
         (((alg) & ~0x000001ff) == 0x06000600)
 
+    #define PSA_ALG_IS_ENCAPSULATION(alg) \
+        (((alg) & 0x7f000000) == 0x0b000000)
+
     #define PSA_ALG_IS_FFDH(alg) \
         (((alg) & 0x7fff0000) == 0x09010000)
 

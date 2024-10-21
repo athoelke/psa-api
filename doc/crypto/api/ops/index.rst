@@ -18,5 +18,6 @@ Cryptographic operation reference
     signature
     pk-encryption
     key-agreement
+    key-encapsulation
     pake
     rng

@@ -76,6 +76,7 @@ typedef struct psa_custom_key_parameters_t {
 #define PSA_ALG_ECDH ((psa_algorithm_t)0x09020000)
 #define PSA_ALG_ECDSA(hash_alg) /* specification-defined value */
 #define PSA_ALG_ECDSA_ANY ((psa_algorithm_t) 0x06000600)
+#define PSA_ALG_ECIES_SEC1 ((psa_algorithm_t)0x0b000100)
 #define PSA_ALG_ED25519PH ((psa_algorithm_t) 0x0600090B)
 #define PSA_ALG_ED448PH ((psa_algorithm_t) 0x06000915)
 #define PSA_ALG_FFDH ((psa_algorithm_t)0x09010000)
@@ -94,6 +95,7 @@ typedef struct psa_custom_key_parameters_t {
 #define PSA_ALG_IS_DETERMINISTIC_ECDSA(alg) /* specification-defined value */
 #define PSA_ALG_IS_ECDH(alg) /* specification-defined value */
 #define PSA_ALG_IS_ECDSA(alg) /* specification-defined value */
+#define PSA_ALG_IS_ENCAPSULATION(alg) /* specification-defined value */
 #define PSA_ALG_IS_FFDH(alg) /* specification-defined value */
 #define PSA_ALG_IS_HASH(alg) /* specification-defined value */
 #define PSA_ALG_IS_HASH_AND_SIGN(alg) /* specification-defined value */
@@ -221,6 +223,9 @@ typedef struct psa_custom_key_parameters_t {
 #define PSA_ECC_FAMILY_SECT_R1 ((psa_ecc_family_t) 0x22)
 #define PSA_ECC_FAMILY_SECT_R2 ((psa_ecc_family_t) 0x2b)
 #define PSA_ECC_FAMILY_TWISTED_EDWARDS ((psa_ecc_family_t) 0x42)
+#define PSA_ENCAPSULATION_MAX_SIZE /* implementation-defined value */
+#define PSA_ENCAPSULATION_SIZE(key_type, key_bits, alg) \
+    /* implementation-defined value */
 #define PSA_ERROR_INSUFFICIENT_ENTROPY ((psa_status_t)-148)
 #define PSA_ERROR_INVALID_PADDING ((psa_status_t)-150)
 #define PSA_EXPORT_ASYMMETRIC_KEY_MAX_SIZE /* implementation-defined value */
@@ -324,8 +329,10 @@ typedef struct psa_custom_key_parameters_t {
 #define PSA_KEY_TYPE_XCHACHA20 ((psa_key_type_t)0x2007)
 #define PSA_KEY_USAGE_CACHE ((psa_key_usage_t)0x00000004)
 #define PSA_KEY_USAGE_COPY ((psa_key_usage_t)0x00000002)
+#define PSA_KEY_USAGE_DECAPSULATE ((psa_key_usage_t)0x00020000)
 #define PSA_KEY_USAGE_DECRYPT ((psa_key_usage_t)0x00000200)
 #define PSA_KEY_USAGE_DERIVE ((psa_key_usage_t)0x00004000)
+#define PSA_KEY_USAGE_ENCAPSULATE ((psa_key_usage_t)0x00010000)
 #define PSA_KEY_USAGE_ENCRYPT ((psa_key_usage_t)0x00000100)
 #define PSA_KEY_USAGE_EXPORT ((psa_key_usage_t)0x00000001)
 #define PSA_KEY_USAGE_SIGN_HASH ((psa_key_usage_t)0x00001000)
@@ -498,7 +505,20 @@ psa_status_t psa_copy_key(psa_key_id_t source_key,
                           const psa_key_attributes_t * attributes,
                           psa_key_id_t * target_key);
 psa_status_t psa_crypto_init(void);
+psa_status_t psa_decapsulate(psa_key_id_t key,
+                             psa_algorithm_t alg,
+                             conts uint8_t * encapsulation,
+                             size_t encapsulation_length,
+                             const psa_key_attributes_t * attributes,
+                             psa_key_id_t * output_key);
 psa_status_t psa_destroy_key(psa_key_id_t key);
+psa_status_t psa_encapsulate(psa_key_id_t key,
+                             psa_algorithm_t alg,
+                             const psa_key_attributes_t * attributes,
+                             psa_key_id_t * output_key,
+                             uint8_t * encapsulation,
+                             size_t encapsulation_size,
+                             size_t * encapsulation_length);
 psa_status_t psa_export_key(psa_key_id_t key,
                             uint8_t * data,
                             size_t data_size,
