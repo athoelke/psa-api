@@ -84,7 +84,7 @@ The CAT field in an algorithm identifier takes the values shown in :numref:`tabl
     Asymmetric encryption, ``0x07``, See :secref:`pke-encoding`
     Key agreement, ``0x09``, See :secref:`ka-encoding`
     PAKE, ``0x0A``, See :secref:`pake-encoding`
-    Encapsulation, ``0x0B``, See :secref:`encapsulation-encoding`
+    Encapsulation, ``0x0B``, See :secref:`key-encapsulation-encoding`
 
 .. rationale::
 
@@ -417,22 +417,22 @@ The permitted values of HASH-TYPE (see :numref:`table-hash-type`) depend on the 
 
 a.  ``hh`` is the HASH-TYPE for the hash algorithm, ``hash``, used to construct the key derivation algorithm.
 
-.. _encapsulation-encoding:
+.. _key-encapsulation-encoding:
 
 Encapsulation algorithm encoding
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The algorithm identifier for encapsulation algorithms defined in this specification are encoded as shown in :numref:`fig-encapsulation-encoding`.
+The algorithm identifier for key-encapsulation algorithms defined in this specification are encoded as shown in :numref:`fig-key-encapsulation-encoding`.
 
 .. figure:: /figure/encoding/kem_encoding.*
-    :name: fig-encapsulation-encoding
+    :name: fig-key-encapsulation-encoding
 
     Encapsulation algorithm encoding
 
-The defined values for ENCAPS-TYPE are shown in :numref:`table-encapsulation-type`.
+The defined values for ENCAPS-TYPE are shown in :numref:`table-key-encapsulation-type`.
 
 .. csv-table:: Encapsulation algorithm sub-type values
-    :name: table-encapsulation-type
+    :name: table-key-encapsulation-type
     :header-rows: 1
     :align: left
     :widths: auto

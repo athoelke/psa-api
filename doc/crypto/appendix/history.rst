@@ -35,7 +35,7 @@ Changes to the API
 
 *   Added key encapsulation functions, `psa_encapsulate()` and `psa_decapsulate()`.
 
-    -   Added `PSA_ALG_ECIES_SEC1` as an encapsulation algorithm that implements the key agreement steps of ECIES.
+    -   Added `PSA_ALG_ECIES_SEC1` as a key-encapsulation algorithm that implements the key agreement steps of ECIES.
 
 Clarifications and fixes
 ~~~~~~~~~~~~~~~~~~~~~~~~

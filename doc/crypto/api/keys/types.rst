@@ -797,7 +797,7 @@ The curve type affects the key format, the key derivation procedure, and the alg
             *   -   Curve type
                 -   Compatible algorithms
             *   -   Weierstrass
-                -   Weierstrass curve key-pairs can be used in asymmetric signature, key agreement, and key encapsulation algorithms.
+                -   Weierstrass curve key-pairs can be used in asymmetric signature, key agreement, and key-encapsulation algorithms.
 
                     `PSA_ALG_DETERMINISTIC_ECDSA`
 
@@ -810,7 +810,7 @@ The curve type affects the key format, the key derivation procedure, and the alg
                     `PSA_ALG_ECIES_SEC1`
 
             *   -   Montgomery
-                -   Montgomery curve key-pairs can be used in key agreement and key encapsulation algorithms.
+                -   Montgomery curve key-pairs can be used in key agreement and key-encapsulation algorithms.
 
                     `PSA_ALG_ECDH`
 
@@ -926,7 +926,7 @@ The curve type affects the key format, the key derivation procedure, and the alg
             *   -   Curve type
                 -   Compatible algorithms
             *   -   Weierstrass
-                -   Weierstrass curve public keys can be used in asymmetric signature and key encapsulation algorithms.
+                -   Weierstrass curve public keys can be used in asymmetric signature and key-encapsulation algorithms.
 
                     `PSA_ALG_DETERMINISTIC_ECDSA`
 
@@ -937,7 +937,7 @@ The curve type affects the key format, the key derivation procedure, and the alg
                     `PSA_ALG_ECIES_SEC1`
 
             *   -   Montgomery
-                -   Montgomery curve public keys can only be used in key encapsulation algorithms.
+                -   Montgomery curve public keys can only be used in key-encapsulation algorithms.
 
                     `PSA_ALG_ECIES_SEC1`
 
