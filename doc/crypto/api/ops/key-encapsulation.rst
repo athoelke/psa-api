@@ -83,7 +83,7 @@ The key derivation, encryption, and authentication steps are left to the applica
     *   Cofactor ECDH is used to perform the key agreement.
     *   The shared secret :math:`Z` is output as the shared output key.
 
-    The encapsulation provided by `PSA_ALG_ECIES_SEC1` is not authenticated.
+    The encapsulation data produced by `PSA_ALG_ECIES_SEC1` is not authenticated.
     When used in a full ECIES scheme, the authentication of the encrypted message implicitly confirms that the derived keys were identical.
 
     The shared output key that is produced by `PSA_ALG_ECIES_SEC1` is not suitable for use as an encryption key.
@@ -252,10 +252,9 @@ Key-encapsulation functions
         Success.
         ``output_key`` contains the identifier for the shared output key.
 
-        In some algorithms, decapsulation failure is implicit, resulting in an incorrect output key, instead of reporting an error status.
-
-        .. todo::
-            What should the result be for an explicit decapsulation failure? - INVALID_SIGNATURE, or INVALID_ARGUMENT (as per the detection of incorrect-length encapsulation data)?
+        .. note::
+            In some key-encapsulation algorithms, decapsulation failure is not reported with a explicit error code.
+            Instead, an incorrect, pseudo-random key is output.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
         The following conditions can result in this error:
 
@@ -276,8 +275,14 @@ Key-encapsulation functions
             -   The key usage flags include invalid values.
             -   The key's permitted-usage algorithm is invalid.
             -   The key attributes, as a whole, are invalid.
-        *   ``encapsulation`` is not obviously valid for the selected algorithm and key.
+        *   ``encapsulation`` is obviously invalid for the selected algorithm and key.
             For example, the implementation can detect that it is an incorrect length.
+    .. retval:: PSA_ERROR_INVALID_SIGNATURE
+        Authentication of the encapsulation data fails.
+
+        .. note::
+            Some key-encapsulation algorithms do not report an authentication failure explicitly.
+            Instead, an incorrect, pseudo-random key is output.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
@@ -294,12 +299,21 @@ Key-encapsulation functions
     Refer to the documentation of individual key-encapsulation algorithms for more information.
 
     .. warning::
-        A successful result from `psa_decapsulate()` does not indicate that the output key is identical to the key produce by the call to `psa_encapsulate()`:
+        A :code:`PSA_SUCCESS` result from `psa_decapsulate()` does not guarantee that the output key is identical to the key produce by the call to `psa_encapsulate()`. For example:
 
         *   Some key-encapsulation algorithms do not authenticate the encapsulation data.
+            Manipulated encapsulation data will not be detected during decapsulation.
         *   Some key-encapsulation algorithms report authentication failure implicitly, by returning a pseudo-random key value.
+            This prevents disclosing information to an attacker that has manipulated the encapsulation data.
+        *   Some key-encapsulation algorithms are probablistic, and cannot guarantee that decapsulation will result in an identical key value.
 
-        It is recommended that application uses the output key in a way that will confirm that the derived keys are identical.
+        It is strongly recommended that application uses the output key in a way that will confirm that the derived keys are identical.
+
+    .. admonition:: Implementation note
+
+        For key-encapsulation algorithms which involve data padding when computing the encapsulation data, the decapsulation algorithm **must not** report a distinct error status if invalid padding is detected.
+
+        Instead, it is recommended that the decapsulation fails implicitly when invalid padding is detected, returning a pseudo-random key.
 
 Support macros
 --------------
