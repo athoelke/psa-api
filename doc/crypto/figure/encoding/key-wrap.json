@@ -1,0 +1,18 @@
+{
+    "reg": [
+        { "name": "0", "bits": 8 },
+        { "name": "WRAP-TYPE", "bits": 8 },
+        { "name": "0", "bits": 6 },
+        { "name": "B", "bits": 1 },
+        { "name": "S", "bits": 1 },
+        { "name": "0x0B", "bits": 7 },
+        { "name": "0", "bits": 1 }
+    ],
+    "options": {
+        "lanes": 1,
+        "fontfamily": "lato",
+        "fontsize": 11,
+        "vspace": 52,
+        "hspace": 600
+    }
+}

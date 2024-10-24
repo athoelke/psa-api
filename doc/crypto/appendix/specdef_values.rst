@@ -121,6 +121,9 @@ Algorithm macros
     #define PSA_ALG_IS_KEY_DERIVATION_STRETCHING(alg) \
         (((alg) & 0x7f800000) == 0x08800000)
 
+    #define PSA_ALG_IS_KEY_WRAP(alg) \
+        (((alg) & 0x7f000000) == 0x0B000000)
+
     #define PSA_ALG_IS_MAC(alg) \
         (((alg) & 0x7f000000) == 0x03000000)
 

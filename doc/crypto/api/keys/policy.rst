@@ -250,6 +250,28 @@ The usage flags are encoded in a bitmask, which has the type `psa_key_usage_t`. 
 
     If this flag is present on all keys used in calls to `psa_key_derivation_input_key()` for a key derivation operation, then it permits calling `psa_key_derivation_verify_bytes()` or `psa_key_derivation_verify_key()` at the end of the operation.
 
+.. macro:: PSA_KEY_USAGE_WRAP
+    :definition: ((psa_key_usage_t)0x00010000)
+
+    .. summary::
+        Permission to wrap another key with the key.
+
+    This flag is required to use the key in a key-wrapping operation.
+    The flag must be present on keys used with the following APIs:
+
+    *   `psa_wrap_key()`
+
+.. macro:: PSA_KEY_USAGE_UNWRAP
+    :definition: ((psa_key_usage_t)0x00020000)
+
+    .. summary::
+        Permission to unwrap another key with the key.
+
+    This flag is required to use the key in a key-unwrapping operation.
+    The flag must be present on keys used with the following APIs:
+
+    *   `psa_unwrap_key()`
+
 .. function:: psa_set_key_usage_flags
 
     .. summary::

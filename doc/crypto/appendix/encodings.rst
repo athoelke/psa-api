@@ -46,6 +46,8 @@ Algorithm identifiers are 32-bit integer values of the type `psa_algorithm_t`. A
         -   [23]
         -   For a cipher algorithm, this flag indicates a stream cipher when S=1.
 
+            For a key-wrapping algorithm, this flag indicates an algorithm that accepts non-aligned input lengths when S=1.
+
             For a key derivation algorithm, this flag indicates a key-stretching or password-hashing algorithm when S=1.
     *   -   B
         -   [22]
@@ -79,6 +81,7 @@ The CAT field in an algorithm identifier takes the values shown in :numref:`tabl
     MAC, ``0x03``, See :secref:`mac-encoding`
     Cipher, ``0x04``, See :secref:`cipher-encoding`
     AEAD, ``0x05``, See :secref:`aead-encoding`
+    Key wrapping, ``0x0B``, See :secref:`key-wrap-encoding`
     Key derivation, ``0x08``, See :secref:`kdf-encoding`
     Asymmetric signature, ``0x06``, See :secref:`sign-encoding`
     Asymmetric encryption, ``0x07``, See :secref:`pke-encoding`
@@ -248,6 +251,30 @@ W is a flag to indicate a wildcard permitted-algorithm policy:
 a.  This is an AEAD mode of an underlying block cipher. The block cipher is determined by the key type that is provided to the AEAD operation.
 
 b.  This is the default algorithm identifier, specifying the default tag length for the algorithm. `PSA_ALG_AEAD_WITH_SHORTENED_TAG()` generates identifiers with alternative LEN values. `PSA_ALG_AEAD_WITH_AT_LEAST_THIS_LENGTH_TAG()` generates wildcard permitted-algorithm policies with W = 1.
+
+.. _key-wrap-encoding:
+
+Key-wrapping algorithm encoding
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The algorithm identifier for key-wrapping algorithms defined in this specification are encoded as shown in :numref:`fig-key-wrap-fields`.
+
+.. figure:: ../figure/encoding/key-wrap.*
+    :name: fig-key-wrap-fields
+
+    Key-wrapping algorithm encoding
+
+The defined values for S, B, and WRAP-TYPE are shown in :numref:`table-key-wrap-type`.
+
+.. csv-table:: Key-wrapping algorithm sub-type values
+    :name: table-key-wrap-type
+    :header-rows: 1
+    :align: left
+    :widths: auto
+
+    Key-wrapping algorithm, S, B,  WRAP-TYPE, Algorithm identifier, Algorithm value
+    AES-KW, 0, 1, ``0x01``, `PSA_ALG_AES_KW`, ``0x0B400100``
+    AES-KWP, 1, 1, ``0x02``, `PSA_ALG_AES_KWP`, ``0x0BC00200``
 
 .. _kdf-encoding:
 

@@ -57,6 +57,8 @@ typedef struct psa_custom_key_parameters_t {
     /* specification-defined value */
 #define PSA_ALG_AEAD_WITH_SHORTENED_TAG(aead_alg, tag_length) \
     /* specification-defined value */
+#define PSA_ALG_AES_KW ((psa_algorithm_t)0x0B400100)
+#define PSA_ALG_AES_KWP ((psa_algorithm_t)0x0BC00200)
 #define PSA_ALG_AES_MMO_ZIGBEE ((psa_algorithm_t)0x02000007)
 #define PSA_ALG_ANY_HASH ((psa_algorithm_t)0x020000ff)
 #define PSA_ALG_AT_LEAST_THIS_LENGTH_MAC(mac_alg, min_mac_length) \
@@ -107,6 +109,7 @@ typedef struct psa_custom_key_parameters_t {
 #define PSA_ALG_IS_KEY_DERIVATION(alg) /* specification-defined value */
 #define PSA_ALG_IS_KEY_DERIVATION_STRETCHING(alg) \
     /* specification-defined value */
+#define PSA_ALG_IS_KEY_WRAP(alg) /* specification-defined value */
 #define PSA_ALG_IS_MAC(alg) /* specification-defined value */
 #define PSA_ALG_IS_PAKE(alg) /* specification-defined value */
 #define PSA_ALG_IS_PBKDF2_HMAC(alg) /* specification-defined value */
@@ -330,9 +333,11 @@ typedef struct psa_custom_key_parameters_t {
 #define PSA_KEY_USAGE_EXPORT ((psa_key_usage_t)0x00000001)
 #define PSA_KEY_USAGE_SIGN_HASH ((psa_key_usage_t)0x00001000)
 #define PSA_KEY_USAGE_SIGN_MESSAGE ((psa_key_usage_t)0x00000400)
+#define PSA_KEY_USAGE_UNWRAP ((psa_key_usage_t)0x00020000)
 #define PSA_KEY_USAGE_VERIFY_DERIVATION ((psa_key_usage_t)0x00008000)
 #define PSA_KEY_USAGE_VERIFY_HASH ((psa_key_usage_t)0x00002000)
 #define PSA_KEY_USAGE_VERIFY_MESSAGE ((psa_key_usage_t)0x00000800)
+#define PSA_KEY_USAGE_WRAP ((psa_key_usage_t)0x00010000)
 #define PSA_MAC_LENGTH(key_type, key_bits, alg) \
     /* implementation-defined value */
 #define PSA_MAC_MAX_SIZE /* implementation-defined value */
@@ -375,6 +380,9 @@ typedef struct psa_custom_key_parameters_t {
     /* implementation-defined value */
 #define PSA_TLS12_ECJPAKE_TO_PMS_OUTPUT_SIZE 32
 #define PSA_TLS12_PSK_TO_MS_PSK_MAX_SIZE /* implementation-defined value */
+#define PSA_WRAP_KEY_OUTPUT_SIZE(wrap_key_type, alg, key_type, key_bits) \
+    /* implementation-defined value */
+#define PSA_WRAP_KEY_PAIR_MAX_SIZE /* implementation-defined value */
 psa_status_t psa_aead_abort(psa_aead_operation_t * operation);
 psa_status_t psa_aead_decrypt(psa_key_id_t key,
                               psa_algorithm_t alg,
@@ -713,6 +721,12 @@ psa_status_t psa_sign_message(psa_key_id_t key,
                               uint8_t * signature,
                               size_t signature_size,
                               size_t * signature_length);
+psa_status_t psa_unwrap_key(const psa_key_attributes_t * attributes,
+                            psa_key_id_t wrapping_key,
+                            psa_algorithm_t alg,
+                            const uint8_t * data,
+                            size_t data_length,
+                            psa_key_id_t * key);
 psa_status_t psa_verify_hash(psa_key_id_t key,
                              psa_algorithm_t alg,
                              const uint8_t * hash,
@@ -725,3 +739,9 @@ psa_status_t psa_verify_message(psa_key_id_t key,
                                 size_t input_length,
                                 const uint8_t * signature,
                                 size_t signature_length);
+psa_status_t psa_wrap_key(psa_key_id_t wrapping_key,
+                          psa_algorithm_t alg,
+                          psa_key_id_t key,
+                          uint8_t * data,
+                          size_t data_size,
+                          size_t * data_length);

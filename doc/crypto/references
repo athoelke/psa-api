@@ -396,3 +396,27 @@
     :author: Thread Group
     :publication: July 2022
     :url: www.threadgroup.org/ThreadSpec
+
+.. reference:: RFC5958
+    :title: Asymmetric Key Packages
+    :author: IETF
+    :publication: August 2010
+    :url: tools.ietf.org/html/rfc5958.html
+
+.. reference:: RFC3394
+    :title: Advanced Encryption Standard (AES) Key Wrap Algorithm
+    :author: IETF
+    :publication: September 2002
+    :url: tools.ietf.org/html/rfc3394.html
+
+.. reference:: RFC5649
+    :title: Advanced Encryption Standard (AES) Key Wrap with Padding Algorithm
+    :author: IETF
+    :publication: August 2009
+    :url: tools.ietf.org/html/rfc5649.html
+
+.. reference:: SP800-38F
+    :title: NIST Special Publication 800-38F: Recommendation for Block Cipher Modes of Operation: Methods for Key Wrapping
+    :author: NIST
+    :publication: December 2012
+    :url: doi.org/10.6028/NIST.SP.800-38F
