@@ -317,6 +317,8 @@ Symmetric keys
             *   `PSA_ALG_CCM`
             *   `PSA_ALG_GCM`
             *   `PSA_ALG_SP800_108_COUNTER_CMAC` (secret input)
+            *   `PSA_ALG_AES_KW`
+            *   `PSA_ALG_AES_KWP`
 
     .. subsection:: Key format
 
