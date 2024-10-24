@@ -194,7 +194,7 @@ Algorithm categories
         ``1`` if ``alg`` is a password-authenticated key exchange (PAKE) algorithm, ``0`` otherwise.
         This macro can return either ``0`` or ``1`` if ``alg`` is not a supported algorithm identifier.
 
-.. macro:: PSA_ALG_IS_ENCAPSULATION
+.. macro:: PSA_ALG_IS_KEY_ENCAPSULATION
     :definition: /* specification-defined value */
 
     .. summary::

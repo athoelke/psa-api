@@ -60,7 +60,7 @@ The key derivation, encryption, and authentication steps are left to the applica
     While the application can implement this using key agreement functions, an implementation can choose to add these as a convenience with an :scterm:`implementation defined` key-encapsulation algorithm identifier.
 
 .. macro:: PSA_ALG_ECIES_SEC1
-    :definition: ((psa_algorithm_t)0x0b000100)
+    :definition: ((psa_algorithm_t)0x0c000100)
 
     .. summary::
         The Elliptic Curve Integrated Encryption Scheme (ECIES).
@@ -92,6 +92,7 @@ The key derivation, encryption, and authentication steps are left to the applica
     .. subsection:: Compatible key types
 
         | :code:`PSA_KEY_TYPE_ECC_KEY_PAIR(family)`
+        | :code:`PSA_KEY_TYPE_ECC_PUBLIC_KEY(family)` (encapsulaton only)
 
         where ``family`` is a Weierstrass or Montgomery Elliptic curve family.
         That is, one of the following values:
@@ -115,7 +116,7 @@ Key-encapsulation functions
         It must be a public key or an asymmetric key pair.
         It must permit the usage `PSA_KEY_USAGE_ENCAPSULATE`.
     .. param:: psa_algorithm_t alg
-        The key-encapsulation algorithm to use: a value of type `psa_algorithm_t` such that :code:`PSA_ALG_IS_ENCAPSULATION(alg)` is true.
+        The key-encapsulation algorithm to use: a value of type `psa_algorithm_t` such that :code:`PSA_ALG_IS_KEY_ENCAPSULATION(alg)` is true.
     .. param:: const psa_key_attributes_t * attributes
         The attributes for the output key.
         This function uses the attributes as follows:
@@ -211,7 +212,7 @@ Key-encapsulation functions
         It must be an asymmetric key pair.
         It must permit the usage `PSA_KEY_USAGE_DECAPSULATE`.
     .. param:: psa_algorithm_t alg
-        The key-encapsulation algorithm to use: a value of type `psa_algorithm_t` such that :code:`PSA_ALG_IS_ENCAPSULATION(alg)` is true.
+        The key-encapsulation algorithm to use: a value of type `psa_algorithm_t` such that :code:`PSA_ALG_IS_KEY_ENCAPSULATION(alg)` is true.
     .. param:: const uint8_t * encapsulation
         The encapsulation data received from the other participant.
     .. param:: size_t encapsulation_length
@@ -329,7 +330,7 @@ Support macros
     .. param:: key_bits
        The size of the key in bits.
     .. param:: alg
-       A key-encapsulation algorithm: a value of type `psa_algorithm_t` such that :code:`PSA_ALG_IS_ENCAPSULATION(alg)` is true.
+       A key-encapsulation algorithm: a value of type `psa_algorithm_t` such that :code:`PSA_ALG_IS_KEY_ENCAPSULATION(alg)` is true.
 
     .. return::
        A sufficient output buffer size for the specified algorithm, key type, and size. An implementation can return either ``0`` or a correct size for an algorithm, key type, and size that it recognizes, but does not support. If the parameters are not valid, the return value is unspecified.

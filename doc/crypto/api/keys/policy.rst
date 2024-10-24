@@ -262,7 +262,7 @@ The usage flags are encoded in a bitmask, which has the type `psa_key_usage_t`. 
     If this flag is present on all keys used in calls to `psa_key_derivation_input_key()` for a key derivation operation, then it permits calling `psa_key_derivation_verify_bytes()` or `psa_key_derivation_verify_key()` at the end of the operation.
 
 .. macro:: PSA_KEY_USAGE_ENCAPSULATE
-    :definition: ((psa_key_usage_t)0x00010000)
+    :definition: ((psa_key_usage_t)0x00040000)
 
     .. summary::
         Permission to encapsulate new keys.
@@ -274,7 +274,7 @@ The usage flags are encoded in a bitmask, which has the type `psa_key_usage_t`. 
     *   `psa_encapsulate()`
 
 .. macro:: PSA_KEY_USAGE_DECAPSULATE
-    :definition: ((psa_key_usage_t)0x00020000)
+    :definition: ((psa_key_usage_t)0x00080000)
 
     .. summary::
         Permission to decapsulate an encapsulated key.
