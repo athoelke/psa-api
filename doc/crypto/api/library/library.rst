@@ -116,7 +116,7 @@ If the application calls any function that returns a :code:`psa_status_t` result
     .. summary::
         Crypto subsystem identifier for the communication with the server, if this is a client that communicates with a server where the key store is located.
 
-    In a client-server implementation, initializing this subsystem is necessary before any API function other than library initialization, deinitialization and functions accessing local data structures such as key attributes.
+    In a client-server implementation, initializing this subsystem is necessary before any API function other than library initialization and functions accessing local data structures such as key attributes.
 
     In a library implementation, initializing this subsystem has no effect, and always succeeds.
 
