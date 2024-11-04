@@ -716,7 +716,7 @@ Multi-part PAKE operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be inactive.
-        *   The library requires initializing by a call to :code:`psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INVALID_HANDLE
         ``password_key`` is not a valid key identifier.
     .. retval:: PSA_ERROR_NOT_PERMITTED
@@ -793,7 +793,7 @@ Multi-part PAKE operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be active, and `psa_pake_set_role()`, `psa_pake_input()`, and `psa_pake_output()` must not have been called yet.
-        *   The library requires initializing by a call to :code:`psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         The following conditions can result in this error:
 
@@ -836,7 +836,7 @@ Multi-part PAKE operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be active, and `psa_pake_set_user()`, `psa_pake_input()`, and `psa_pake_output()` must not have been called yet.
-        *   The library requires initializing by a call to :code:`psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         ``user_id`` is not valid for the operation's algorithm and cipher suite.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
@@ -873,7 +873,7 @@ Multi-part PAKE operations
 
         *   The operation state is not valid: it must be active, and `psa_pake_set_peer()`, `psa_pake_input()`, and `psa_pake_output()` must not have been called yet.
         *   Calling `psa_pake_set_peer()` is invalid with the operation's algorithm.
-        *   The library requires initializing by a call to :code:`psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         ``peer_id`` is not valid for the operation's algorithm and cipher suite.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
@@ -910,7 +910,7 @@ Multi-part PAKE operations
 
         *   The operation state is not valid: it must be active, and `psa_pake_set_context()`, `psa_pake_input()`, and `psa_pake_output()` must not have been called yet.
         *   Calling `psa_pake_set_context()` is invalid with the operation's algorithm.
-        *   The library requires initializing by a call to :code:`psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         ``context`` is not valid for the operation's algorithm and cipher suite.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
@@ -955,7 +955,7 @@ Multi-part PAKE operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be active and fully set up, and this call must conform to the algorithm's requirements for ordering of input and output steps.
-        *   The library requires initializing by a call to :code:`psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         ``step`` is not compatible with the operation's algorithm.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
@@ -1002,7 +1002,7 @@ Multi-part PAKE operations
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be active and fully set up, and this call must conform to the algorithm's requirements for ordering of input and output steps.
-        *   The library requires initializing by a call to :code:`psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         The following conditions can result in this error:
 
@@ -1083,7 +1083,7 @@ Multi-part PAKE operations
             For an unconfirmed key, this will be when the key-exchange output and input steps are complete, but prior to any key-confirmation output and input steps.
 
             For a confirmed key, this will be when all key-exchange and key-confirmation output and input steps are complete.
-        *   The library requires initializing by a call to :code:`psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_ALREADY_EXISTS
         This is an attempt to create a persistent key, and there is already a persistent key with the given identifier.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
@@ -1169,7 +1169,7 @@ Multi-part PAKE operations
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
     .. retval:: PSA_ERROR_BAD_STATE
-        The library requires initializing by a call to :code:`psa_crypto_init()`.
+        The library requires initializing. See :secref:`library-init`.
 
     Aborting an operation frees all associated resources except for the ``operation`` object itself.
     Once aborted, the operation object can be reused for another operation by calling `psa_pake_setup()` again.

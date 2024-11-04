@@ -1048,7 +1048,7 @@ Key-derivation functions
         The following conditions can result in this error:
 
         *   The operation state is not valid: it must be active, with all required input steps complete.
-        *   The library requires initializing by a call to `psa_crypto_init()`.
+        *   The library requires initializing. See :secref:`library-init`.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_INSUFFICIENT_STORAGE
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
