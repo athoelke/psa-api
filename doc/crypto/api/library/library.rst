@@ -44,7 +44,7 @@ It is recommended that applications initialize the |API| implementation, before 
 This is typically achieved by calling `psa_crypto_init()`.
 
 Some implementations provide the ability to selectively initialize a subset of the functionality, using calls to `psa_crypto_init_subsystem()`.
-For example, this permits use cases such as early-stage bootloaders, that need to decrypt or authenticate firmware, where it is unnecessary to wait for an RNG to collect enough entropy.
+For example, this permits use cases such as early-stage bootloaders, that need to decrypt or authenticate firmware, where it is unnecessary to wait for a random bit generator to collect enough entropy.
 In these implementations, calling `psa_crypto_init()` is equivalent to calling `psa_crypto_init_subsystem()` for all available subsystems.
 
 Applications are permitted to call these functions more than once.
@@ -63,8 +63,9 @@ If the application calls any function that returns a :code:`psa_status_t` result
     *   A client-server implementation, in which `psa_crypto_init()`, or :code:`psa_crypto_init_subsystem(PSA_CRYPTO_SUBSYSTEM_COMMUNICATION)`, establishes the communication with the server.
         No key management or cryptographic operation can be performed until this is done.
 
-    *   An implementation in which `psa_crypto_init()`, or :code:`psa_crypto_init_subsystem(PSA_CRYPTO_SUBSYSTEM_RANDOM)`, initializes the random bit generator, and no operations that require the RNG can be performed until this is done.
-        For example, random data, key, IV, or nonce generation; randomized signature or encryption; and algorithms that are implemented with blinding.
+    *   An implementation in which `psa_crypto_init()`, or :code:`psa_crypto_init_subsystem(PSA_CRYPTO_SUBSYSTEM_RANDOM)`, initializes the random bit generator.
+        No operations that require output from the random bit generator can be performed until this is done.
+        For example, random data, key, IV, or nonce generation; randomized signature or encryption; key encapsulation; password-authenticated key exchange; and algorithms that are implemented with blinding.
 
 .. warning::
 
