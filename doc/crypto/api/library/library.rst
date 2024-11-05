@@ -170,12 +170,15 @@ If the application calls any function that returns a :code:`psa_status_t` result
 
     Initializing this subsystem initializes all registered entropy drivers, and accesses the registered entropy sources.
 
-    Initializing this subsystem is necessary for `psa_generate_random()`, `psa_generate_key()`, and some operations using private or secret keys.
+    Initializing this subsystem is necessary for `psa_generate_random()`, `psa_generate_key()`, `psa_encapsulate_key()`, PAKE operations, and some operations using key pairs.
 
     It is guaranteed that the following operations do not to require this subsystem:
 
+    *   Retrieving key attributes.
     *   Hash operations.
     *   Signature verification operations.
+    *   Exporting symmetric keys.
+    *   Exporting asymmetric public keys from public-key objects.
 
     Is it :scterm:`implementation defined` whether other operations require the initialization of this subsystem.
 
