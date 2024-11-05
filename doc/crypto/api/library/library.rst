@@ -226,8 +226,15 @@ If the application calls any function that returns a :code:`psa_status_t` result
     Applications may call this function on the same subsystem more than once.
     Once a call succeeds, subsequent calls with the same subsystem are guaranteed to succeed.
 
-    Initializing a subsystem may initialize other subsystems if the implementations needs them internally.
-    For example, in a typical client-server implementation, `PSA_CRYPTO_SUBSYSTEM_COMMUNICATION` is required for all other subsystems, and therefore initializing any other subsystem also initializes `PSA_CRYPTO_SUBSYSTEM_COMMUNICATION`.
+    Initializing a subsystem may initialize other subsystems if the implementation needs them internally.
+    For example:
+
+    *   In a typical client-server implementation, `PSA_CRYPTO_SUBSYSTEM_COMMUNICATION` is required for all other subsystems, and therefore initializing any other subsystem also initializes `PSA_CRYPTO_SUBSYSTEM_COMMUNICATION`.
+    *   In a system where the random bit generator is provided by a secure element, initializing `PSA_CRYPTO_SUBSYSTEM_RANDOM` can also initialize `PSA_CRYPTO_SUBSYSTEM_SECURE_ELEMENTS`.
+    *   In a system where protected communication with a secure element requires a per-session key, initializing `PSA_CRYPTO_SUBSYSTEM_SECURE_ELEMENTS` can also initialize `PSA_CRYPTO_SUBSYSTEM_RANDOM`.
+
+    .. warning::
+        Application code that depends on the initialization dependencies of a specific implementation or system, might not be directly portable to other implementations.
 
     Calling `psa_crypto_init_subsystem()` with for a subsystem that is not used by the implementation must have no effect, and return :code:`PSA_SUCCESS`.
     In effect, this is indicating that there is no further initialization required for this subsystem.
