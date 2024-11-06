@@ -146,19 +146,19 @@ If the application calls any function that returns a :code:`psa_status_t` result
     :definition: /* implementation-defined value */
 
     .. summary::
-        Crypto subsystem identifier for accelerator drivers.
+        Crypto subsystem identifier for :term:`cryptographic accelerator`\ s.
 
-    Initializing this subsystem results in initialization of all registered accelerator drivers.
+    Initializing this subsystem results in initialization of cryptographic hardware accelerator interfaces.
 
-    Initializing this subsystem allows cryptographic operations that are implemented via an accelerator driver.
+    Initializing this subsystem allows cryptographic operations that are implemented in an accelerator.
 
 .. macro:: PSA_CRYPTO_SUBSYSTEM_SECURE_ELEMENTS
     :definition: /* implementation-defined value */
 
     .. summary::
-        Crypto subsystem identifier for secure element drivers.
+        Crypto subsystem identifier for :term:`secure element`\ s.
 
-    Initializing this subsystem results in initialization of all registered secure element drivers.
+    Initializing this subsystem results in initialization of all cryptographic secure elements.
 
     Initializing this subsystem as well as `PSA_CRYPTO_SUBSYSTEM_KEYS` allows creating, accessing, and destroying keys in a secure element. That is, keys whose location is not `PSA_KEY_LOCATION_LOCAL_STORAGE`.
 
@@ -168,7 +168,7 @@ If the application calls any function that returns a :code:`psa_status_t` result
     .. summary::
         Crypto subsystem identifier for the random generator.
 
-    Initializing this subsystem initializes all registered entropy drivers, and accesses the registered entropy sources.
+    Initializing this subsystem initializes all entropy providers, and access to entropy sources.
 
     Initializing this subsystem is necessary for `psa_generate_random()`, `psa_generate_key()`, `psa_encapsulate()`, PAKE operations, and some operations using key pairs.
 
@@ -186,7 +186,7 @@ If the application calls any function that returns a :code:`psa_status_t` result
     :definition: /* implementation-defined value */
 
     .. summary::
-        Crypto subsystem identifier for access to built-in keys.
+        Crypto subsystem identifier for access to :term:`built-in key`\ s.
 
     Initializing this subsystem as well as `PSA_CRYPTO_SUBSYSTEM_KEYS` allows access to built-in keys.
 

@@ -330,7 +330,7 @@ When creating a key, the attributes for the new key are specified in a `psa_key_
     .. param:: psa_key_id_t source_key
         The key to copy.
         It must permit the usage `PSA_KEY_USAGE_COPY`.
-        If a private or secret key is being copied outside of a secure element it must also permit `PSA_KEY_USAGE_EXPORT`.
+        If a private or secret key is being copied outside of a :term:`secure element` it must also permit `PSA_KEY_USAGE_EXPORT`.
     .. param:: const psa_key_attributes_t * attributes
         The attributes for the new key.
 
