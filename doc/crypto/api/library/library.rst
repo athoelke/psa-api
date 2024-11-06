@@ -198,6 +198,11 @@ If the application calls any function that returns a :code:`psa_status_t` result
 
     Using this value in a call to `psa_crypto_init_subsystem()` is equivalent to calling `psa_crypto_init()`.
 
+    .. admonition:: Implementation note
+
+        It is recommended that :code:`psa_crypto_init_subsystem(PSA_CRYPTO_ALL_SUBSYSTEMS)` is implemented in a way that provides compatibility with future versions of the implementation.
+        That is, addition of a new subsystem to an implementation does not require recompilation of the application so that this call will still initialize all subsystems.
+
 .. function:: psa_crypto_init_subsystem
 
     .. summary::
