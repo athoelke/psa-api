@@ -103,6 +103,8 @@ If the application calls any function that returns a :code:`psa_status_t` result
     .. summary::
         Encoding of a subsystem of the |API| implementation.
 
+        .. versionadded:: 1.3
+
     This type is used to specify implementation subsystems in a call to `psa_crypto_init_subsystem()`.
     Values of this type are ``PSA_CRYPTO_SUBSYSTEM_xxx`` constants, or a bitwise-or of two or more of them.
 
@@ -116,6 +118,8 @@ If the application calls any function that returns a :code:`psa_status_t` result
     .. summary::
         Crypto subsystem identifier for the communication with the server, if this is a client that communicates with a server where the key store is located.
 
+        .. versionadded:: 1.3
+
     In a client-server implementation, initializing this subsystem is necessary before any API function other than library initialization and functions accessing local data structures such as key attributes.
 
     In a library implementation, initializing this subsystem has no effect, and always succeeds.
@@ -125,6 +129,8 @@ If the application calls any function that returns a :code:`psa_status_t` result
 
     .. summary::
         Crypto subsystem identifier for the key store in memory.
+
+        .. versionadded:: 1.3
 
     Initializing this subsystem allows creating, accessing and destroying volatile keys in the default location, that is, keys with the lifetime `PSA_KEY_LIFETIME_VOLATILE`.
 
@@ -138,6 +144,8 @@ If the application calls any function that returns a :code:`psa_status_t` result
     .. summary::
         Crypto subsystem identifier for access to keys in storage.
 
+        .. versionadded:: 1.3
+
     Initializing this subsystem and the `PSA_CRYPTO_SUBSYSTEM_KEYS` subsystem allows creating, accessing, and destroying persistent keys.
 
     Persistent keys in secure elements also require `PSA_CRYPTO_SUBSYSTEM_SECURE_ELEMENTS`.
@@ -147,6 +155,8 @@ If the application calls any function that returns a :code:`psa_status_t` result
 
     .. summary::
         Crypto subsystem identifier for :term:`cryptographic accelerator`\ s.
+
+        .. versionadded:: 1.3
 
     Initializing this subsystem results in initialization of cryptographic hardware accelerator interfaces.
 
@@ -158,6 +168,8 @@ If the application calls any function that returns a :code:`psa_status_t` result
     .. summary::
         Crypto subsystem identifier for :term:`secure element`\ s.
 
+        .. versionadded:: 1.3
+
     Initializing this subsystem results in initialization of all cryptographic secure elements.
 
     Initializing this subsystem as well as `PSA_CRYPTO_SUBSYSTEM_KEYS` allows creating, accessing, and destroying keys in a secure element. That is, keys whose location is not `PSA_KEY_LOCATION_LOCAL_STORAGE`.
@@ -167,6 +179,8 @@ If the application calls any function that returns a :code:`psa_status_t` result
 
     .. summary::
         Crypto subsystem identifier for the random generator.
+
+        .. versionadded:: 1.3
 
     Initializing this subsystem initializes all entropy providers, and access to entropy sources.
 
@@ -188,6 +202,8 @@ If the application calls any function that returns a :code:`psa_status_t` result
     .. summary::
         Crypto subsystem identifier for access to :term:`built-in key`\ s.
 
+        .. versionadded:: 1.3
+
     Initializing this subsystem as well as `PSA_CRYPTO_SUBSYSTEM_KEYS` allows access to built-in keys.
 
 .. macro:: PSA_CRYPTO_ALL_SUBSYSTEMS
@@ -195,6 +211,8 @@ If the application calls any function that returns a :code:`psa_status_t` result
 
     .. summary::
         Crypto subsystem identifier for all available subsystems.
+
+        .. versionadded:: 1.3
 
     Using this value in a call to `psa_crypto_init_subsystem()` is equivalent to calling `psa_crypto_init()`.
 
@@ -207,6 +225,8 @@ If the application calls any function that returns a :code:`psa_status_t` result
 
     .. summary::
         Partial library initialization.
+
+        .. versionadded:: 1.3
 
     .. param:: psa_crypto_subsystem_t subsystem
         The subsystem, or set of subsystems, to initialize.
