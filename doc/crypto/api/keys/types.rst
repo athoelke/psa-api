@@ -7,10 +7,10 @@
 .. _key-types:
 
 Key types
-=========
+---------
 
 Key type encoding
------------------
+~~~~~~~~~~~~~~~~~
 
 .. typedef:: uint16_t psa_key_type_t
 
@@ -41,7 +41,18 @@ Key type encoding
     Zero is not the encoding of any key type.
 
 Key categories
---------------
+~~~~~~~~~~~~~~
+
+In the |API|, keys are typically used to store secrets that are specific to a set of related cryptographic algorithms.
+Keys can also be used to store non-cryptographic secrets or other data.
+The key type is used to identify what the key value is, and what can be used for.
+
+*   :secref:`unstructured-keys` --- defines types for non-key data and unstructured symmetric keys.
+    For example, passwords, key-derivation secrets, or AES keys.
+*   :secref:`structured-keys` --- defines types for structured symmetric keys.
+    For example, WPA3-SAE password tokens.
+*   :secref:`asymmetric-keys` --- defines types for asymmetric keys.
+    For example, elliptic curve or SPAKE2+ keys.
 
 .. macro:: PSA_KEY_TYPE_IS_UNSTRUCTURED
     :definition: /* specification-defined value */
@@ -54,7 +65,7 @@ Key categories
 
     This encompasses both symmetric keys and non-key data.
 
-    See :secref:`symmetric-keys` for a list of symmetric key types.
+    See :secref:`unstructured-keys` for a list of unstructured key types.
 
 .. macro:: PSA_KEY_TYPE_IS_ASYMMETRIC
     :definition: /* specification-defined value */
@@ -86,10 +97,344 @@ Key categories
         A key type: a value of type `psa_key_type_t`.
 
 
-.. _symmetric-keys:
+Elliptic curve families
+~~~~~~~~~~~~~~~~~~~~~~~
 
-Symmetric keys
---------------
+.. typedef:: uint8_t psa_ecc_family_t
+
+    .. summary::
+        The type of identifiers of an elliptic curve family.
+
+    The curve identifier is required to create a number of key types:
+
+    *   ECC keys using `PSA_KEY_TYPE_ECC_KEY_PAIR()` or `PSA_KEY_TYPE_ECC_PUBLIC_KEY()`.
+        These keys are used in various asymmetric signature, key-encapsulation, and key-agreement algorithms.
+    *   SPAKE2+ keys using the `PSA_KEY_TYPE_SPAKE2P_KEY_PAIR()` or `PSA_KEY_TYPE_SPAKE2P_PUBLIC_KEY()`.
+        These keys are used in the SPAKE2+ PAKE algorithms.
+    *   WPA3-SAE password tokens using `PSA_KEY_TYPE_WPA3_SAE_ECC_PT()`.
+        These keys are used in the WPA3-SAE PAKE algorithms.
+
+    The specific ECC curve within a family is identified by the ``key_bits`` attribute of the key.
+
+    The range of elliptic curve family identifier values is divided as follows:
+
+    :code:`0x00`
+        Reserved.
+        Not allocated to an ECC family.
+    :code:`0x01 - 0x7f`
+        ECC family identifiers defined by this standard.
+        Unallocated values in this range are reserved for future use.
+    :code:`0x80 - 0xff`
+        Invalid.
+        Values in this range must not be used.
+
+    The least significant bit of a elliptic curve family identifier is a parity bit for the whole key type.
+    See :secref:`asymmetric-key-encoding` for details of the encoding of asymmetric key types.
+
+    .. admonition:: Implementation note
+
+        To provide other elliptic curve families, it is recommended that an implementation defines a key type with bit 15 set, which indicates an :scterm:`implementation defined` key type.
+
+.. macro:: PSA_ECC_FAMILY_SECP_K1
+    :definition: ((psa_ecc_family_t) 0x17)
+
+    .. summary::
+        SEC Koblitz curves over prime fields.
+
+    This family comprises the following curves:
+
+    *   secp192k1 : ``key_bits = 192``
+    *   secp224k1 : ``key_bits = 225``
+    *   secp256k1 : ``key_bits = 256``
+
+    They are defined in :cite-title:`SEC2`.
+
+.. macro:: PSA_ECC_FAMILY_SECP_R1
+    :definition: ((psa_ecc_family_t) 0x12)
+
+    .. summary::
+        SEC random curves over prime fields.
+
+    This family comprises the following curves:
+
+    *   secp192r1 : ``key_bits = 192``
+    *   secp224r1 : ``key_bits = 224``
+    *   secp256r1 : ``key_bits = 256``
+    *   secp384r1 : ``key_bits = 384``
+    *   secp521r1 : ``key_bits = 521``
+
+    They are defined in :cite:`SEC2`.
+
+.. macro:: PSA_ECC_FAMILY_SECP_R2
+    :definition: ((psa_ecc_family_t) 0x1b)
+
+    .. summary::
+        .. warning::
+            This family of curves is weak and deprecated.
+
+    This family comprises the following curves:
+
+    *   secp160r2 : ``key_bits = 160`` *(Deprecated)*
+
+    It is defined in the superseded :cite-title:`SEC2v1`.
+
+.. macro:: PSA_ECC_FAMILY_SECT_K1
+    :definition: ((psa_ecc_family_t) 0x27)
+
+    .. summary::
+        SEC Koblitz curves over binary fields.
+
+    This family comprises the following curves:
+
+    *   sect163k1 : ``key_bits = 163`` *(Deprecated)*
+    *   sect233k1 : ``key_bits = 233``
+    *   sect239k1 : ``key_bits = 239``
+    *   sect283k1 : ``key_bits = 283``
+    *   sect409k1 : ``key_bits = 409``
+    *   sect571k1 : ``key_bits = 571``
+
+    They are defined in :cite:`SEC2`.
+
+    .. warning::
+        The 163-bit curve sect163k1 is weak and deprecated and is only recommended for use in legacy applications.
+
+.. macro:: PSA_ECC_FAMILY_SECT_R1
+    :definition: ((psa_ecc_family_t) 0x22)
+
+    .. summary::
+        SEC random curves over binary fields.
+
+    This family comprises the following curves:
+
+    *   sect163r1 : ``key_bits = 163`` *(Deprecated)*
+    *   sect233r1 : ``key_bits = 233``
+    *   sect283r1 : ``key_bits = 283``
+    *   sect409r1 : ``key_bits = 409``
+    *   sect571r1 : ``key_bits = 571``
+
+    They are defined in :cite:`SEC2`.
+
+    .. warning::
+        The 163-bit curve sect163r1 is weak and deprecated and is only recommended for use in legacy applications.
+
+.. macro:: PSA_ECC_FAMILY_SECT_R2
+    :definition: ((psa_ecc_family_t) 0x2b)
+
+    .. summary::
+        SEC additional random curves over binary fields.
+
+    This family comprises the following curves:
+
+    *   sect163r2 : ``key_bits = 163`` *(Deprecated)*
+
+    It is defined in :cite:`SEC2`.
+
+    .. warning::
+        The 163-bit curve sect163r2 is weak and deprecated and is only recommended for use in legacy applications.
+
+.. macro:: PSA_ECC_FAMILY_BRAINPOOL_P_R1
+    :definition: ((psa_ecc_family_t) 0x30)
+
+    .. summary::
+        Brainpool P random curves.
+
+    This family comprises the following curves:
+
+    *   brainpoolP160r1 : ``key_bits = 160`` *(Deprecated)*
+    *   brainpoolP192r1 : ``key_bits = 192``
+    *   brainpoolP224r1 : ``key_bits = 224``
+    *   brainpoolP256r1 : ``key_bits = 256``
+    *   brainpoolP320r1 : ``key_bits = 320``
+    *   brainpoolP384r1 : ``key_bits = 384``
+    *   brainpoolP512r1 : ``key_bits = 512``
+
+    They are defined in :rfc-title:`5639`.
+
+    .. warning::
+        The 160-bit curve brainpoolP160r1 is weak and deprecated and is only recommended for use in legacy applications.
+
+.. macro:: PSA_ECC_FAMILY_FRP
+    :definition: ((psa_ecc_family_t) 0x33)
+
+    .. summary::
+        Curve used primarily in France and elsewhere in Europe.
+
+    This family comprises one 256-bit curve:
+
+    *   FRP256v1 : ``key_bits = 256``
+
+    This is defined by :cite-title:`FRP`.
+
+.. macro:: PSA_ECC_FAMILY_MONTGOMERY
+    :definition: ((psa_ecc_family_t) 0x41)
+
+    .. summary::
+        Montgomery curves.
+
+    This family comprises the following Montgomery curves:
+
+    *   Curve25519 : ``key_bits = 255``
+    *   Curve448 : ``key_bits = 448``
+
+    Curve25519 is defined in :cite-title:`Curve25519`. Curve448 is defined in :cite-title:`Curve448`.
+
+.. macro:: PSA_ECC_FAMILY_TWISTED_EDWARDS
+    :definition: ((psa_ecc_family_t) 0x42)
+
+    .. summary::
+        Twisted Edwards curves.
+
+        .. versionadded:: 1.1
+
+    This family comprises the following twisted Edwards curves:
+
+    *   Edwards25519 : ``key_bits = 255``. This curve is birationally equivalent to Curve25519.
+    *   Edwards448 : ``key_bits = 448``. This curve is birationally equivalent to Curve448.
+
+    Edwards25519 is defined in :cite-title:`Ed25519`. Edwards448 is defined in :cite-title:`Curve448`.
+
+
+Diffie-Hellman families
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. typedef:: uint8_t psa_dh_family_t
+
+    .. summary::
+        The type of identifiers of a finite-field Diffie-Hellman group family.
+
+    The group family identifier is required to create a finite-field Diffie-Hellman key using the `PSA_KEY_TYPE_DH_KEY_PAIR()` or `PSA_KEY_TYPE_DH_PUBLIC_KEY()` macros.
+
+    The specific Diffie-Hellman group within a family is identified by the ``key_bits`` attribute of the key.
+
+    The range of Diffie-Hellman group family identifier values is divided as follows:
+
+    :code:`0x00`
+        Reserved.
+        Not allocated to a DH group family.
+    :code:`0x01 - 0x7f`
+        DH group family identifiers defined by this standard.
+        Unallocated values in this range are reserved for future use.
+    :code:`0x80 - 0xff`
+        Invalid.
+        Values in this range must not be used.
+
+    The least significant bit of a Diffie-Hellman group family identifier is a parity bit for the whole key type.
+    See :secref:`asymmetric-key-encoding` for details of the encoding of asymmetric key types.
+
+    .. admonition:: Implementation note
+
+        To provide other Diffie-Hellman group families, it is recommended that an implementation defines a key type with bit 15 set, which indicates an :scterm:`implementation defined` key type.
+
+.. macro:: PSA_DH_FAMILY_RFC7919
+    :definition: ((psa_dh_family_t) 0x03)
+
+    .. summary::
+        Finite-field Diffie-Hellman groups defined for TLS in RFC 7919.
+
+    This family includes groups with the following key sizes (in bits): 2048, 3072, 4096, 6144, 8192.
+    An implementation can support all of these sizes or only a subset.
+
+    Keys is this group can only be used with the `PSA_ALG_FFDH` key-agreement algorithm.
+
+    These groups are defined by :rfc-title:`7919#A`.
+
+.. macro:: PSA_DH_FAMILY_RFC3526
+    :definition: ((psa_dh_family_t) 0x05)
+
+    .. summary::
+        Finite-field Diffie-Hellman groups defined for IKE2 in RFC 3526.
+
+        .. versionadded:: 1.x
+
+    This family includes groups with the following key sizes (in bits): 2048, 3072, 4096, 6144, 8192.
+    An implementation can support all of these sizes or only a subset.
+
+    Keys is this group can be used with the `PSA_ALG_FFDH` key-agreement algorithm, or with the `PSA_ALG_WPA3_SAE` PAKE algorithm.
+
+    These groups are defined by :rfc-title:`3526`.
+
+
+Attribute accessors
+~~~~~~~~~~~~~~~~~~~
+
+.. function:: psa_set_key_type
+
+    .. summary::
+        Declare the type of a key.
+
+    .. param:: psa_key_attributes_t * attributes
+        The attribute object to write to.
+    .. param:: psa_key_type_t type
+        The key type to write. If this is `PSA_KEY_TYPE_NONE`, the key type in ``attributes`` becomes unspecified.
+
+    .. return:: void
+
+    This function overwrites any key type previously set in ``attributes``.
+
+    .. admonition:: Implementation note
+
+        This is a simple accessor function that is not required to validate its inputs. It can be efficiently implemented as a ``static inline`` function or a function-like-macro.
+
+
+.. function:: psa_get_key_type
+
+    .. summary::
+        Retrieve the key type from key attributes.
+
+    .. param:: const psa_key_attributes_t * attributes
+        The key attribute object to query.
+
+    .. return:: psa_key_type_t
+        The key type stored in the attribute object.
+
+    .. admonition:: Implementation note
+
+        This is a simple accessor function that is not required to validate its inputs. It can be efficiently implemented as a ``static inline`` function or a function-like-macro.
+
+
+.. function:: psa_get_key_bits
+
+    .. summary::
+        Retrieve the key size from key attributes.
+
+    .. param:: const psa_key_attributes_t * attributes
+        The key attribute object to query.
+
+    .. return:: size_t
+        The key size stored in the attribute object, in bits.
+
+    .. admonition:: Implementation note
+
+        This is a simple accessor function that is not required to validate its inputs. It can be efficiently implemented as a ``static inline`` function or a function-like-macro.
+
+
+.. function:: psa_set_key_bits
+
+    .. summary::
+        Declare the size of a key.
+
+    .. param:: psa_key_attributes_t * attributes
+        The attribute object to write to.
+    .. param:: size_t bits
+        The key size in bits. If this is ``0``, the key size in ``attributes`` becomes unspecified. Keys of size ``0`` are not supported.
+
+    .. return:: void
+
+    This function overwrites any key size previously set in ``attributes``.
+
+    .. admonition:: Implementation note
+
+        This is a simple accessor function that is not required to validate its inputs. It can be efficiently implemented as a ``static inline`` function or a function-like-macro.
+
+.. _unstructured-keys:
+
+Unstructured keys
+-----------------
+
+.. _non-key-data:
+
+Non-key data
+~~~~~~~~~~~~
 
 .. macro:: PSA_KEY_TYPE_RAW_DATA
     :definition: ((psa_key_type_t)0x1001)
@@ -114,46 +459,6 @@ Symmetric keys
             *   `PSA_ALG_SP800_108_COUNTER_CMAC`
             *   `PSA_ALG_TLS12_PRF`
             *   `PSA_ALG_TLS12_PSK_TO_MS`
-
-    .. subsection:: Key format
-
-        The data format for import and export of the key is the raw bytes of the key.
-
-    .. subsection:: Key derivation
-
-        A call to `psa_key_derivation_output_key()` will draw :math:`m/8` bytes of output and use these as the key data, where :math:`m` is the bit-size of the key.
-
-.. macro:: PSA_KEY_TYPE_HMAC
-    :definition: ((psa_key_type_t)0x1100)
-
-    .. summary::
-        HMAC key.
-
-    HMAC keys can be used in HMAC, or HMAC-based, algorithms.
-    Although HMAC is parameterized by a specific hash algorithm, for example SHA-256, the hash algorithm is not specified in the key type.
-    The permitted-algorithm policy for the key must specify a particular hash algorithm.
-
-    The bit size of an HMAC key must be a non-zero multiple of 8.
-    An HMAC key is typically the same size as the output of the underlying hash algorithm.
-    An HMAC key that is longer than the block size of the underlying hash algorithm will be hashed before use, see :RFC-title:`2104#2`.
-
-    It is recommended that an application does not construct HMAC keys that are longer than the block size of the hash algorithm that will be used.
-    It is :scterm:`implementation defined` whether an HMAC key that is longer than the hash block size is supported.
-
-    If the application does not control the length of the data used to construct the HMAC key, it is recommended that the application hashes the key data, when it exceeds the hash block length, before constructing the HMAC key.
-
-    .. note::
-
-        :code:`PSA_HASH_LENGTH(alg)` provides the output size of hash algorithm ``alg``, in bytes.
-
-        :code:`PSA_HASH_BLOCK_LENGTH(alg)` provides the block size of hash algorithm ``alg``, in bytes.
-
-    .. subsection:: Compatible algorithms
-
-        .. hlist::
-
-            *   `PSA_ALG_HMAC`
-            *   `PSA_ALG_SP800_108_COUNTER_HMAC` (secret input)
 
     .. subsection:: Key format
 
@@ -286,6 +591,50 @@ Symmetric keys
     .. subsection:: Key derivation
 
         A call to `psa_key_derivation_output_key()` will draw :math:`m/8` bytes of output and use these as the key data, where :math:`m` is the bit-size of the key.
+
+Symmetric cryptographic keys
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. macro:: PSA_KEY_TYPE_HMAC
+    :definition: ((psa_key_type_t)0x1100)
+
+    .. summary::
+        HMAC key.
+
+    HMAC keys can be used in HMAC, or HMAC-based, algorithms.
+    Although HMAC is parameterized by a specific hash algorithm, for example SHA-256, the hash algorithm is not specified in the key type.
+    The permitted-algorithm policy for the key must specify a particular hash algorithm.
+
+    The bit size of an HMAC key must be a non-zero multiple of 8.
+    An HMAC key is typically the same size as the output of the underlying hash algorithm.
+    An HMAC key that is longer than the block size of the underlying hash algorithm will be hashed before use, see :RFC-title:`2104#2`.
+
+    It is recommended that an application does not construct HMAC keys that are longer than the block size of the hash algorithm that will be used.
+    It is :scterm:`implementation defined` whether an HMAC key that is longer than the hash block size is supported.
+
+    If the application does not control the length of the data used to construct the HMAC key, it is recommended that the application hashes the key data, when it exceeds the hash block length, before constructing the HMAC key.
+
+    .. note::
+
+        :code:`PSA_HASH_LENGTH(alg)` provides the output size of hash algorithm ``alg``, in bytes.
+
+        :code:`PSA_HASH_BLOCK_LENGTH(alg)` provides the block size of hash algorithm ``alg``, in bytes.
+
+    .. subsection:: Compatible algorithms
+
+        .. hlist::
+
+            *   `PSA_ALG_HMAC`
+            *   `PSA_ALG_SP800_108_COUNTER_HMAC` (secret input)
+
+    .. subsection:: Key format
+
+        The data format for import and export of the key is the raw bytes of the key.
+
+    .. subsection:: Key derivation
+
+        A call to `psa_key_derivation_output_key()` will draw :math:`m/8` bytes of output and use these as the key data, where :math:`m` is the bit-size of the key.
+
 
 .. macro:: PSA_KEY_TYPE_AES
     :definition: ((psa_key_type_t)0x2400)
@@ -593,10 +942,71 @@ Symmetric keys
 
         A call to `psa_key_derivation_output_key()` will draw 32 bytes of output and use these as the key data.
 
+
+.. _structured-keys:
+
+Structured keys
+---------------
+
+WPA3-SAE password tokens
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. macro:: PSA_KEY_TYPE_WPA3_SAE_ECC_PT
+    :definition: /* specification-defined value */
+
+    .. summary::
+        WPA3-SAE password token using elliptic curves.
+
+        .. versionadded:: 1.x
+
+    .. param:: curve
+        A value of type :code:`psa_ecc_family_t` that identifies the elliptic curve family to be used.
+
+    .. TBD
+
+    The bit-size of an SPAKE2+ public key is the same as the corresponding private key.
+    See `PSA_KEY_TYPE_SPAKE2P_KEY_PAIR()` and the documentation of each elliptic curve family for details.
+
+    To construct a SPAKE2+ public key, it must be imported.
+
+    .. subsection:: Compatible algorithms
+
+        .. hlist::
+
+            *   `PSA_ALG_WPA3_SAE_FIXED`
+            *   `PSA_ALG_WPA3_SAE_GDH`
+
+    .. subsection:: Key format
+
+        A SPAKE2+ public key consists of the two values :math:`w0` and :math:`L`, which result from the SPAKE2+ registration phase, see :secref:`spake2p-registration`.
+        :math:`w0` is a scalar in the same range as a elliptic curve private key from the group used as the SPAKE2+ primitive group.
+        :math:`L` is a point on the curve, similar to a public key from the same group, corresponding to the :math:`w1` value in the key pair.
+
+        The data format for import and export of the public key is the concatenation of the formatted values for :math:`w0` and :math:`L`, using the standard formats for elliptic curve keys used by the |API|.
+        For example, for SPAKE2+ over P-256 (secp256r1), the output from :code:`psa_export_public_key()` would be the concatenation of:
+
+        *   The P-256 private key :math:`w0`.
+            This is a 32-byte big-endian encoding of the integer :math:`w0`.
+        *   The P-256 public key :math:`L`.
+            This is a 65-byte concatenation of:
+
+            -   The byte ``0x04``.
+            -   The 32-byte big-endian encoding of the x-coordinate of :math:`L`.
+            -   The 32-byte big-endian encoding of the y-coordinate of :math:`L`.
+
+    .. subsection:: Key derivation
+
 .. _asymmetric-keys:
 
 Asymmetric keys
 ---------------
+
+Asymmetric keys come in pairs.
+One is a private or secret key, which must be kept confidential.
+The other is a public key, which is meant to be shared with other participants in the protocol.
+
+.. note::
+    Depending on the type of cryptographic scheme, the private key can be referred to as the *prover key* or the *decapsulation key*, and the public key can be referred to as the *verifier key* or the *encapsulation key*.
 
 The |API| defines the following types of asymmetric key:
 
@@ -605,10 +1015,16 @@ The |API| defines the following types of asymmetric key:
 * :secref:`dh-keys`
 * :secref:`spake2p-keys`
 
+In the |API|, key objects can either be a key pair, providing both the private and public key, or just a public key.
+The difference in the key type values for a key pair and a public key for the same scheme is common across all asymmetric keys.
+
+The `PSA_KEY_TYPE_KEY_PAIR_OF_PUBLIC_KEY()` and `PSA_KEY_TYPE_PUBLIC_KEY_OF_KEY_PAIR()` macros convert from one type to the other.
+
+
 .. _rsa-keys:
 
 RSA keys
---------
+~~~~~~~~
 
 .. macro:: PSA_KEY_TYPE_RSA_KEY_PAIR
     :definition: ((psa_key_type_t)0x7001)
@@ -713,10 +1129,11 @@ RSA keys
     .. param:: type
         A key type: a value of type `psa_key_type_t`.
 
+
 .. _ecc-keys:
 
 Elliptic Curve keys
--------------------
+~~~~~~~~~~~~~~~~~~~
 
 Elliptic curve keys are grouped into families of related curves.
 A keys for a specific curve is specified by a combination of the elliptic curve family and the bit-size of the key.
@@ -753,34 +1170,6 @@ The curve type affects the key format, the key-derivation procedure, and the alg
         -   `PSA_ECC_FAMILY_MONTGOMERY`
     *   -   Twisted Edwards
         -   `PSA_ECC_FAMILY_TWISTED_EDWARDS`
-
-.. typedef:: uint8_t psa_ecc_family_t
-
-    .. summary::
-        The type of identifiers of an elliptic curve family.
-
-    The curve identifier is required to create an ECC key using the `PSA_KEY_TYPE_ECC_KEY_PAIR()` or `PSA_KEY_TYPE_ECC_PUBLIC_KEY()` macros.
-
-    The specific ECC curve within a family is identified by the ``key_bits`` attribute of the key.
-
-    The range of elliptic curve family identifier values is divided as follows:
-
-    :code:`0x00`
-        Reserved.
-        Not allocated to an ECC family.
-    :code:`0x01 - 0x7f`
-        ECC family identifiers defined by this standard.
-        Unallocated values in this range are reserved for future use.
-    :code:`0x80 - 0xff`
-        Invalid.
-        Values in this range must not be used.
-
-    The least significant bit of a elliptic curve family identifier is a parity bit for the whole key type.
-    See :secref:`asymmetric-key-encoding` for details of the encoding of asymmetric key types.
-
-    .. admonition:: Implementation note
-
-        To provide other elliptic curve families, it is recommended that an implementation defines a key type with bit 15 set, which indicates an :scterm:`implementation defined` key type.
 
 .. macro:: PSA_KEY_TYPE_ECC_KEY_PAIR
     :definition: /* specification-defined value */
@@ -993,164 +1382,6 @@ The curve type affects the key format, the key-derivation procedure, and the alg
 
                     This is a 32-byte string for Edwards25519, and a 57-byte string for Edwards448.
 
-.. macro:: PSA_ECC_FAMILY_SECP_K1
-    :definition: ((psa_ecc_family_t) 0x17)
-
-    .. summary::
-        SEC Koblitz curves over prime fields.
-
-    This family comprises the following curves:
-
-    *   secp192k1 : ``key_bits = 192``
-    *   secp224k1 : ``key_bits = 225``
-    *   secp256k1 : ``key_bits = 256``
-
-    They are defined in :cite-title:`SEC2`.
-
-.. macro:: PSA_ECC_FAMILY_SECP_R1
-    :definition: ((psa_ecc_family_t) 0x12)
-
-    .. summary::
-        SEC random curves over prime fields.
-
-    This family comprises the following curves:
-
-    *   secp192r1 : ``key_bits = 192``
-    *   secp224r1 : ``key_bits = 224``
-    *   secp256r1 : ``key_bits = 256``
-    *   secp384r1 : ``key_bits = 384``
-    *   secp521r1 : ``key_bits = 521``
-
-    They are defined in :cite:`SEC2`.
-
-.. macro:: PSA_ECC_FAMILY_SECP_R2
-    :definition: ((psa_ecc_family_t) 0x1b)
-
-    .. summary::
-        .. warning::
-            This family of curves is weak and deprecated.
-
-    This family comprises the following curves:
-
-    *   secp160r2 : ``key_bits = 160`` *(Deprecated)*
-
-    It is defined in the superseded :cite-title:`SEC2v1`.
-
-.. macro:: PSA_ECC_FAMILY_SECT_K1
-    :definition: ((psa_ecc_family_t) 0x27)
-
-    .. summary::
-        SEC Koblitz curves over binary fields.
-
-    This family comprises the following curves:
-
-    *   sect163k1 : ``key_bits = 163`` *(Deprecated)*
-    *   sect233k1 : ``key_bits = 233``
-    *   sect239k1 : ``key_bits = 239``
-    *   sect283k1 : ``key_bits = 283``
-    *   sect409k1 : ``key_bits = 409``
-    *   sect571k1 : ``key_bits = 571``
-
-    They are defined in :cite:`SEC2`.
-
-    .. warning::
-        The 163-bit curve sect163k1 is weak and deprecated and is only recommended for use in legacy applications.
-
-.. macro:: PSA_ECC_FAMILY_SECT_R1
-    :definition: ((psa_ecc_family_t) 0x22)
-
-    .. summary::
-        SEC random curves over binary fields.
-
-    This family comprises the following curves:
-
-    *   sect163r1 : ``key_bits = 163`` *(Deprecated)*
-    *   sect233r1 : ``key_bits = 233``
-    *   sect283r1 : ``key_bits = 283``
-    *   sect409r1 : ``key_bits = 409``
-    *   sect571r1 : ``key_bits = 571``
-
-    They are defined in :cite:`SEC2`.
-
-    .. warning::
-        The 163-bit curve sect163r1 is weak and deprecated and is only recommended for use in legacy applications.
-
-.. macro:: PSA_ECC_FAMILY_SECT_R2
-    :definition: ((psa_ecc_family_t) 0x2b)
-
-    .. summary::
-        SEC additional random curves over binary fields.
-
-    This family comprises the following curves:
-
-    *   sect163r2 : ``key_bits = 163`` *(Deprecated)*
-
-    It is defined in :cite:`SEC2`.
-
-    .. warning::
-        The 163-bit curve sect163r2 is weak and deprecated and is only recommended for use in legacy applications.
-
-.. macro:: PSA_ECC_FAMILY_BRAINPOOL_P_R1
-    :definition: ((psa_ecc_family_t) 0x30)
-
-    .. summary::
-        Brainpool P random curves.
-
-    This family comprises the following curves:
-
-    *   brainpoolP160r1 : ``key_bits = 160`` *(Deprecated)*
-    *   brainpoolP192r1 : ``key_bits = 192``
-    *   brainpoolP224r1 : ``key_bits = 224``
-    *   brainpoolP256r1 : ``key_bits = 256``
-    *   brainpoolP320r1 : ``key_bits = 320``
-    *   brainpoolP384r1 : ``key_bits = 384``
-    *   brainpoolP512r1 : ``key_bits = 512``
-
-    They are defined in :rfc-title:`5639`.
-
-    .. warning::
-        The 160-bit curve brainpoolP160r1 is weak and deprecated and is only recommended for use in legacy applications.
-
-.. macro:: PSA_ECC_FAMILY_FRP
-    :definition: ((psa_ecc_family_t) 0x33)
-
-    .. summary::
-        Curve used primarily in France and elsewhere in Europe.
-
-    This family comprises one 256-bit curve:
-
-    *   FRP256v1 : ``key_bits = 256``
-
-    This is defined by :cite-title:`FRP`.
-
-.. macro:: PSA_ECC_FAMILY_MONTGOMERY
-    :definition: ((psa_ecc_family_t) 0x41)
-
-    .. summary::
-        Montgomery curves.
-
-    This family comprises the following Montgomery curves:
-
-    *   Curve25519 : ``key_bits = 255``
-    *   Curve448 : ``key_bits = 448``
-
-    Curve25519 is defined in :cite-title:`Curve25519`. Curve448 is defined in :cite-title:`Curve448`.
-
-.. macro:: PSA_ECC_FAMILY_TWISTED_EDWARDS
-    :definition: ((psa_ecc_family_t) 0x42)
-
-    .. summary::
-        Twisted Edwards curves.
-
-        .. versionadded:: 1.1
-
-    This family comprises the following twisted Edwards curves:
-
-    *   Edwards25519 : ``key_bits = 255``. This curve is birationally equivalent to Curve25519.
-    *   Edwards448 : ``key_bits = 448``. This curve is birationally equivalent to Curve448.
-
-    Edwards25519 is defined in :cite-title:`Ed25519`. Edwards448 is defined in :cite-title:`Curve448`.
-
 .. macro:: PSA_KEY_TYPE_IS_ECC
     :definition: /* specification-defined value */
 
@@ -1190,38 +1421,11 @@ The curve type affects the key format, the key-derivation procedure, and the alg
     .. return:: psa_ecc_family_t
         The elliptic curve family id, if ``type`` is a supported elliptic curve key. Unspecified if ``type`` is not a supported elliptic curve key.
 
+
 .. _dh-keys:
 
 Diffie Hellman keys
--------------------
-
-.. typedef:: uint8_t psa_dh_family_t
-
-    .. summary::
-        The type of identifiers of a finite-field Diffie-Hellman group family.
-
-    The group family identifier is required to create a finite-field Diffie-Hellman key using the `PSA_KEY_TYPE_DH_KEY_PAIR()` or `PSA_KEY_TYPE_DH_PUBLIC_KEY()` macros.
-
-    The specific Diffie-Hellman group within a family is identified by the ``key_bits`` attribute of the key.
-
-    The range of Diffie-Hellman group family identifier values is divided as follows:
-
-    :code:`0x00`
-        Reserved.
-        Not allocated to a DH group family.
-    :code:`0x01 - 0x7f`
-        DH group family identifiers defined by this standard.
-        Unallocated values in this range are reserved for future use.
-    :code:`0x80 - 0xff`
-        Invalid.
-        Values in this range must not be used.
-
-    The least significant bit of a Diffie-Hellman group family identifier is a parity bit for the whole key type.
-    See :secref:`asymmetric-key-encoding` for details of the encoding of asymmetric key types.
-
-    .. admonition:: Implementation note
-
-        To provide other Diffie-Hellman group families, it is recommended that an implementation defines a key type with bit 15 set, which indicates an :scterm:`implementation defined` key type.
+~~~~~~~~~~~~~~~~~~~
 
 .. macro:: PSA_KEY_TYPE_DH_KEY_PAIR
     :definition: /* specification-defined value */
@@ -1278,47 +1482,6 @@ Diffie Hellman keys
         The data format for export of the public key is the representation of the public key :math:`y = g^x\!\mod p` as a big-endian byte string.
         The length of the byte string is the length of the base prime :math:`p` in bytes.
 
-.. macro:: PSA_DH_FAMILY_RFC7919
-    :definition: ((psa_dh_family_t) 0x03)
-
-    .. summary::
-        Finite-field Diffie-Hellman groups defined for TLS in RFC 7919.
-
-    This family includes groups with the following key sizes (in bits): 2048, 3072, 4096, 6144, 8192.
-    An implementation can support all of these sizes or only a subset.
-
-    Keys is this group can only be used with the `PSA_ALG_FFDH` key-agreement algorithm.
-
-    These groups are defined by :rfc-title:`7919#A`.
-
-.. macro:: PSA_KEY_TYPE_KEY_PAIR_OF_PUBLIC_KEY
-    :definition: /* specification-defined value */
-
-    .. summary::
-        The key-pair type corresponding to a public-key type.
-
-    .. param:: type
-        A public-key type or key-pair type.
-
-    .. return::
-        The corresponding key-pair type. If ``type`` is not a public key or a key pair, the return value is undefined.
-
-    If ``type`` is a key-pair type, it will be left unchanged.
-
-.. macro:: PSA_KEY_TYPE_PUBLIC_KEY_OF_KEY_PAIR
-    :definition: /* specification-defined value */
-
-    .. summary::
-        The public-key type corresponding to a key-pair type.
-
-    .. param:: type
-        A public-key type or key-pair type.
-
-    .. return::
-        The corresponding public-key type. If ``type`` is not a public key or a key pair, the return value is undefined.
-
-    If ``type`` is a public-key type, it will be left unchanged.
-
 .. macro:: PSA_KEY_TYPE_IS_DH
     :definition: /* specification-defined value */
 
@@ -1357,6 +1520,7 @@ Diffie Hellman keys
 
     .. return:: psa_dh_family_t
         The Diffie-Hellman group family id, if ``type`` is a supported Diffie-Hellman key. Unspecified if ``type`` is not a supported Diffie-Hellman key.
+
 
 .. _spake2p-keys:
 
@@ -1519,74 +1683,34 @@ SPAKE2+ keys
     .. return:: psa_ecc_family_t
         The elliptic curve family id, if ``type`` is a supported SPAKE2+ key. Unspecified if ``type`` is not a supported SPAKE2+ key.
 
-Attribute accessors
--------------------
 
-.. function:: psa_set_key_type
+Support macros
+~~~~~~~~~~~~~~
 
-    .. summary::
-        Declare the type of a key.
-
-    .. param:: psa_key_attributes_t * attributes
-        The attribute object to write to.
-    .. param:: psa_key_type_t type
-        The key type to write. If this is `PSA_KEY_TYPE_NONE`, the key type in ``attributes`` becomes unspecified.
-
-    .. return:: void
-
-    This function overwrites any key type previously set in ``attributes``.
-
-    .. admonition:: Implementation note
-
-        This is a simple accessor function that is not required to validate its inputs. It can be efficiently implemented as a ``static inline`` function or a function-like-macro.
-
-
-.. function:: psa_get_key_type
+.. macro:: PSA_KEY_TYPE_KEY_PAIR_OF_PUBLIC_KEY
+    :definition: /* specification-defined value */
 
     .. summary::
-        Retrieve the key type from key attributes.
+        The key-pair type corresponding to a public-key type.
 
-    .. param:: const psa_key_attributes_t * attributes
-        The key attribute object to query.
+    .. param:: type
+        A public-key type or key-pair type.
 
-    .. return:: psa_key_type_t
-        The key type stored in the attribute object.
+    .. return::
+        The corresponding key-pair type. If ``type`` is not a public key or a key pair, the return value is undefined.
 
-    .. admonition:: Implementation note
+    If ``type`` is a key-pair type, it will be left unchanged.
 
-        This is a simple accessor function that is not required to validate its inputs. It can be efficiently implemented as a ``static inline`` function or a function-like-macro.
-
-
-.. function:: psa_get_key_bits
+.. macro:: PSA_KEY_TYPE_PUBLIC_KEY_OF_KEY_PAIR
+    :definition: /* specification-defined value */
 
     .. summary::
-        Retrieve the key size from key attributes.
+        The public-key type corresponding to a key-pair type.
 
-    .. param:: const psa_key_attributes_t * attributes
-        The key attribute object to query.
+    .. param:: type
+        A public-key type or key-pair type.
 
-    .. return:: size_t
-        The key size stored in the attribute object, in bits.
+    .. return::
+        The corresponding public-key type. If ``type`` is not a public key or a key pair, the return value is undefined.
 
-    .. admonition:: Implementation note
-
-        This is a simple accessor function that is not required to validate its inputs. It can be efficiently implemented as a ``static inline`` function or a function-like-macro.
-
-
-.. function:: psa_set_key_bits
-
-    .. summary::
-        Declare the size of a key.
-
-    .. param:: psa_key_attributes_t * attributes
-        The attribute object to write to.
-    .. param:: size_t bits
-        The key size in bits. If this is ``0``, the key size in ``attributes`` becomes unspecified. Keys of size ``0`` are not supported.
-
-    .. return:: void
-
-    This function overwrites any key size previously set in ``attributes``.
-
-    .. admonition:: Implementation note
-
-        This is a simple accessor function that is not required to validate its inputs. It can be efficiently implemented as a ``static inline`` function or a function-like-macro.
+    If ``type`` is a public-key type, it will be left unchanged.

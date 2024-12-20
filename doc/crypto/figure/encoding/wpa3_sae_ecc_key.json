@@ -1,0 +1,18 @@
+{
+    "reg": [
+        { "name": "P", "bits": 1 },
+        { "name": "ECC-FAMILY", "bits": 6 },
+        { "name": "5", "bits": 5 },
+        { "name": "3", "bits": 2 },
+        { "name": "0", "bits": 1 },
+        { "name": "0", "bits": 1 }
+    ],
+    "config": {
+        "lanes": 1,
+        "fontfamily": "lato",
+        "fontsize": 11,
+        "bits": 16,
+        "vspace": 52,
+        "hspace": 300
+    }
+}
