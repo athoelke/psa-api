@@ -24,6 +24,7 @@ typedef uint32_t psa_pake_primitive_t;
 typedef uint8_t psa_pake_primitive_type_t;
 typedef uint8_t psa_pake_role_t;
 typedef uint8_t psa_pake_step_t;
+typedef /* implementation-defined type */ psa_xof_operation_t;
 typedef struct psa_custom_key_parameters_t {
     uint32_t flags;
 } psa_custom_key_parameters_t;
@@ -134,6 +135,7 @@ typedef struct psa_custom_key_parameters_t {
 #define PSA_ALG_IS_TLS12_PRF(alg) /* specification-defined value */
 #define PSA_ALG_IS_TLS12_PSK_TO_MS(alg) /* specification-defined value */
 #define PSA_ALG_IS_WILDCARD(alg) /* specification-defined value */
+#define PSA_ALG_IS_XOF(alg) /* specification-defined value */
 #define PSA_ALG_JPAKE(hash_alg) /* specification-defined value */
 #define PSA_ALG_KEY_AGREEMENT(ka_alg, kdf_alg) \
     /* specification-defined value */
@@ -158,6 +160,8 @@ typedef struct psa_custom_key_parameters_t {
 #define PSA_ALG_SHA3_256 ((psa_algorithm_t)0x02000011)
 #define PSA_ALG_SHA3_384 ((psa_algorithm_t)0x02000012)
 #define PSA_ALG_SHA3_512 ((psa_algorithm_t)0x02000013)
+#define PSA_ALG_SHAKE128 ((psa_algorithm_t)0x0D000100)
+#define PSA_ALG_SHAKE256 ((psa_algorithm_t)0x0D000200)
 #define PSA_ALG_SHAKE256_512 ((psa_algorithm_t)0x02000015)
 #define PSA_ALG_SHA_1 ((psa_algorithm_t)0x02000005)
 #define PSA_ALG_SHA_224 ((psa_algorithm_t)0x02000008)
@@ -210,7 +214,7 @@ typedef struct psa_custom_key_parameters_t {
 #define PSA_CIPHER_UPDATE_OUTPUT_SIZE(key_type, alg, input_length) \
     /* implementation-defined value */
 #define PSA_CRYPTO_API_VERSION_MAJOR 1
-#define PSA_CRYPTO_API_VERSION_MINOR 3
+#define PSA_CRYPTO_API_VERSION_MINOR 4
 #define PSA_CUSTOM_KEY_PARAMETERS_INIT { 0 }
 #define PSA_DH_FAMILY_RFC7919 ((psa_dh_family_t) 0x03)
 #define PSA_ECC_FAMILY_BRAINPOOL_P_R1 ((psa_ecc_family_t) 0x30)
@@ -380,6 +384,7 @@ typedef struct psa_custom_key_parameters_t {
     /* implementation-defined value */
 #define PSA_TLS12_ECJPAKE_TO_PMS_OUTPUT_SIZE 32
 #define PSA_TLS12_PSK_TO_MS_PSK_MAX_SIZE /* implementation-defined value */
+#define PSA_XOF_OPERATION_INIT /* implementation-defined value */
 psa_status_t psa_aead_abort(psa_aead_operation_t * operation);
 psa_status_t psa_aead_decrypt(psa_key_id_t key,
                               psa_algorithm_t alg,
@@ -743,3 +748,13 @@ psa_status_t psa_verify_message(psa_key_id_t key,
                                 size_t input_length,
                                 const uint8_t * signature,
                                 size_t signature_length);
+psa_status_t psa_xof_abort(psa_xof_operation_t * operation);
+psa_status_t psa_xof_input(psa_xof_operation_t * operation,
+                           const uint8_t * input,
+                           size_t input_length);
+psa_xof_operation_t psa_xof_operation_init(void);
+psa_status_t psa_xof_output(psa_xof_operation_t * operation,
+                            uint8_t * output,
+                            size_t output_length);
+psa_status_t psa_xof_setup(psa_xof_operation_t * operation,
+                           psa_algorithm_t alg);

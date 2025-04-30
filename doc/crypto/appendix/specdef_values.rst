@@ -1,4 +1,4 @@
-.. SPDX-FileCopyrightText: Copyright 2020-2024 Arm Limited and/or its affiliates <open-source-office@arm.com>
+.. SPDX-FileCopyrightText: Copyright 2020-2025 Arm Limited and/or its affiliates <open-source-office@arm.com>
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. _appendix-specdef-values:
@@ -189,6 +189,9 @@ Algorithm macros
         ((PSA_ALG_GET_HASH(alg) == PSA_ALG_ANY_HASH) || \
          (((alg) & 0x7f008000) == 0x03008000) || \
          (((alg) & 0x7f008000) == 0x05008000))
+
+    #define PSA_ALG_IS_XOF(alg) \
+        (((alg) & 0x7f000000) == 0x0D000000)
 
     #define PSA_ALG_JPAKE(hash_alg) \
         ((psa_algorithm_t) (0x0a000100 | ((hash_alg) & 0x000000ff)))

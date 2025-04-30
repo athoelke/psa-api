@@ -1,4 +1,4 @@
-.. SPDX-FileCopyrightText: Copyright 2022-2024 Arm Limited and/or its affiliates <open-source-office@arm.com>
+.. SPDX-FileCopyrightText: Copyright 2022-2025 Arm Limited and/or its affiliates <open-source-office@arm.com>
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. _appendix-encodings:
@@ -76,6 +76,7 @@ The CAT field in an algorithm identifier takes the values shown in :numref:`tabl
     Algorithm category, CAT, Category details
     None, ``0x00``, See `PSA_ALG_NONE`
     Hash, ``0x02``, See :secref:`hash-encoding`
+    XOF, ``0x0D``, See :secref:`xof-encoding`
     MAC, ``0x03``, See :secref:`mac-encoding`
     Cipher, ``0x04``, See :secref:`cipher-encoding`
     AEAD, ``0x05``, See :secref:`aead-encoding`
@@ -134,6 +135,30 @@ The defined values for HASH-TYPE are shown in :numref:`table-hash-type`.
     *wildcard* :sup:`a`, ``0xFF``, `PSA_ALG_ANY_HASH`, ``0x020000FF``
 
 a.  The wildcard hash `PSA_ALG_ANY_HASH` can be used to parameterize a signature algorithm which defines a key usage policy, permitting any hash algorithm to be specified in a signature operation using the key.
+
+.. _xof-encoding:
+
+XOF algorithm encoding
+~~~~~~~~~~~~~~~~~~~~~~
+
+The algorithm identifier for XOF algorithms defined in this specification are encoded as shown in :numref:`fig-xof-fields`.
+
+.. figure:: ../figure/encoding/xof.*
+    :name: fig-xof-fields
+
+    XOF algorithm encoding
+
+The defined values for XOF-TYPE are shown in :numref:`table-xof-type`.
+
+.. csv-table:: XOF algorithm sub-type values
+    :name: table-xof-type
+    :header-rows: 1
+    :align: left
+    :widths: auto
+
+    XOF algorithm, XOF-TYPE, Algorithm identifier, Algorithm value
+    SHAKE128, ``0x01``, `PSA_ALG_SHAKE128`, ``0x0D000100``
+    SHAKE256, ``0x02``, `PSA_ALG_SHAKE256`, ``0x0D000200``
 
 .. _mac-encoding:
 

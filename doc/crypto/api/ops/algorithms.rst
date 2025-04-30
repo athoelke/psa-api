@@ -16,6 +16,7 @@ Algorithm identifiers are used for two purposes in the |API|:
 The specific algorithm identifiers are described alongside the cryptographic operation functions to which they apply:
 
 *   :secref:`hash-algorithms`
+*   :secref:`xof-algorithms`
 *   :secref:`mac-algorithms`
 *   :secref:`cipher-algorithms`
 *   :secref:`aead-algorithms`
@@ -82,6 +83,21 @@ Algorithm categories
         ``1`` if ``alg`` is a hash algorithm, ``0`` otherwise. This macro can return either ``0`` or ``1`` if ``alg`` is not a supported algorithm identifier.
 
     See :secref:`hash-algorithms` for a list of defined hash algorithms.
+
+.. macro:: PSA_ALG_IS_XOF
+    :definition: /* specification-defined value */
+
+    .. summary::
+        Whether the specified algorithm is an XOF algorithm.
+
+    .. param:: alg
+        An algorithm identifier: a value of type `psa_algorithm_t`.
+
+    .. return::
+        ``1`` if ``alg`` is an XOF algorithm, ``0`` otherwise.
+        This macro can return either ``0`` or ``1`` if ``alg`` is not a supported algorithm identifier.
+
+    See :secref:`xof-algorithms` for a list of defined XOF algorithms.
 
 .. macro:: PSA_ALG_IS_MAC
     :definition: /* specification-defined value */

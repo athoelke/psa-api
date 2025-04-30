@@ -17,7 +17,8 @@ Changes between *1.3.1* and *1.4.0*
 Changes to the API
 ~~~~~~~~~~~~~~~~~~
 
-*   TBD
+*   Add support for extendable-output functions (XOF).
+    See :secref:`xof`.
 
 Clarifications and fixes
 ~~~~~~~~~~~~~~~~~~~~~~~~
