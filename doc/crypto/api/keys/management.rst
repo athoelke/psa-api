@@ -21,6 +21,7 @@ New keys can be created in the following ways:
 *   `psa_encapsulate()` and `psa_decapsulate()` create a shared secret key using a key-encapsulation mechanism.
 *   `psa_pake_get_shared_key()` creates a key from the shared secret result of a password-authenticated key exchange. See :secref:`pake`.
 *   `psa_copy_key()` duplicates an existing key with a different lifetime or with a more restrictive usage policy.
+*   `psa_attach_key()` registers existing key material from secure storage for use as a volatile key.
 
 When creating a key, the attributes for the new key are specified in a `psa_key_attributes_t` object. Each key creation function defines how it uses the attributes.
 
@@ -411,6 +412,113 @@ When creating a key, the attributes for the new key are specified in a `psa_key_
     As a result, the new key cannot be used for operations that were not permitted on the source key.
 
     The effect of this function on implementation-defined attributes is implementation-defined.
+
+.. function:: psa_attach_key
+
+    .. summary::
+        Register existing key material within the implementation under a specified volatile key identifier and policy.
+
+        .. versionadded:: 1.4
+
+    .. param:: const psa_key_attributes_t * attributes
+        The attributes for the key to be registered.
+
+        The attributes that are required to be set depend on the stored key material.
+        Where an attribute is provided by both the application and the stored key material, they must be compatible.
+
+        The following attributes must be set:
+
+        *   The key lifetime must specify a volatile key and the location in which the existing key material is stored.
+            See :secref:`key-lifetimes`.
+        *   The key identifier must be the default `PSA_KEY_ID_NULL`.
+        *   The key type.
+
+        The following attributes must be set for keys used in cryptographic operations:
+
+        *   The key permitted-algorithm policy, see :secref:`permitted-algorithms`.
+        *   The key usage flags, see :secref:`key-usage-flags`.
+
+        The following attributes are optional:
+
+        *   If the key size is nonzero, it must be equal to the key size of the stored key material.
+
+        .. note::
+            The key material corresponding to the specified location and label must already exist within the implementation's storage.
+            This function does not import or create key material; it only registers existing key material under the provided attributes.
+
+    .. param:: const uint8_t * label
+        Buffer containing a label that identifies the key material to be registered.
+
+        The contents of this label are interpreted by the implementation and may correspond to a pre-provisioned or otherwise securely stored key within the location specified in the provided attributes.
+    .. param:: size_t label_length
+        Size of the ``label`` buffer in bytes.
+    .. param:: psa_key_id_t * key
+        On success, an identifier for the newly created key.
+        `PSA_KEY_ID_NULL` on failure.
+
+    .. return:: psa_status_t
+    .. retval:: PSA_SUCCESS
+        Success.
+    .. retval:: PSA_ERROR_DOES_NOT_EXIST
+        The key material to be registered does not exist in the implementation's storage.
+    .. retval:: PSA_ERROR_NOT_SUPPORTED
+        The key attributes, as a whole, are not supported, either by the implementation in general or in the specified storage location.
+    .. retval:: PSA_ERROR_INVALID_ARGUMENT
+        The following conditions can result in this error:
+
+        *   The key type is invalid.
+        *   The key size is nonzero, and is incompatible with the stored key material.
+        *   The key lifetime specifies a non-volatile persistence level.
+        *   The key lifetime specifies an invalid storage location.
+        *   The key identifier in the provided attributes is not `PSA_KEY_ID_NULL`.
+        *   The key usage flags include invalid values.
+        *   The key's permitted-usage algorithm is invalid.
+        *   The key attributes, as a whole, are invalid.
+        *   The stored key material is incompatible with the provided key attributes.
+    .. retval:: PSA_ERROR_NOT_PERMITTED
+        The implementation does not permit creating a key with the specified attributes due to some implementation-specific policy.
+    .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
+    .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
+    .. retval:: PSA_ERROR_STORAGE_FAILURE
+    .. retval:: PSA_ERROR_DATA_CORRUPT
+    .. retval:: PSA_ERROR_DATA_INVALID
+    .. retval:: PSA_ERROR_CORRUPTION_DETECTED
+    .. retval:: PSA_ERROR_BAD_STATE
+        The library requires initializing by a call to `psa_crypto_init()`.
+
+    This function allows applications to register existing key material that has been provisioned outside the |API|, such as during manufacturing or by a secure element.
+    After registering the key, the application has a volatile key identifier that can be used in cryptographic operations permitted by its usage flags and algorithm policy.
+
+    The key material is identified by its location, specified in the provided attributes ``lifetime`` value, and the ``label`` parameter.
+    The format of the label is specific to the implementation and storage location.
+    Typically, the label is used as a location-specific name or identifier for the key material.
+
+    This function can only be used to create a volatile key.
+    That is, a key with a lifetime persistence level of `PSA_KEY_PERSISTENCE_VOLATILE`.
+
+    The key's policy and type are taken from ``attributes``.
+    The attributes can optionally specify a key size; in this case it must match the size determined from the key material.
+    A key size of ``0`` in ``attributes`` --- the default value --- indicates that the key size is determined by the key material.
+
+    The provided attributes must accurately describe the key.
+    It is recommended that the implementation verifies that the key material is compatible with the provided attributes; but it is the application's responsibility to ensure correctness.
+
+    Calling `psa_destroy_key()` with a key identifier returned by `psa_attach_key()` will remove the key identifer and policy from the key store, but the original key material remains within the implementation.
+
+    It is :scterm:`implementation defined` whether the same key material can be attached to multiple key identifiers concurrently.
+
+    .. note::
+
+        This function is intended for scenarios where key material is provisioned outside the |API|, and the application needs to use such keys within the API framework.
+
+        Implementations may impose restrictions on which keys can be registered, depending on their storage architecture and security policies.
+
+        The function does not allow registering keys that are not already present in the implementation's storage.
+        To import new key material, use `psa_import_key()`.
+
+        The function does not modify the key material; it only registers it under the specified identifier and attributes.
+
+        To create a persistent key from pre-existing key material, the implementation might permit a key returned by `psa_attach_key()` to be copied to a persistent key using `psa_copy_key()`.
 
 .. _key-destruction:
 
