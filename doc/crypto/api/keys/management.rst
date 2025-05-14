@@ -416,19 +416,19 @@ When creating a key, the attributes for the new key are specified in a `psa_key_
 .. function:: psa_attach_key
 
     .. summary::
-        Register existing key material within the implementation under a specified volatile key identifier and policy.
+        Register existing key material within the implementation with a volatile key identifier and key policy.
 
         .. versionadded:: 1.4
 
     .. param:: const psa_key_attributes_t * attributes
         The attributes for the key to be registered.
 
-        The attributes that are required to be set depend on the stored key material.
-        Where an attribute is provided by both the application and the stored key material, they must be compatible.
+        The attributes that are required to be set depend on the identified key material.
+        Where an attribute is provided by both the application and the key material, they must be compatible.
 
         The following attributes must be set:
 
-        *   The key lifetime must specify a volatile key and the location in which the existing key material is stored.
+        *   The key lifetime must specify a volatile key, and the storage location of the existing key material.
             See :secref:`key-lifetimes`.
         *   The key identifier must be the default `PSA_KEY_ID_NULL`.
         *   The key type.
@@ -440,16 +440,16 @@ When creating a key, the attributes for the new key are specified in a `psa_key_
 
         The following attributes are optional:
 
-        *   If the key size is nonzero, it must be equal to the key size of the stored key material.
+        *   If the key size is nonzero, it must be equal to the key size of the key material.
 
         .. note::
-            The key material corresponding to the specified location and label must already exist within the implementation's storage.
-            This function does not import or create key material; it only registers existing key material under the provided attributes.
+            The specified location and label must refer to valid key material within the implementation's storage.
+            This function does not import or generate key material; it only registers existing key material under the provided attributes.
 
     .. param:: const uint8_t * label
         Buffer containing a label that identifies the key material to be registered.
 
-        The contents of this label are interpreted by the implementation and may correspond to a pre-provisioned or otherwise securely stored key within the location specified in the provided attributes.
+        The contents of this label are interpreted by the implementation and may correspond to a pre-provisioned, securely stored, or deterministically derived key within the location specified in the provided attributes.
     .. param:: size_t label_length
         Size of the ``label`` buffer in bytes.
     .. param:: psa_key_id_t * key
@@ -460,7 +460,7 @@ When creating a key, the attributes for the new key are specified in a `psa_key_
     .. retval:: PSA_SUCCESS
         Success.
     .. retval:: PSA_ERROR_DOES_NOT_EXIST
-        The key material to be registered does not exist in the implementation's storage.
+        `label`` does not refer to key material within the location specified in ``attributes``.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
         The key attributes, as a whole, are not supported, either by the implementation in general or in the specified storage location.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
@@ -487,11 +487,12 @@ When creating a key, the attributes for the new key are specified in a `psa_key_
         The library requires initializing by a call to `psa_crypto_init()`.
 
     This function allows applications to register existing key material that has been provisioned outside the |API|, such as during manufacturing or by a secure element.
+    It can also be used to create a key identifier for keys that are deterministically derived from a secret within the implementation.
     After registering the key, the application has a volatile key identifier that can be used in cryptographic operations permitted by its usage flags and algorithm policy.
 
     The key material is identified by its location, specified in the provided attributes ``lifetime`` value, and the ``label`` parameter.
     The format of the label is specific to the implementation and storage location.
-    Typically, the label is used as a location-specific name or identifier for the key material.
+    Typically, the label is used as a location-specific identifier for the key material, or can provide input for deriving the key material from an internal secret.
 
     This function can only be used to create a volatile key.
     That is, a key with a lifetime persistence level of `PSA_KEY_PERSISTENCE_VOLATILE`.
