@@ -460,7 +460,7 @@ When creating a key, the attributes for the new key are specified in a `psa_key_
     .. retval:: PSA_SUCCESS
         Success.
     .. retval:: PSA_ERROR_DOES_NOT_EXIST
-        `label`` does not refer to key material within the location specified in ``attributes``.
+        ``label`` does not refer to key material within the location specified in ``attributes``.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
         The key attributes, as a whole, are not supported, either by the implementation in general or in the specified storage location.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
