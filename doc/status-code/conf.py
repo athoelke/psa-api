@@ -73,26 +73,11 @@ doc_info = {
     'page_break': 'chapter',
     }
 
-# If the draft flag is set, then include extra content and watermark
-
-if doc_info.get('draft'):
-    doc_info.pop('date', None)                      # Remove any release date - use build date
-    doc_info['include_content'] = ['rationale', 'todo', 'banner']
-    doc_info['watermark'] = "DRAFT"
-
-# If a release candidate, then include watermark
-
-if doc_info.get('release_candidate'):
-    doc_info['watermark'] = "Candidate"
-
-# absolute or relative path to the psa_spec material from this file
-# atg_sphinx_spec_dir = '../atg-sphinx-spec'
-
-# Set up and run the atg-sphinx-spec configuration
+# Set up and run the psa-api-tool configuration
 
 import os
 
-atg_sphinx_spec_dir = os.environ.get('ATG_SPHINX_SPEC') or atg_sphinx_spec_dir
-exec(compile(open(os.path.join(atg_sphinx_spec_dir,'atg-sphinx-conf.py'),
+psa_api_tool_path = os.environ.get('PSA_API_TOOL') or psa_api_tool_path
+exec(compile(open(os.path.join(psa_api_tool_path,'psa-api-conf.py'),
                   encoding='utf-8').read(),
-             'atg-sphinx-conf.py', 'exec'))
+             'psa-api-conf.py', 'exec'))
