@@ -57,22 +57,22 @@
 
 .. reference:: PSM
    :title: Platform Security Model
-   :doc_no: ARM DEN 0128
+   :doc_id: ARM DEN 0128
    :url: developer.arm.com/documentation/den0128
 
 .. reference:: PSA-CRYPT
     :title: PSA Certified Crypto API
-    :doc_no: IHI 0086
+    :doc_id: IHI 0086
     :url: arm-software.github.io/psa-api/crypto
 
 .. reference:: PSA-STAT
     :title: PSA Certified Status code API
-    :doc_no: ARM IHI 0097
+    :doc_id: ARM IHI 0097
     :url: arm-software.github.io/psa-api/status-code
 
 .. reference:: PSA-FFM
     :title: Arm® Platform Security Architecture Firmware Framework
-    :doc_no: ARM DEN 0063
+    :doc_id: ARM DEN 0063
     :url: developer.arm.com/documentation/den0063
 
 .. reference:: SP800-30

@@ -44,7 +44,7 @@ Use the same vendor assignment as for PSA services?
 
 Can the driver assembly process generate distinct location values as needed? This can be convenient, but it's also risky: if you upgrade a device, you need the location values to be the same between builds.
 
-The current plan is for Arm to maintain a registry of vendors and assign a location namespace to each vendor.
+The current plan is to maintain a registry of vendors and assign a location namespace to each vendor.
 Parts of the namespace would be reserved for implementations and integrators.
 
 Multiple transparent drivers

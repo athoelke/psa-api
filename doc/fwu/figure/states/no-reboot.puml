@@ -4,7 +4,7 @@
 @startuml
 
 '' State diagram
-!include atg-spec.pumh
+!include psa-spec.pumh
 
 
 skinparam LegendFontSize 12

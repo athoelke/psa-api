@@ -2,8 +2,8 @@
 ' SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 @startuml
-!include atg-spec.pumh
-!include atg-dataflow.pumh
+!include psa-spec.pumh
+!include psa-dataflow.pumh
 
 dfd_agent "External system" as ext
 dfd_tb("System boundary") {

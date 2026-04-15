@@ -5,7 +5,7 @@
 
 ' SUIT update using the FWU API
 
-!include atg-spec.pumh
+!include psa-spec.pumh
 
 box Network
 participant "Update server" as server

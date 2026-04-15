@@ -14,11 +14,7 @@
 
     This document refers to the following documents.
 
-    .. reference-table:: Arm documents referenced by this document
-        :filter: arm
-
-    .. reference-table:: Other documents referenced by this document
-        :filter: non-arm
+    .. reference-table:: Documents referenced by this document
         :sorted:
 
 .. include:: terms

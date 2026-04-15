@@ -3,23 +3,23 @@
 
 @startuml
 
-!include atg-spec.pumh
-!include atg-dataflow.pumh
+!include psa-spec.pumh
+!include psa-dataflow.pumh
 
 skinparam RectangleborderThickness 0
 skinparam RectanglefontColor white
-skinparam DatabaseBorderColor #ArmMidGray
-skinparam InterfaceBorderColor #ArmMidGray
+skinparam DatabaseBorderColor #PSAMidGray
+skinparam InterfaceBorderColor #PSAMidGray
 
-rectangle "Firmware creator" as creator #ArmDarkBlue
+rectangle "Firmware creator" as creator #PSADarkBlue
 cloud Internet {
-    rectangle "Update server" as server #ArmMidGray
+    rectangle "Update server" as server #PSAMidGray
 }
-interface "MQTT\n CoAP\nHTTPS\n     ..." as tls #ArmLightGray
+interface "MQTT\n CoAP\nHTTPS\n     ..." as tls #PSALightGray
 
 dfd_tb("Device ") {
-    rectangle "Update client" as client #ArmMidBlue
-    database "Firmware store" as store #ArmLightGray
+    rectangle "Update client" as client #PSAMidBlue
+    database "Firmware store" as store #PSALightGray
 }
 
 creator -> server

@@ -3,8 +3,8 @@
 
 @startuml
 
-!include atg-spec.pumh
-!include atg-lifecycle.pumh
+!include psa-spec.pumh
+!include psa-lifecycle.pumh
 
 stakeholder "SiP and OEM" as n1
 stakeholder "SiP and/or OEM" as n2

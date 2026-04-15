@@ -18,8 +18,8 @@ application code can access all the system memory, including the memory used by
 the cryptographic services described in this specification. Thus, the
 architecture provides :term:`no isolation`.
 
-This architecture does not conform to the Arm *Platform Security Architecture
-Security Model*. However, it is useful for providing cryptographic services
+This architecture does not conform to the :cite-title:`PSM`.
+However, it is useful for providing cryptographic services
 that use the same interface, even on devices that cannot support any security
 boundary. So, while this architecture is not the primary design goal of the API
 defined in the present specification, it is supported.

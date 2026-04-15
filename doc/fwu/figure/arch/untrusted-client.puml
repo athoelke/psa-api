@@ -3,27 +3,27 @@
 
 @startuml
 
-!include atg-spec.pumh
-!include atg-dataflow.pumh
+!include psa-spec.pumh
+!include psa-dataflow.pumh
 
 skinparam RectangleborderThickness 0
 skinparam RectanglefontColor white
 skinparam FilefontColor white
-skinparam DatabaseBorderColor #ArmMidGray
-skinparam InterfaceBorderColor #ArmMidGray
+skinparam DatabaseBorderColor #PSAMidGray
+skinparam InterfaceBorderColor #PSAMidGray
 
-file "Firmware package" <<data>> as firmware #ArmDarkBlue
+file "Firmware package" <<data>> as firmware #PSADarkBlue
 
 dfd_tb($label = "Device") {
     dfd_align() {
-        rectangle "Update client" <<app>> as client #ArmMidGray
-        interface "  **Firmware**\n**Update API**" as api  #ArmGreen
-        rectangle "Update service proxy" <<library>> as proxy #ArmMidBlue
+        rectangle "Update client" <<app>> as client #PSAMidGray
+        interface "  **Firmware**\n**Update API**" as api  #PSAGreen
+        rectangle "Update service proxy" <<library>> as proxy #PSAMidBlue
     }
     dfd_tb($label = "Platform Root of Trust") as rot {
-        rectangle "Update service" <<RoT service>> as service #ArmMidBlue
-        database "Firmware store" as store #ArmLightGray
-        rectangle "Bootloader" as bootloader #ArmMidBlue
+        rectangle "Update service" <<RoT service>> as service #PSAMidBlue
+        database "Firmware store" as store #PSALightGray
+        rectangle "Bootloader" as bootloader #PSAMidBlue
         label "<size:30>   <&key>\nTrust anchor" as anchor
     }
 }

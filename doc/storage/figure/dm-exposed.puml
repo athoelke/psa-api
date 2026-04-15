@@ -3,23 +3,23 @@
 
 @startuml
 
-!include atg-spec.pumh
-!include atg-dataflow.pumh
+!include psa-spec.pumh
+!include psa-dataflow.pumh
 
 skinparam RectangleborderThickness 0
 skinparam RectanglefontColor white
-skinparam DatabaseBorderColor #ArmMidGray
-skinparam InterfaceBorderColor #ArmMidGray
+skinparam DatabaseBorderColor #PSAMidGray
+skinparam InterfaceBorderColor #PSAMidGray
 
 left to right direction
 
 dfd_tb("Device ") {
-    rectangle "Application" as caller #ArmMidGray
-    interface "**Secure Storage API**" as api  #ArmGreen
+    rectangle "Application" as caller #PSAMidGray
+    interface "**Secure Storage API**" as api  #PSAGreen
     dfd_tb($label="Platform Root of Trust") {
-      rectangle "Storage service" as service #ArmMidBlue
+      rectangle "Storage service" as service #PSAMidBlue
     }
-    database "Storage medium" as store #ArmLightGray
+    database "Storage medium" as store #PSALightGray
 }
 
 caller -d- api

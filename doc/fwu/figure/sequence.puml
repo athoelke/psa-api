@@ -3,7 +3,7 @@
 
 @startuml
 
-!include atg-spec.pumh
+!include psa-spec.pumh
 
 participant "Update server" as server
 participant "Update client" as client

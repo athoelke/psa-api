@@ -2,7 +2,7 @@
 ' SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 @startuml
-!include atg-spec.pumh
+!include psa-spec.pumh
 
 skinparam LegendFontSize 12
 

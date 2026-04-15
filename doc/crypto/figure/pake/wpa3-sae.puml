@@ -3,7 +3,7 @@
 
 @startuml
 
-    !include atg-spec.pumh
+    !include psa-spec.pumh
 
     participant "STA-A" as STAA
     participant "STA-B" as STAB

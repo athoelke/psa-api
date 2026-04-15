@@ -3,27 +3,27 @@
 
 .. reference:: PSA-STAT
     :title: PSA Certified Status code API
-    :doc_no: ARM IHI 0097
+    :doc_id: ARM IHI 0097
     :url: arm-software.github.io/psa-api/status-code
 
 .. reference:: PSA-FFM
     :title: Arm® Platform Security Architecture Firmware Framework
-    :doc_no: ARM DEN 0063
+    :doc_id: ARM DEN 0063
     :url: developer.arm.com/documentation/den0063
 
 .. reference:: PSM
    :title: Platform Security Model
-   :doc_no: ARM DEN 0128
+   :doc_id: ARM DEN 0128
    :url: developer.arm.com/documentation/den0128
 
 .. reference:: PSA-CERT
    :title: PSA Certified™ Level 2 Lightweight Protection Profile
-   :doc_no: JSA DEN 002
+   :doc_id: JSA DEN 002
    :url: psacertified.org/development-resources/certification-resources/#leveltwo
 
 .. reference:: IR8259
    :author: NIST
-   :doc_no: IR 8259
+   :doc_id: IR 8259
    :title: Foundational Cybersecurity Activities for IoT Device Manufacturers
    :publication: May 2020
    :url: doi.org/10.6028/NIST.IR.8259
@@ -31,20 +31,20 @@
 .. reference:: EN303645
    :title: Cyber Security for Consumer Internet of Things: Baseline Requirements
    :author: ETSI
-   :doc_no: EN 303 645
+   :doc_id: EN 303 645
    :publication: June 2020
    :url: www.etsi.org/standards/get-standards#search=303%20645
 
 .. reference:: LWM2M
    :title: Lightweight M2M
    :author: OMA
-   :doc_no: LwM2M v1.2
+   :doc_id: LwM2M v1.2
    :publication: November 2020
    :url: openmobilealliance.org/release/LightweightM2M
 
 .. reference:: UEFI
    :title: Unified Extensible Firmware Interface (UEFI) Specification
-   :doc_no: UEFI v2.10
+   :doc_id: UEFI v2.10
    :author: UEFI Forum, Inc.
    :publication: August 2022
    :url: uefi.org/specifications

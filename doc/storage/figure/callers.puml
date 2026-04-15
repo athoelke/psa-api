@@ -3,27 +3,27 @@
 
 @startuml
 
-!include atg-spec.pumh
-!include atg-dataflow.pumh
+!include psa-spec.pumh
+!include psa-dataflow.pumh
 
 skinparam RectangleborderThickness 0
 skinparam RectanglefontColor white
-skinparam DatabaseBorderColor #ArmMidGray
-skinparam InterfaceBorderColor #ArmMidGray
+skinparam DatabaseBorderColor #PSAMidGray
+skinparam InterfaceBorderColor #PSAMidGray
 
 left to right direction
 
 dfd_tb("Application boundary") {
-   rectangle "Application 1" as caller1 #ArmMidGray
-   interface "**Secure Storage API**" as api1  #ArmGreen
+   rectangle "Application 1" as caller1 #PSAMidGray
+   interface "**Secure Storage API**" as api1  #PSAGreen
 }
 dfd_tb("Data protection boundary") {
-rectangle "Storage service" as service #ArmMidBlue
-database "Storage medium" as store #ArmLightGray
+rectangle "Storage service" as service #PSAMidBlue
+database "Storage medium" as store #PSALightGray
 }
 dfd_tb("Application boundary") {
-   interface "**Secure Storage API**" as api2  #ArmGreen
-   rectangle "Application 2" as caller2 #ArmMidGray
+   interface "**Secure Storage API**" as api2  #PSAGreen
+   rectangle "Application 2" as caller2 #PSAMidGray
 }
 
 caller1 -d- api1

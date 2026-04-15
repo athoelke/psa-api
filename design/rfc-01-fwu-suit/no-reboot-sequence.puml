@@ -3,7 +3,7 @@
 
 @startuml
 
-!include atg-spec.pumh
+!include psa-spec.pumh
 
 ' Complex SUIT installation using the FWU API, no boot
 

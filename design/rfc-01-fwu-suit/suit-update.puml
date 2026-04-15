@@ -3,7 +3,7 @@
 
 @startuml
 
-!include atg-spec.pumh
+!include psa-spec.pumh
 
 ' title SUIT update : high-level flow
 

@@ -2,18 +2,18 @@
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. reference:: PSM
-    :title: Platform Security Model
-    :doc_no: ARM DEN 0128
-    :url: developer.arm.com/documentation/den0128
+   :title: Platform Security Model
+   :doc_id: ARM DEN 0128
+   :url: developer.arm.com/documentation/den0128
 
 .. reference:: PSA-FFM
     :title: Arm® Platform Security Architecture Firmware Framework
-    :doc_no: ARM DEN 0063
+    :doc_id: ARM DEN 0063
     :url: developer.arm.com/documentation/den0063
 
 .. reference:: PSA-STAT
     :title: PSA Certified Status code API
-    :doc_no: ARM IHI 0097
+    :doc_id: ARM IHI 0097
     :url: arm-software.github.io/psa-api/status-code
 
 .. reference:: C99
@@ -405,7 +405,7 @@
 
 .. reference:: PSA-PQC
     :title: PSA Certified Crypto API 1.4 PQC Extension
-    :doc_no: ARM AES 0119
+    :doc_id: ARM AES 0119
     :url: arm-software.github.io/psa-api/crypto
 
 .. reference:: RFC5958

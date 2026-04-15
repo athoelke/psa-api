@@ -3,5 +3,5 @@
 
 .. reference:: PSA-CRYPT
     :title: PSA Certified Crypto API
-    :doc_no: IHI 0086
+    :doc_id: IHI 0086
     :url: arm-software.github.io/psa-api/crypto
