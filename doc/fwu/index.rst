@@ -13,7 +13,7 @@
 
 ..  front-matter::
 
-   about
+   about/about
 
 ..  maintoc::
 

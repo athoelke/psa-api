@@ -1,0 +1,32 @@
+.. SPDX-FileCopyrightText: Copyright 2018-2020, 2022-2025 Arm Limited and/or its affiliates
+.. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
+
+.. term:: Initial Attestation Key
+    :abbr: IAK
+
+    Typically, the Initial Attestation Key is a secret private key from an asymmetric key-pair accessible only to the Initial Attestation service within the :term:`Platform Root of Trust`. See :cite-title:`PSM`.
+
+.. term:: PSA
+
+    Platform Security Architecture
+
+.. term:: Platform Root of Trust
+    :abbr: PRoT
+
+    The overall trust anchor for the system. This ensures the platform is securely booted and configured, and establishes the secure environments required to protect security services. See :cite-title:`PSM`.
+
+.. scterm:: Implementation Defined
+
+    Behavior that is not defined by this specification, but is defined and documented by individual implementations.
+
+    Application developers can choose to depend on :sc:`IMPLEMENTATION DEFINED` behavior, but must be aware that their code might not be portable to another implementation.
+
+.. term:: Secure Processing Environment
+    :abbr: SPE
+
+    This is the security domain that includes the :term:`Platform Root of Trust` domain.
+
+.. term:: Non-secure Processing Environment
+    :abbr: NSPE
+
+    This is the security domain outside of the :term:`Secure Processing Environment`. It is the application domain, typically containing the application firmware and hardware.

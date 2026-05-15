@@ -28,3 +28,9 @@
     :confidentiality: Non-confidential
 
     GlobalPlatform governance of PSA Certified evaluation scheme.
+
+
+.. release-info::
+   :extend:
+
+   For a detailed list of changes, see :secref:`change-history`.

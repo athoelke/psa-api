@@ -100,3 +100,11 @@
     :author: NIST
     :publication: September 2012
     :url: doi.org/10.6028/NIST.SP.800-30r1
+
+
+.. references::
+
+   This document refers to the following documents.
+
+   .. reference-table:: Documents referenced by this document
+      :sorted:

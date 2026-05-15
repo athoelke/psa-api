@@ -918,14 +918,14 @@ Other changes
 *   Document formatting improvements.
 
 
-Planned changes for version |docversion|.x
+Planned changes for version |APIversion|.x
 ------------------------------------------
 
-Future versions of this specification that use a |docversion|.x version will describe the same API as this specification.
+Future versions of this specification that use a |APIversion|.x version will describe the same API as this specification.
 Any changes will not affect application compatibility and will not introduce major features.
 These updates are intended to add minor requirements on implementations, introduce optional definitions, make corrections, clarify potential or actual ambiguities, or improve the documentation.
 
-These are the changes that might be included in a version 1.2.x:
+These are the changes that might be included in a version |APIversion|.x:
 
 *   Declare identifiers for additional cryptographic algorithms.
 *   Mandate certain checks when importing some types of asymmetric keys.

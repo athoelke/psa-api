@@ -12,3 +12,8 @@
     :confidentiality: Non-confidential
 
     Republished as part of the PSA Certified APIs.
+
+.. release-info::
+    :extend:
+
+    The detailed changes in each release are described in :secref:`changes`.

@@ -101,7 +101,7 @@ The |API| must be independent of the format and encoding of firmware images and 
 
    This version of the |API| is suitable for some of the use cases that are defined by :rfc-title:`9124` and :cite-title:`SUIT-MFST`. For example, where the payloads are integrated in the manifest envelope, or there is just one external payload to the envelope.
 
-   Support for the more complex use cases from :rfc:`9124`, with multiple external payloads, is not considered in version |docversion| of the |API|, but might be in scope for future versions of the interface.
+   Support for the more complex use cases from :rfc:`9124`, with multiple external payloads, is not considered in version |APIversion| of the |API|, but might be in scope for future versions of the interface.
 
 Flexibility for different hardware designs
 ------------------------------------------

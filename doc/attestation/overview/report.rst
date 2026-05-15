@@ -10,7 +10,7 @@ The attestation report returned by the |API| is formatted and encoded as a signe
 
 The PSA Attestation Token is an incompatible evolution of the original attestation format, that was specified in version 1.0 of the |API|.
 
-To comply with version |docversion| of the |API|, an implementation must only produce attestation reports that conform to :rfc:`9783`.
+To comply with version |APIversion| of the |API|, an implementation must only produce attestation reports that conform to :rfc:`9783`.
 
 :numref:`tab-psa-token-notes` provides specific recommendations for the construction of some of the token claims.
 

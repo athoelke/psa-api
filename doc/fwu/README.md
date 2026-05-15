@@ -9,7 +9,8 @@ The Firmware Update API specification source files are organized as follows:
 
 Folder | Content
 -- | --
-Current directory | Configuration and front-matter
+Current directory | Configuration and table of contents
+`about` | Front matter
 `overview` | Informative chapters 1-4
 `api` | API reference chapter 5
 `appendix` | Appendix chapters

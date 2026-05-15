@@ -551,3 +551,10 @@
     :author: Jean-Philippe Aumasson, Samuel Neves, Zooko Wilcox-O’Hearn, Christian Winnerlein
     :publication: January 2013
     :url: blake2.net/blake2.pdf
+
+.. references::
+
+    This document refers to the following documents.
+
+    .. reference-table:: Documents referenced by this document
+        :sorted:

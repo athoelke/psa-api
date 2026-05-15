@@ -7,14 +7,6 @@
 
 .. include:: terms
 
-.. release-info::
-    :extend:
-
-    The detailed changes in each release are described in :secref:`changes`.
-
-.. terms::
-    :hide:
-
 .. potential-for-change::
 
     This document is in active, collaborative development.

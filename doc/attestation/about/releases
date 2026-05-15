@@ -1,0 +1,71 @@
+.. SPDX-FileCopyrightText: Copyright 2018-2020, 2022-2025 Arm Limited and/or its affiliates
+.. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
+
+.. Releases of this specification
+
+.. release:: 1.0 beta 0
+    :date: February 2019
+    :confidentiality: Non-confidential
+
+    Initial publication.
+
+.. release:: 1.0.0
+    :date: June 2019
+    :confidentiality: Non-confidential
+
+    First stable release with 1.0 API finalized.
+
+    Uses the PSA Certified API common error status codes.
+
+    Modified the API parameters to align with other PSA Certified APIs.
+
+    Updated the claims and lifecycle to match the latest Platform Security Model.
+
+    Updated CBOR example in the appendix.
+
+.. release:: 1.0.1
+    :date: August 2019
+    :confidentiality: Non-confidential
+
+    Recommend type byte 0x01 for arm_psa_UEID.
+
+    Remove erroneous guidance regarding EAT’s origination claim.
+
+.. release:: 1.0.2
+    :date: February 2020
+    :confidentiality: Non-confidential
+
+    Clarify the claim number of Instance ID.
+
+    Permit COSE-Mac0 for signing tokens (with appropriate warning).
+
+    Update URLs.
+
+.. release:: 1.0.3
+    :date: October 2022
+    :confidentiality: Non-confidential
+
+    Relicensed as open source under CC BY-SA 4.0.
+
+    CDDL definition added to the appendices.
+
+    Example header file added to the appendices.
+
+    Minor corrections and clarifications.
+
+.. release:: 1.0.4
+    :date: September 2025
+    :confidentiality: Non-confidential
+
+    GlobalPlatform governance of PSA Certified evaluation scheme.
+
+.. release:: 2.0.0
+    :date: ?
+    :confidentiality: Non-confidential
+
+    Updated attestation token format to the PSA attestation token.
+
+.. release-info::
+    :extend:
+
+    The detailed changes in each release are described in :secref:`document-history`.

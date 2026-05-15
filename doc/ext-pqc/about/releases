@@ -36,3 +36,9 @@
     :confidentiality: Non-confidential
 
     Fixes and clarifications
+
+
+.. release-info::
+    :extend:
+
+    The detailed changes in each release are described in :secref:`changes`.

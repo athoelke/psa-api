@@ -9,7 +9,7 @@ The Crypto Driver Interface specification source files are organized as follows:
 
 Folder | Content
 -- | --
-Current directory | Configuration and front-matter
+Current directory | Configuration and table of contents
 `about` | Front matter
 `body` | Specification chapters
 `appendix` | Appendices

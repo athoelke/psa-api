@@ -9,7 +9,7 @@ The Crypto API PQC Extension specification source files are organized as follows
 
 Folder | Content
 -- | --
-Current directory | Configuration and front-matter
+Current directory | Configuration and table of contents
 `about` | Front matter
 `overview` | Informative chapter 1
 `api` | API reference chapter 2
