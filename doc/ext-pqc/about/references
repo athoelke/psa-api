@@ -42,13 +42,13 @@
     :publication: July 2025 (Draft 11)
     :url: datatracker.ietf.org/doc/html/draft-ietf-lamps-kyber-certificates-11
 
-.. reference:: RFC9881
+.. reference:: RFC 9881
     :title: Internet X.509 Public Key Infrastructure --- Algorithm Identifiers for the Module-Lattice-Based Digital Signature Algorithm (ML-DSA)
     :author: IETF
     :publication: October 2025
     :url: tools.ietf.org/html/rfc9881
 
-.. reference:: RFC9909
+.. reference:: RFC 9909
     :title: Internet X.509 Public Key Infrastructure --- Algorithm Identifiers for the Stateless Hash-Based Digital Signature Algorithm (SLH-DSA)
     :author: IETF
     :publication: December 2025
@@ -66,25 +66,25 @@
     :publication: October 2020
     :url: doi.org/10.6028/NIST.SP.800-208
 
-.. reference:: RFC8391
+.. reference:: RFC 8391
     :title: XMSS: eXtended Merkle Signature Scheme
     :author: IRTF
     :publication: May 2018
     :url: tools.ietf.org/html/rfc8391
 
-.. reference:: RFC8554
+.. reference:: RFC 8554
     :title: Leighton-Micali Hash-Based Signatures
     :author: IRTF
     :publication: April 2019
     :url: tools.ietf.org/html/rfc8554
 
-.. reference:: RFC9858
+.. reference:: RFC 9858
     :title: Additional Parameter sets for HSS/LMS Hash-Based Signatures
     :author: IRTF
     :publication: October 2025
     :url: tools.ietf.org/html/rfc9858
 
-.. reference:: RFC9802
+.. reference:: RFC 9802
     :title: Use of the HSS and XMSS Hash-Based Signature Algorithms in Internet X.509 Public Key Infrastructure
     :author: IETF
     :publication: June 2025
@@ -96,19 +96,19 @@
     :publication: July 2018
     :url: datatracker.ietf.org/doc/html/draft-sca-cfrg-sm3-02
 
-.. reference:: RFC9688
+.. reference:: RFC 9688
     :title: Use of the SHA3 One-Way Hash Functions in the Cryptographic Message Syntax (CMS)
     :author: IETF
     :publication: November 2024
     :url: tools.ietf.org/html/rfc9688.html
 
-.. reference:: RFC8017
+.. reference:: RFC 8017
     :title: PKCS #1: RSA Cryptography Specifications Version 2.2
     :author: IETF
     :publication: November 2016
     :url: tools.ietf.org/html/rfc8017.html
 
-.. reference:: RFC8702
+.. reference:: RFC 8702
     :title: Use of the SHAKE One-Way Hash Functions in the Cryptographic Message Syntax (CMS)
     :author: IETF
     :publication: January 2020

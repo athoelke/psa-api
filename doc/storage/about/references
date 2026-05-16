@@ -1,0 +1,34 @@
+.. SPDX-FileCopyrightText: Copyright 2018-2019, 2022-2026 Arm Limited and/or its affiliates
+.. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
+
+.. reference:: PSA STAT
+   :title: PSA Certified Status code API
+   :kind: normative
+   :doc_id: Arm IHI 0097
+   :url: arm-software.github.io/psa-api/status-code
+
+.. reference:: PSA CRYPT
+   :title: PSA Certified Crypto API
+   :kind: informative
+   :doc_id: Arm IHI 0086
+   :url: arm-software.github.io/psa-api/crypto
+
+.. reference:: PSM
+   :title: Platform Security Model
+   :kind: normative
+   :doc_id: JSADEN014
+   :author: PSA Certified
+   :url: psacertified.org/development-resources/building-in-security/threat-models/
+
+.. reference:: PSA FFM
+   :title: Arm® Platform Security Architecture Firmware Framework
+   :kind: normative
+   :doc_id: Arm DEN 0063
+   :url: developer.arm.com/documentation/den0063
+
+.. reference:: SP800-30
+   :title: Special Publication 800-30 Revision 1: Guide for Conducting Risk Assessments
+   :kind: informative
+   :author: NIST
+   :publication: September 2012
+   :url: doi.org/10.6028/NIST.SP.800-30r1

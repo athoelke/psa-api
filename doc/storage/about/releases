@@ -1,0 +1,45 @@
+.. SPDX-FileCopyrightText: Copyright 2018-2019, 2022-2026 Arm Limited and/or its affiliates
+.. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
+
+.. release:: 1.0.0
+    :date: June 2019
+    :confidentiality: Non-confidential
+
+    First stable release with 1.0 API finalized.
+
+    Uses the common PSA Certified Status codes.
+
+    Modified the API parameters to align with other PSA Certified APIs.
+
+    Added storage flags to specify protection requirement.
+
+.. release:: 1.0.1
+    :date: October 2022
+    :confidentiality: Non-confidential
+
+    Relicensed as open source under CC BY-SA 4.0.
+
+    Documentation clarifications.
+
+.. release:: 1.0.2
+    :date: March 2023
+    :confidentiality: Non-confidential
+
+    Documentation clarifications.
+
+.. release:: 1.0.3
+    :date: January 2024
+    :confidentiality: Non-confidential
+
+    Provide a Security Risk Assessment.
+
+.. release:: 1.0.4
+    :date: September 2025
+    :confidentiality: Non-confidential
+
+    GlobalPlatform governance of PSA Certified evaluation scheme.
+
+.. release-info::
+    :extend:
+
+    The detailed changes in each release are described in :secref:`document-history`.

@@ -7,7 +7,6 @@
 
 .. include:: terms
 
-.. potential-for-change::
-    :hide:
+.. include:: intro
 
 .. about::

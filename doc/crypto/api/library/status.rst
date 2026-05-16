@@ -1,4 +1,4 @@
-.. SPDX-FileCopyrightText: Copyright 2018-2025 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2018-2026 Arm Limited and/or its affiliates
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. _status-codes:
@@ -8,7 +8,7 @@ Status codes
 
 The |API| uses the status code definitions that are shared with the other PSA Certified APIs. The |API| also provides some |API|-specific status codes, see :secref:`specific-errors`.
 
-The following elements are defined in :file:`psa/error.h` from :cite-title:`PSA-STAT` (previously defined in :cite:`PSA-FFM`):
+The following elements are defined in :file:`psa/error.h` from :cite-title:`PSA STAT`:
 
 .. code-block:: xref
 
@@ -45,7 +45,7 @@ These definitions must be available to an application that includes the :file:`p
 Common error codes
 ^^^^^^^^^^^^^^^^^^
 
-Some of the common status codes have a more precise meaning when returned by a function in the |API|, compared to the definitions in `[PSA-STAT]`. See also :secref:`error-handling`.
+Some of the common status codes have a more precise meaning when returned by a function in the |API|, compared to the definitions in `[PSA STAT]`. See also :secref:`error-handling`.
 
 .. list-table::
     :class: longtable
@@ -56,12 +56,12 @@ Some of the common status codes have a more precise meaning when returned by a f
       - Meaning in the |API|
 
     * - :code:`PSA_ERROR_NOT_SUPPORTED`
-      - `[PSA-STAT]` recommends the use of :code:`PSA_ERROR_INVALID_ARGUMENT` for invalid parameter values.
+      - `[PSA STAT]` recommends the use of :code:`PSA_ERROR_INVALID_ARGUMENT` for invalid parameter values.
 
         In the |API|, this is relaxed for algorithm identifier and key type parameters. It is recommended to return :code:`PSA_ERROR_INVALID_ARGUMENT` for invalid values, but :code:`PSA_ERROR_NOT_SUPPORTED` is also allowed, to permit implementations to avoid having to recognize all the cryptographic mechanisms that are defined in the PSA specification but not provided by that particular implementation.
 
     * - :code:`PSA_ERROR_INVALID_ARGUMENT`
-      - `[PSA-STAT]` recommends the use of :code:`PSA_ERROR_NOT_SUPPORTED` for unsupported parameter values.
+      - `[PSA STAT]` recommends the use of :code:`PSA_ERROR_NOT_SUPPORTED` for unsupported parameter values.
 
         In the |API|, either :code:`PSA_ERROR_INVALID_ARGUMENT` or :code:`PSA_ERROR_NOT_SUPPORTED` can be returned when unsupported algorithm identifier or key type parameters are used. This allows implementations to avoid having to recognize all the cryptographic mechanisms that are defined in the PSA specification but not provided by that particular implementation.
 

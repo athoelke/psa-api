@@ -9,7 +9,7 @@ Status codes
 
 The |API| uses the status code definitions that are shared with the other PSA Certified APIs.
 
-The following elements are defined in :file:`psa/error.h` from :cite-title:`PSA-STAT` (previously defined in :cite:`PSA-FFM`):
+The following elements are defined in :file:`psa/error.h` from :cite-title:`PSA STAT`:
 
 .. code-block:: xref
 

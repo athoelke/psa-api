@@ -1,35 +1,35 @@
 .. SPDX-FileCopyrightText: Copyright 2018-2020, 2022-2025 Arm Limited and/or its affiliates
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
+.. reference:: PSA STAT
+   :title: PSA Certified Status code API
+   :kind: normative
+   :doc_id: Arm IHI 0097
+   :url: arm-software.github.io/psa-api/status-code
+
+.. reference:: RFC 9783
+   :title: Arm's Platform Security Architecture (PSA) Attestation Token
+   :kind: normative
+   :author: H. Tschofenig, S. Frost, M. Brossard, A. Shaw, and T. Fossati
+   :publication: June 2025
+   :url: tools.ietf.org/html/rfc9783
+
 .. reference:: PSM
    :title: Platform Security Model
-   :doc_id: ARM DEN 0128
-   :url: developer.arm.com/documentation/den0128
-
-.. reference:: PSA-STAT
-    :title: PSA Certified Status code API
-    :doc_id: ARM IHI 0097
-    :url: arm-software.github.io/psa-api/status-code
-
-.. reference:: PSA-FFM
-    :title: Arm® Platform Security Architecture Firmware Framework
-    :doc_id: ARM DEN 0063
-    :url: developer.arm.com/documentation/den0063
+   :kind: informative
+   :doc_id: JSADEN014
+   :author: PSA Certified
+   :url: psacertified.org/development-resources/building-in-security/threat-models/
 
 .. reference:: C99
-    :title: ISO/IEC 9899:1999 --- Programming Languages --- C
-    :author: ISO/IEC
-    :publication: December 1999
-    :url: www.iso.org/standard/29237.html
+   :title: Programming Languages --- C
+   :kind: informative
+   :doc_id: ISO/IEC 9899:1999
+   :publication: December 1999
+   :url: www.iso.org/standard/29237.html
 
-.. reference:: RFC9783
-    :title: Arm's Platform Security Architecture (PSA) Attestation Token
-    :author: H. Tschofenig, S. Frost, M. Brossard, A. Shaw, and T. Fossati
-    :publication: June 2025
-    :url: tools.ietf.org/html/rfc9783
-
-.. reference:: RFC2104
-    :title: HMAC: Keyed-Hashing for Message Authentication
-    :author: IETF
-    :publication: February 1997
-    :url: tools.ietf.org/html/rfc2104
+.. reference:: RFC 2104
+   :title: HMAC: Keyed-Hashing for Message Authentication
+   :kind: informative
+   :publication: February 1997
+   :url: tools.ietf.org/html/rfc2104

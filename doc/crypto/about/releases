@@ -1,24 +1,6 @@
 .. SPDX-FileCopyrightText: Copyright 2018-2026 Arm Limited and/or its affiliates
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
-.. release:: 1.0 Beta 1
-    :date: January 2019
-    :confidentiality: Non-confidential
-
-    First public beta release.
-
-.. release:: 1.0 Beta 2
-    :date: February 2019
-    :confidentiality: Non-confidential
-
-    Update for release with other PSA Certified API specifications.
-
-.. release:: 1.0 Beta 3
-    :date: May 2019
-    :confidentiality: Non-confidential
-
-    Update for release with other PSA Certified API specifications.
-
 .. release:: 1.0 Final
     :date: February 2020
     :confidentiality: Non-confidential

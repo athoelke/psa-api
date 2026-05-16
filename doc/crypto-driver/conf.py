@@ -8,14 +8,14 @@
 
 doc_info = {
     # Document template
-    'template': 'psa-api-2025',
+    'template': 'gp-2026',
 
     # Document title, MANDATORY
     'title': 'PSA Certified\nCrypto Driver Interface',
     'author': 'Arm Limited',
 
     # Document copyright date, default to year of 'date'
-    'copyright_date': '2020-2025',
+    'copyright_date': '2020-2026',
     'copyright': 'Arm Limited and/or its affiliates',
 
     # Document identifier, marked as open issue if not provided
@@ -25,25 +25,19 @@ doc_info = {
     'version': '1.0',
     # Document quality status, marked as open issue if not provided
     'quality': 'ALP',
-    # Document issue number (within that version and quality status)
-    # Marked as open issue if not provided
+   # Document maintenance revision
     'issue_no': 1,
-    # Identifies the sequence number of a release candidate of the same issue
-    # default to None
-    # 'release_candidate': 1,
-    # Draft status - use this to indicate the document is not ready for publication
-    #'draft': True,
-
-    # Document confidentiality. Must be either Non-confidential or Confidential
-    # Marked as open issue if not provided
-    'confidentiality': 'Non-confidential',
+    # Document draft revision
+    'draft': 0,
+    # Document status
+    'status': 'PUB',
 
     # Id of the legal notice for this document
     # Marked as open issue if not provided
-    'license': 'psa-certified-api-license',
+    #'license': 'gp-psa-certified-api-license',
 
     # Document date, default to build date
-    'date': '30/09/2025',
+    'date': 'September 2025',
 
     # Default header file for API definitions
     # default to None, and can be set in documentation source
@@ -55,10 +49,7 @@ doc_info = {
     #    2 : Sub-elements of API - parameters, fields, values
     'header_doxygen': 2,
 
-    # Declare a watermark for the PDF output
-    # 'watermark': 'DRAFT',
-
-# List of optional content that should be included in the build.
+   # List of optional content that should be included in the build.
     # Valid options are:
     #   'rationale' : This enables output of ..rationale:: directives
     #   'banner'    : This enables output of the title page banner
@@ -81,7 +72,7 @@ doc_info = {
     #   'appendix' : just before the appendices
     #   'chapter'  : before every chapter
     # Default to 'appendix'
-    #'page_break': 'chapter'
+    'page_break': 'chapter'
     }
 
 # Set up and run the psa-api-tool configuration

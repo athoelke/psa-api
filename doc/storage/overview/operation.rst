@@ -11,7 +11,7 @@ The Internal Trusted Storage service that implements the Internal Trusted Storag
 
 Internally the Internal Trusted Storage service should be designed such that one partition cannot access the data owned by another partition. The method of doing this is not specified here, but one method would be to store metadata with the data indicating the partition that owns it.
 
-:numref:`fig-crypto-storage` provides a simple example of how an Internal Trusted Storage service can be used by a service that implements :cite-title:`PSA-CRYPT` to secure keystore material. This is illustrative and not prescriptive.
+:numref:`fig-crypto-storage` provides a simple example of how an Internal Trusted Storage service can be used by a service that implements :cite-title:`PSA CRYPT` to secure keystore material. This is illustrative and not prescriptive.
 
 .. figure:: /figure/storage.*
    :name: fig-crypto-storage

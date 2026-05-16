@@ -8,7 +8,7 @@
 
 doc_info = {
     # Document template
-    'template': 'psa-api-2025',
+    'template': 'gp-2026',
 
     # Document title, MANDATORY
     'title': 'PSA Certified\nStatus code API',
@@ -19,30 +19,23 @@ doc_info = {
     'copyright': 'Arm Limited and/or its affiliates',
 
     # Document identifier, marked as open issue if not provided
-    'doc_id': 'IHI 0097',
+    'doc_id': 'GPD_SPE_097',
 
     # The short X.Y version. MANDATORY
     'version': '1.0',
-    # Document quality status, marked as open issue if not provided
-    'quality': 'REL',
-    # Document issue number (within that version and quality status)
-    # Marked as open issue if not provided
+    # Document maintenance revision
     'issue_no': 5,
-    # Identifies the sequence number of a release candidate of the same issue
-    # default to None
-    'release_candidate': None,
-    'draft': False,
-
-    # Document confidentiality. Must be either Non-confidential or Confidential
-    # Marked as open issue if not provided
-    'confidentiality': 'Non-confidential',
+    # Document draft revision
+    'draft': 0,
+    # Document status
+    'status': 'PUB',
 
     # Id of the legal notice for this document
     # Marked as open issue if not provided
-    'license': 'psa-certified-api-license',
+    #'license': 'gp-psa-certified-api-license',
 
     # Document date, default to build date
-    'date': '22/01/2026',
+    'date': 'January 2026',
 
     # psa_spec: default header file for API definitions
     # default to None, and can be set in documentation source
@@ -63,7 +56,7 @@ doc_info = {
     'include_content': [],
 
     # Include the C Identifier index. Default to True
-    'identifier_index': False,
+    'identifier_index': True,
 
     # Specify where to add page breaks in main/appendix
     #   'none'     : no page breaks

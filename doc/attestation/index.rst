@@ -3,17 +3,9 @@
 
 ..  title::
 
-    .. abstract::
-
-        This document is part of the PSA Certified API specifications. It defines interfaces to provide an attestation service for the Root of Trust.
-
-..  front-matter::
-
-    about/about
-
 ..  maintoc::
 
-    overview/intro
+    about/about
     overview/use-cases
     overview/report
     api/api

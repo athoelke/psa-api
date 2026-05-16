@@ -8,7 +8,7 @@
 
 doc_info = {
     # Document template
-    'template': 'psa-api-2025',
+    'template': 'gp-2026',
 
     # Document title, MANDATORY
     'title': 'PSA Certified\nCrypto API',
@@ -19,31 +19,23 @@ doc_info = {
     'copyright': 'Arm Limited and/or its affiliates',
 
     # Document identifier, marked as open issue if not provided
-    'doc_id': 'IHI 0086',
+    'doc_id': 'GPD_SPE_086',
 
     # The short X.Y version. MANDATORY
-    'version': '1.5',
-    # Document quality status, marked as open issue if not provided
-    'quality': 'REL',
-    # Document issue number (within that version and quality status)
-    # Marked as open issue if not provided
-    'issue_no': 0,
-    # Identifies the sequence number of a release candidate of the same issue
-    # default to None
-    #'release_candidate': 1,
-    # Draft status - use this to indicate the document is not ready for publication
-    'draft': True,
-
-    # Document confidentiality. Must be either Non-confidential or Confidential
-    # Marked as open issue if not provided
-    'confidentiality': 'Non-confidential',
+    'version': '1.4',
+    # Document maintenance revision
+    'issue_no': 1,
+    # Document draft revision
+    'draft': 1,
+    # Document status
+    'status': 'DFT',
 
     # Id of the legal notice for this document
     # Marked as open issue if not provided
-    'license': 'psa-certified-api-license',
+    #'license': 'gp-psa-certified-api-license',
 
     # Document date, default to build date
-    'date': '28/01/2026',
+    'date': 'January 2026',
 
     # Default header file for API definitions
     # default to None, and can be set in documentation source
@@ -54,9 +46,6 @@ doc_info = {
     #    1 : Primary API elements
     #    2 : Sub-elements of API - parameters, fields, values
     'header_doxygen': 2,
-
-    # Declare a watermark for the PDF output
-    # 'watermark': 'DRAFT',
 
     # Optional ordering of return error values
     # This list is used to create a standard ordering of return value responses

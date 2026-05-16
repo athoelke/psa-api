@@ -66,7 +66,7 @@ UIDs
 
 ``uids`` in the |API| are defined as ``uint64_t``. This is expected to be larger than would be used on any system. This large namespace is chosen to allow a :term:`Root of Trust Service` to easily manage assets on behalf of other services.
 
-For example, consider a cryptography service running as a RoT Service. When a service running in a :term:`Secure Partition` requests key storage from the cryptography service, the cryptography service can concatenate a numerical identity of the requesting partition (for example, a ``int32_t`` in the :cite-title:`PSA-FFM`) with the key identifier (for example, a ``uint32_t`` in the :cite-title:`PSA-CRYPT`) to generate the ``uid`` of the Internal Trusted Storage entry for the key. This allows the cryptography service to easily manage isolation between the key namespaces of its various clients.
+For example, consider a cryptography service running as a RoT Service. When a service running in a :term:`Secure Partition` requests key storage from the cryptography service, the cryptography service can concatenate a numerical identity of the requesting partition (for example, a ``int32_t`` in the :cite-title:`PSA FFM`) with the key identifier (for example, a ``uint32_t`` in the :cite-title:`PSA CRYPT`) to generate the ``uid`` of the Internal Trusted Storage entry for the key. This allows the cryptography service to easily manage isolation between the key namespaces of its various clients.
 
 Requirements for ``uid``:
 

@@ -37,12 +37,8 @@
 
 
 .. release-info::
-    :replace:
+    :extend:
 
-    Prior to version 1.0.1, the definitions in this specification were released as part of :cite-title:`PSA-FFM`.
-
-    The change history table lists the changes that have been made to this document.
-
-    .. release-table:: Document revision history
+    Prior to version 1.0.1, the definitions in this specification were released as part of :cite-title:`PSA FFM`.
 
     For a detailed list of changes, see :secref:`change-history`.

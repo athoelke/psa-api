@@ -133,10 +133,7 @@ The header file for the |API| has the name :file:`psa/update.h`. All of the inte
 
 Implementations must provide their own version of the :file:`psa/update.h` header file. :secref:`appendix-example-header` provides an incomplete, example header file which includes all of the |API| elements.
 
-This |API| uses some of the common status codes that are defined by :cite-title:`PSA-STAT` as part of the :file:`psa/error.h` header file. Applications are not required to explicitly include the :file:`psa/error.h` header file when using these status codes with the |API|. See :secref:`status-codes`.
-
-.. note::
-   The common error codes in :file:`psa/error.h` were previously defined in :cite-title:`PSA-FFM`.
+This |API| uses some of the common status codes that are defined by :cite-title:`PSA STAT` as part of the :file:`psa/error.h` header file. Applications are not required to explicitly include the :file:`psa/error.h` header file when using these status codes with the |API|. See :secref:`status-codes`.
 
 .. _required_functions:
 
@@ -200,7 +197,7 @@ The |API| uses the status code definitions that are shared with the other PSA Ce
 Common status codes
 ^^^^^^^^^^^^^^^^^^^
 
-The following elements are defined in :file:`psa/error.h` from :cite:`PSA-STAT` (previously defined in :cite:`PSA-FFM`):
+The following elements are defined in :file:`psa/error.h` from :cite:`PSA STAT`:
 
 .. code-block:: xref
 

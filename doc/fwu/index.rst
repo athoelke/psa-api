@@ -3,21 +3,9 @@
 
 ..  title::
 
-   .. banner::
-
-      This is a DRAFT release. The content is subject to change. To provide feedback, see :secref:`feedback`.
-
-   .. abstract::
-
-      This document defines a standard firmware interface for installing firmware updates.
-
-..  front-matter::
-
-   about/about
-
 ..  maintoc::
 
-   overview/intro
+   about/about
    overview/goals
    overview/architecture
    overview/programming-model

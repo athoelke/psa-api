@@ -20,7 +20,7 @@ Status codes ``-129`` to ``-248`` are for use by PSA Certified API specification
 
 Status codes in this range must only be used as defined in a PSA specification.
 
-In the context of an implementation of :cite-title:`PSA-FFM`:
+In the context of an implementation of :cite-title:`PSA FFM`:
 
 *  The :term:`Secure Partition Manager` (SPM) implementation can define error codes in the range ``-249`` to ``-256`` for :sc:`IMPLEMENTATION DEFINED` purposes.
 *  A :term:`Root of Trust Service` (RoT Service) can define additional error codes in the ranges ``-1`` to ``-128`` and ``-257`` to ``MIN_INT32`` for RoT Service-specific error conditions.
@@ -140,14 +140,14 @@ Error codes
 
    This error indicates that the function has detected an abnormal call, which typically indicates a programming error in the caller, or an abuse of the API.
 
-   This error has a specific meaning in an implementation of :cite-title:`PSA-FFM`.
+   This error has a specific meaning in an implementation of :cite-title:`PSA FFM`.
 
 .. macro:: PSA_ERROR_CONNECTION_REFUSED
    :definition: ((psa_status_t)-130)
 
    .. summary:: A status code that indicates that the caller is not permitted to connect to a Service.
 
-   This message has a specific meaning in an implementation of :cite-title:`PSA-FFM`.
+   This message has a specific meaning in an implementation of :cite-title:`PSA FFM`.
 
 
 .. macro:: PSA_ERROR_CONNECTION_BUSY
@@ -155,7 +155,7 @@ Error codes
 
    .. summary:: A status code that indicates that the caller cannot connect to a service.
 
-   This message has a specific meaning in an implementation of :cite-title:`PSA-FFM`.
+   This message has a specific meaning in an implementation of :cite-title:`PSA FFM`.
 
 
 .. macro:: PSA_ERROR_GENERIC_ERROR

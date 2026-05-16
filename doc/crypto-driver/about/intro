@@ -1,0 +1,29 @@
+.. SPDX-FileCopyrightText: Copyright 2025-2026 Arm Limited and/or its affiliates
+.. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
+
+.. introduction::
+
+   This document describes an interface for cryptoprocessor drivers within an implementation of the PSA Certified Crypto API. This interface complements :cite-title:`PSA CRYPT`, which describes the interface between a Crypto API implementation and an application.
+
+   In the remainder of this document:
+
+   *  :secref:`introduction` describes the purpose of this interface.
+   *  :secref:`overview` describes what a Crypto Driver looks like.
+   *  :secref:`driver-description` outlines the  Driver manifest.
+   *  :secref:`driver-entry-points` provides details of driver capabilities.
+   *  :secref:`transparent-drivers` and :secref:`opaque-drivers` explain the requirements for specific driver types.
+   *  :secref:`using-drivers` describes how application code influences Driver selection.
+
+.. api-status::
+
+   .. warning:: **API status : ALPHA**
+
+      This interfaces defined by this document are at Alpha quality. This document is shared to support ongoing development and discussion of the architecture and interfaces for Crypto Drivers.
+
+      At ALPHA quality, any aspect of the interface might be changed in a future version of the document.
+
+   The current planned scope for v1.0 is found here at :url:`github.com/ARM-software/psa-api/discussions/306`.
+
+   There are several projects currently implementing the |API|, see :url:`github.com/arm-software/psa-api/blob/main/related-projects.md`.
+
+   For a practical guide, with a description of the current state of drivers in Mbed TLS, see the examples in :url:`github.com/Mbed-TLS/TF-PSA-Crypto/blob/development/docs/psa-driver-example-and-guide.md`.

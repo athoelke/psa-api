@@ -17,7 +17,7 @@ The header file for the |API| has the name :file:`psa/crypto.h`. All of the API 
 
 Implementations must provide their own version of the :file:`psa/crypto.h` header file. Implementations can provide a subset of the API defined in this specification and a subset of the available algorithms. :secref:`appendix-example-header` provides an incomplete, example header file which includes all of the API elements. See also :secref:`implementation-considerations`.
 
-The |API| uses the status code definitions that are shared with the other PSA Certified APIs. :cite-title:`PSA-STAT` defines these status codes in the :file:`psa/error.h` header file. Applications are not required to explicitly include the :file:`psa/error.h` header file when using these status codes with the |API|. See :secref:`status-codes`.
+The |API| uses the status code definitions that are shared with the other PSA Certified APIs. :cite-title:`PSA STAT` defines these status codes in the :file:`psa/error.h` header file. Applications are not required to explicitly include the :file:`psa/error.h` header file when using these status codes with the |API|. See :secref:`status-codes`.
 
 .. _api-conventions:
 

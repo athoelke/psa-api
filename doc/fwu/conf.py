@@ -8,42 +8,34 @@
 
 doc_info = {
     # Document template
-    'template': 'psa-api-2025',
+    'template': 'gp-2026',
 
     # Document title, MANDATORY
     'title': 'PSA Certified\nFirmware Update API',
     'author': 'Arm Limited',
 
     # Document copyright date, default to year of 'date'
-    'copyright_date': '2020-2025',
+    'copyright_date': '2020-2026',
     'copyright': 'Arm Limited and/or its affiliates',
 
     # Document identifier, marked as open issue if not provided
-    'doc_id': 'IHI 0093',
+    'doc_id': 'GPD_SPE_093',
 
     # The short X.Y version. MANDATORY
     'version': '1.0',
-    # Document quality status, marked as open issue if not provided
-    'quality': 'REL',
-    # Document issue number (within that version and quality status)
-    # Marked as open issue if not provided
+    # Document maintenance revision
     'issue_no': 1,
-    # Identifies the sequence number of a release candidate of the same issue
-    # default to None
-    #'release_candidate': 2,
-    #'draft': True,
-
-    # Document confidentiality. Must be either Non-confidential or Confidential
-    # Marked as open issue if not provided
-    'confidentiality': 'Non-confidential',
+    # Document draft revision
+    'draft': 0,
+    # Document status
+    'status': 'PUB',
 
     # Id of the legal notice for this document
     # Marked as open issue if not provided
-    'license': 'psa-certified-api-license',
+    #'license': 'gp-psa-certified-api-license',
 
     # Document date, default to build date
-    'date': '23/9/2025',
-
+    'date': 'September 2025',
 
     # psa_spec: default header file for API definitions
     # default to None, and can be set in documentation source

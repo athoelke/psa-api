@@ -41,4 +41,4 @@ Internal Trusted Storage requirements
 14. The `PSA_STORAGE_FLAG_WRITE_ONCE` must be enforced when the Root of Trust Lifecycle state of the device is ``SECURED``  or ``NON_PSA_ROT_DEBUG``. It must not be enforced when the device is in the ``PSA_ROT_PROVISIONING`` state.
 15. The creation of a ``uid`` with value ``0`` (zero) must be treated as an error.
 
-The lifecycle states are described in :cite-title:`PSM` and :cite-title:`PSA-FFM`.
+The lifecycle states are described in :cite-title:`PSM` and :cite-title:`PSA FFM`.

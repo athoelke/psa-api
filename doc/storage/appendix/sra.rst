@@ -125,7 +125,7 @@ Introduction
 Background
 ~~~~~~~~~~
 
-:secref:`intro` provides the context in which the |API| is designed.
+:secref:`introduction` provides the context in which the |API| is designed.
 
 Purpose
 ~~~~~~~

@@ -1,12 +1,14 @@
-.. SPDX-FileCopyrightText: Copyright 2022, 2025 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2022, 2026 Arm Limited and/or its affiliates
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
-.. reference:: PSA-FFM
+.. reference:: PSA FFM
     :title: Arm® Platform Security Architecture Firmware Framework
-    :doc_id: DEN 0063
+    :kind: normative
+    :doc_id: Arm DEN 0063
     :url: https://developer.arm.com/documentation/den0063/a
 
 .. reference:: TF-M
     :title: Trusted Firmware-M
+    :kind: informative
     :author: trustedfirmware.org
     :url: git.trustedfirmware.org/trusted-firmware-m.git/about/

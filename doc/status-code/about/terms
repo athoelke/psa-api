@@ -26,4 +26,4 @@
 .. term:: Secure Partition Manager
     :abbr: SPM
 
-    Part of :cite-title:`PSA-FFM` that is responsible for isolating software in Partitions, managing the execution of software within Partitions, and providing communication between Partitions.
+    Part of :cite-title:`PSA FFM` that is responsible for isolating software in Partitions, managing the execution of software within Partitions, and providing communication between Partitions.

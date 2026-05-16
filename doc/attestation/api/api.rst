@@ -24,7 +24,7 @@ All the elements are defined in the C language. The |API| makes use of standard 
 API conventions
 ---------------
 
-All functions return a status indication of type ``psa_status_t``, which is defined by :cite-title:`PSA-STAT`. The value ``0`` (``PSA_SUCCESS``) indicates successful operation, and a negative value indicates an error. Each API documents the specific error codes that might be returned, and the meaning of each error.
+All functions return a status indication of type ``psa_status_t``, which is defined by :cite-title:`PSA STAT`. The value ``0`` (``PSA_SUCCESS``) indicates successful operation, and a negative value indicates an error. Each API documents the specific error codes that might be returned, and the meaning of each error.
 
 All parameters of pointer type must be valid, non-null pointers unless the pointer is to a buffer of length 0 or the function's documentation explicitly describes the behavior when the pointer is null. For implementations where a null pointer dereference usually aborts the application, passing NULL as a function parameter where a null pointer is not allowed should abort the caller in the habitual manner.
 
@@ -36,7 +36,7 @@ Status codes
 
 The |API| uses the status code definitions that are shared with the other PSA Certified APIs.
 
-The following elements are defined in :file:`psa/error.h` from :cite-title:`PSA-STAT` (previously defined in :cite:`PSA-FFM`):
+The following elements are defined in :file:`psa/error.h` from :cite-title:`PSA STAT`:
 
 .. code-block:: xref
 

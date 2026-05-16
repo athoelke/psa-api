@@ -1,23 +1,21 @@
-.. SPDX-FileCopyrightText: Copyright 2020-2023 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2020-2023, 2026 Arm Limited and/or its affiliates
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
-.. reference:: PSA-STAT
-    :title: PSA Certified Status code API
-    :doc_id: ARM IHI 0097
-    :url: arm-software.github.io/psa-api/status-code
-
-.. reference:: PSA-FFM
-    :title: Arm® Platform Security Architecture Firmware Framework
-    :doc_id: ARM DEN 0063
-    :url: developer.arm.com/documentation/den0063
+.. reference:: PSA STAT
+   :title: PSA Certified Status code API
+   :kind: normative
+   :doc_id: ARM IHI 0097
+   :url: arm-software.github.io/psa-api/status-code
 
 .. reference:: PSM
    :title: Platform Security Model
+   :kind: informative
    :doc_id: ARM DEN 0128
    :url: developer.arm.com/documentation/den0128
 
 .. reference:: PSA-CERT
    :title: PSA Certified™ Level 2 Lightweight Protection Profile
+   :kind: informative
    :doc_id: JSA DEN 002
    :url: psacertified.org/development-resources/certification-resources/#leveltwo
 
@@ -25,11 +23,13 @@
    :author: NIST
    :doc_id: IR 8259
    :title: Foundational Cybersecurity Activities for IoT Device Manufacturers
+   :kind: informative
    :publication: May 2020
    :url: doi.org/10.6028/NIST.IR.8259
 
 .. reference:: EN303645
    :title: Cyber Security for Consumer Internet of Things: Baseline Requirements
+   :kind: informative
    :author: ETSI
    :doc_id: EN 303 645
    :publication: June 2020
@@ -37,6 +37,7 @@
 
 .. reference:: LWM2M
    :title: Lightweight M2M
+   :kind: informative
    :author: OMA
    :doc_id: LwM2M v1.2
    :publication: November 2020
@@ -44,67 +45,63 @@
 
 .. reference:: UEFI
    :title: Unified Extensible Firmware Interface (UEFI) Specification
+   :kind: informative
    :doc_id: UEFI v2.10
    :author: UEFI Forum, Inc.
    :publication: August 2022
    :url: uefi.org/specifications
 
-.. reference:: RFC4122
-   :author: IETF
-   :title: A Universally Unique IDentifier (UUID) URN Namespace
-   :url: tools.ietf.org/html/rfc4122
-
-.. reference:: RFC8240
+.. reference:: RFC 8240
    :title: Report from the Internet of Things Software Update (IoTSU) Workshop 2016
+   :kind: informative
    :author: IAB
    :publication: September 2017
    :url: tools.ietf.org/html/rfc8240
 
-.. reference:: RFC9019
+.. reference:: RFC 9019
    :title: A Firmware Update Architecture for Internet of Things
+   :kind: informative
    :author: IETF
    :publication: April 2021
    :url: tools.ietf.org/html/rfc9019
 
-.. reference:: RFC9124
+.. reference:: RFC 9124
    :title: A Manifest Information Model for Firmware Updates in Internet of Things (IoT) Devices
+   :kind: informative
    :author: IETF
    :publication: January 2022
    :url: tools.ietf.org/html/rfc9124
 
 .. reference:: SUIT-MFST
    :title: A Concise Binary Object Representation (CBOR)-based Serialization Format for the Software Updates for Internet of Things (SUIT) Manifest
+   :kind: informative
    :author: IETF, (draft)
    :publication: February 2023
    :url: datatracker.ietf.org/doc/draft-ietf-suit-manifest
 
 .. reference:: SUIT-ENC
    :title: Encrypted Payloads in SUIT Manifests
+   :kind: informative
    :author: IETF, (draft)
    :publication: April 2023
    :url: datatracker.ietf.org/doc/draft-ietf-suit-firmware-encryption
 
 .. reference:: C99
-    :title: ISO/IEC 9899:1999 --- Programming Languages --- C
-    :author: ISO/IEC
-    :publication: December 1999
-    :url: www.iso.org/standard/29237.html
+   :title: Programming Languages --- C
+   :kind: informative
+   :doc_id: ISO/IEC 9899:1999
+   :publication: December 1999
+   :url: www.iso.org/standard/29237.html
 
 .. reference:: EBBR
    :author: Arm Limited and Contributors
    :title: Embedded Base Boot Requirements (EBBR) Specification
+   :kind: informative
    :url: arm-software.github.io/ebbr
 
 .. reference:: SP800-30
-    :title: NIST Special Publication 800-30 Revision 1: Guide for Conducting Risk Assessments
-    :author: NIST
-    :publication: September 2012
-    :url: doi.org/10.6028/NIST.SP.800-30r1
-
-
-.. references::
-
-   This document refers to the following documents.
-
-   .. reference-table:: Documents referenced by this document
-      :sorted:
+   :title: Special Publication 800-30 Revision 1: Guide for Conducting Risk Assessments
+   :kind: informative
+   :author: NIST
+   :publication: September 2012
+   :url: doi.org/10.6028/NIST.SP.800-30r1

@@ -735,7 +735,7 @@ RFC3526 defines a set of FF groups that are recommended for use with WPA3-SAE (t
     :widths: auto
 
     WPA3-SAE suite, DH-FAMILY, P, DH family :sup:`a`, Key value
-    RFC3526, 0x02, 1, `PSA_DH_FAMILY_RFC3526`, ``0x3305``
+    RFC 3526, 0x02, 1, `PSA_DH_FAMILY_RFC3526`, ``0x3305``
 
 a.  The finite field Diffie Hellman family values defined in the API also include the parity bit. The password token key type value is constructed from the finite field Diffie Hellman family using :code:`PSA_KEY_TYPE_WPA3_SAE_DH(family)`.
 
@@ -893,7 +893,7 @@ The defined values for DH-FAMILY and P are shown in :numref:`table-dh-type`.
     :widths: auto
 
     DH key group, DH-FAMILY, P, DH family :sup:`a`, Public-key value, Key-pair value
-    RFC7919, 0x01, 1, `PSA_DH_FAMILY_RFC7919`, ``0x4203``, ``0x7203``
+    RFC 7919, 0x01, 1, `PSA_DH_FAMILY_RFC7919`, ``0x4203``, ``0x7203``
 
 a.  The finite field Diffie Hellman group family values defined in the API also include the parity bit. The key type value is constructed from the finite field Diffie Hellman family using either :code:`PSA_KEY_TYPE_DH_PUBLIC_KEY(family)` or :code:`PSA_KEY_TYPE_DH_KEY_PAIR(family)` as required.
 

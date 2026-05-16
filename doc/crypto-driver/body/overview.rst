@@ -1,6 +1,8 @@
 ..  SPDX-FileCopyrightText: Copyright 2020-2025 Arm Limited and/or its affiliates
 ..  SPDX-License-Identifier: CC-BY-SA-4.0
 
+.. _overview:
+
 Overview of drivers
 -------------------
 

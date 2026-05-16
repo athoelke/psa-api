@@ -1,4 +1,4 @@
-.. SPDX-FileCopyrightText: Copyright 2022, 2024-2025 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2022, 2024-2026 Arm Limited and/or its affiliates
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. _change-history:
@@ -7,11 +7,13 @@
 Change history
 ==============
 
+Document and API Changes
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Changes between version 1.0.4 and version 1.0.5
 -----------------------------------------------
 
-*  Fixed the link in the :cite-title:`PSA-FFM` document reference.
+*  Fixed the link in the :cite-title:`PSA FFM` document reference.
 
 Changes between version 1.0.3 and version 1.0.4
 -----------------------------------------------
@@ -26,7 +28,7 @@ Changes between version 1.0.2 and version 1.0.3
 Changes between version 1.0.1 and version 1.0.2
 -----------------------------------------------
 
-*  Removed the whitespace within the definition of some of the status codes. The whitespace was erroneously introduced during the separation from the :cite-title:`PSA-FFM`. This change is necessary to ensure that multiple definitions of the same status code are identical, as required by the C language.
+*  Removed the whitespace within the definition of some of the status codes. The whitespace was erroneously introduced during the separation from the :cite-title:`PSA FFM`. This change is necessary to ensure that multiple definitions of the same status code are identical, as required by the C language.
 
 
 Changes between version 1.0.0 and version 1.0.1
@@ -47,4 +49,4 @@ Changes between version 1.0.0 and version 1.0.1
 Changes prior to version 1.0.0
 ------------------------------
 
-The definition of the common status codes was incorporated in the :cite-title:`PSA-FFM` specification up until version 1.0.0.
+The definition of the common status codes was incorporated in the :cite-title:`PSA FFM` specification up until version 1.0.0.
