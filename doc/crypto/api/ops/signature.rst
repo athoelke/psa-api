@@ -3132,7 +3132,7 @@ An interruptible asymmetric signature operation is used as follows:
 .. function:: psa_sign_iop_complete
 
     .. summary::
-        Attempt to finish the interruptible calculation of an asymmetric signature.
+        Progress an interruptible asymmetric signature calculation.
 
         .. versionadded:: 1.6
 
@@ -3558,7 +3558,7 @@ An interruptible asymmetric verification operation is used as follows:
 .. function:: psa_verify_iop_complete
 
     .. summary::
-        Attempt to finish the interruptible verification of an asymmetric signature.
+        Progress an interruptible asymmetric signature verification.
 
         .. versionadded:: 1.6
 

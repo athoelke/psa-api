@@ -569,7 +569,7 @@ An interruptible key-agreement operation is used as follows:
 .. function:: psa_key_agreement_iop_complete
 
     .. summary::
-        Attempt to finish a key agreement and return the shared secret.
+        Progress an interruptible key-agreement operation and return the shared secret.
 
         .. versionadded:: 1.6
 

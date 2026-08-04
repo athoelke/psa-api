@@ -1074,7 +1074,7 @@ An interruptible key-generation operation is used as follows:
 .. function:: psa_generate_key_iop_complete
 
     .. summary::
-        Attempt to finish the interruptible generation of a key.
+        Progress an interruptible operation to generate a key.
 
         .. versionadded:: 1.6
 
@@ -1293,7 +1293,7 @@ An interruptible public-key export operation is used as follows:
 .. function:: psa_export_public_key_iop_complete
 
     .. summary::
-        Attempt to finish the interruptible export of a public key.
+        Progress an interruptible operation to export a public key.
 
         .. versionadded:: 1.6
 
