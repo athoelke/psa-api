@@ -3107,6 +3107,7 @@ An interruptible asymmetric signature operation is used as follows:
         The following conditions can result in this error:
 
         *   The algorithm does not allow signing of a message.
+        *   The selected algorithm or implementation permits only one message fragment, and `psa_sign_iop_update()` has already been called.
         *   The total input for the operation is too large for the signature algorithm.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
         The following conditions can result in this error:
@@ -3539,6 +3540,7 @@ An interruptible asymmetric verification operation is used as follows:
         The following conditions can result in this error:
 
         *   The algorithm does not allow verification of a message.
+        *   The selected algorithm or implementation permits only one message fragment, and `psa_verify_iop_update()` has already been called.
         *   The total input for the operation is too large for the signature algorithm.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
         The following conditions can result in this error:
