@@ -253,7 +253,7 @@ There are three components in an interruptible operation:
 
     An application can set an overall *maximum ops* value, that limits the *ops* performed within any interruptible function called by that application. The current *maximum ops* value can also be queried. If the *maximum ops* is not set by an application, interruptible functions will not return until the operation is complete.
 
-    Each interruptible operation also provides a function to report the cumulative number of *ops* used by the operation. This value is only reset when the operation is aborted, or when an operation object is set up for a new operation. This permits the final value to be queried after an operation has finished successfully.
+    Each interruptible operation also provides a function to report the cumulative number of *ops* used by the operation. This value is reset when the operation is aborted, or when an operation object is successfully set up for a new operation. A failed setup can also reset the value. This permits the final value to be queried after an operation has finished successfully.
 
 Interruptible operations follow a common pattern of use, which is shown in :numref:`fig-interruptible`.
 

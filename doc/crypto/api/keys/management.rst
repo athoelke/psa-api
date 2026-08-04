@@ -933,7 +933,8 @@ An interruptible key-generation operation is used as follows:
         Number of *ops* that the operation has taken so far.
 
     After the interruptible operation has completed, the returned value is the number of *ops* spent on the entire operation.
-    The value is reset to zero by a call to either `psa_generate_key_iop_setup()` or `psa_generate_key_iop_abort()`.
+    The value is reset to zero by a successful call to either `psa_generate_key_iop_setup()` or `psa_generate_key_iop_abort()`.
+    A failed call to `psa_generate_key_iop_setup()` can also reset the value to zero.
 
     This function can be used to tune the value passed to `psa_iop_set_max_ops()`.
 
@@ -1025,7 +1026,7 @@ An interruptible key-generation operation is used as follows:
     *   A successful call to `psa_generate_key_iop_complete()`.
     *   A call to `psa_generate_key_iop_abort()`.
 
-    If `psa_generate_key_iop_setup()` returns an error, the operation object is unchanged.
+    If `psa_generate_key_iop_setup()` returns an error, the operation object remains inactive, but its number of *ops* can be reset to zero.
 
 .. function:: psa_generate_key_iop_custom
 
@@ -1229,7 +1230,8 @@ An interruptible public-key export operation is used as follows:
         Number of *ops* that the operation has taken so far.
 
     After the interruptible operation has completed, the returned value is the number of *ops* spent on the entire operation.
-    The value is reset to zero by a call to either `psa_export_public_key_iop_setup()` or `psa_export_public_key_iop_abort()`.
+    The value is reset to zero by a successful call to either `psa_export_public_key_iop_setup()` or `psa_export_public_key_iop_abort()`.
+    A failed call to `psa_export_public_key_iop_setup()` can also reset the value to zero.
 
     This function can be used to tune the value passed to `psa_iop_set_max_ops()`.
 
@@ -1286,7 +1288,7 @@ An interruptible public-key export operation is used as follows:
     *   A successful call to `psa_export_public_key_iop_complete()`.
     *   A call to `psa_export_public_key_iop_abort()`.
 
-    If `psa_export_public_key_iop_setup()` returns an error, the operation object is unchanged.
+    If `psa_export_public_key_iop_setup()` returns an error, the operation object remains inactive, but its number of *ops* can be reset to zero.
 
 .. function:: psa_export_public_key_iop_complete
 

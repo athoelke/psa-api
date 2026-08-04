@@ -2876,7 +2876,8 @@ An interruptible asymmetric signature operation is used as follows:
     .. return:: uint32_t
         Number of *ops* that the operation has taken so far.
 
-    After the interruptible operation has completed, the returned value is the number of *ops* spent on the entire operation. The value is reset to zero by a call to either `psa_sign_iop_setup()` or `psa_sign_iop_abort()`.
+    After the interruptible operation has completed, the returned value is the number of *ops* spent on the entire operation. The value is reset to zero by a successful call to either `psa_sign_iop_setup()` or `psa_sign_iop_abort()`.
+    A failed call to `psa_sign_iop_setup()` can also reset the value to zero.
 
     This function can be used to tune the value passed to `psa_iop_set_max_ops()`.
 
@@ -2937,7 +2938,7 @@ An interruptible asymmetric signature operation is used as follows:
     *   A successful call to `psa_sign_iop_complete()`.
     *   A call to `psa_sign_iop_abort()`.
 
-    If `psa_sign_iop_setup()` returns an error, the operation object is unchanged.
+    If `psa_sign_iop_setup()` returns an error, the operation object remains inactive, but its number of *ops* can be reset to zero.
 
 .. function:: psa_sign_iop_setup_complete
 
@@ -3297,7 +3298,8 @@ An interruptible asymmetric verification operation is used as follows:
     .. return:: uint32_t
         Number of *ops* that the operation has taken so far.
 
-    After the interruptible operation has completed, the returned value is the number of *ops* spent on the entire operation. The value is reset to zero by a call to either `psa_verify_iop_setup()` or `psa_verify_iop_abort()`.
+    After the interruptible operation has completed, the returned value is the number of *ops* spent on the entire operation. The value is reset to zero by a successful call to either `psa_verify_iop_setup()` or `psa_verify_iop_abort()`.
+    A failed call to `psa_verify_iop_setup()` can also reset the value to zero.
 
     This function can be used to tune the value passed to `psa_iop_set_max_ops()`.
 
@@ -3364,7 +3366,7 @@ An interruptible asymmetric verification operation is used as follows:
     *   A successful call to `psa_verify_iop_complete()`.
     *   A call to `psa_verify_iop_abort()`.
 
-    If `psa_verify_iop_setup()` returns an error, the operation object is unchanged.
+    If `psa_verify_iop_setup()` returns an error, the operation object remains inactive, but its number of *ops* can be reset to zero.
 
 .. function:: psa_verify_iop_setup_complete
 
