@@ -444,7 +444,7 @@ An interruptible key-agreement operation is used as follows:
     .. return:: uint32_t
         Number of *ops* that the operation has taken so far.
 
-    After the interruptible operation has completed, the returned value is the number of *ops* required for the entire operation.
+    After the interruptible operation has completed, the returned value is the number of *ops* spent on the entire operation.
     The value is reset to zero by a call to either `psa_key_agreement_iop_setup()` or `psa_key_agreement_iop_abort()`.
 
     This function can be used to tune the value passed to `psa_iop_set_max_ops()`.
