@@ -906,6 +906,9 @@ psa_status_t psa_sign_iop_hash(psa_sign_iop_t * operation,
                                const uint8_t * hash,
                                size_t hash_length);
 psa_sign_iop_t psa_sign_iop_init(void);
+psa_status_t psa_sign_iop_set_context(psa_sign_iop_t * operation,
+                                      const uint8_t * context,
+                                      size_t context_length);
 psa_status_t psa_sign_iop_setup(psa_sign_iop_t * operation,
                                 psa_key_id_t key,
                                 psa_algorithm_t alg);
@@ -968,6 +971,9 @@ psa_status_t psa_verify_iop_hash(psa_verify_iop_t * operation,
                                  const uint8_t * hash,
                                  size_t hash_length);
 psa_verify_iop_t psa_verify_iop_init(void);
+psa_status_t psa_verify_iop_set_context(psa_verify_iop_t * operation,
+                                        const uint8_t * context,
+                                        size_t context_length);
 psa_status_t psa_verify_iop_setup(psa_verify_iop_t * operation,
                                   psa_key_id_t key,
                                   psa_algorithm_t alg,

@@ -135,7 +135,7 @@ Some applications need to bound the expensive computation performed in an indivi
 
 *   Version 1.6 of the |API| introduces optional interruptible signature and verification operations, `psa_sign_iop_t` and `psa_verify_iop_t`. They limit the computation performed in a call and can return :code:`PSA_OPERATION_INCOMPLETE` when further calls are required.
 
-    These operations are distinct from the multi-part operations and are intended for applications that require bounded execution time. The interruptible operations use a zero-length context when the algorithm has a context parameter.
+    These operations are distinct from the multi-part operations and are intended for applications that require bounded execution time. If the algorithm has a context parameter, an interruptible operation uses a zero-length context unless the application calls `psa_sign_iop_set_context()` or `psa_verify_iop_set_context()`.
 
 See :secref:`interruptible-sign` and :secref:`interruptible-verify`.
 
@@ -592,7 +592,7 @@ They are used with the Edwards25519 and Edwards448 elliptic curve keys, see `PSA
 
 Both PureEdDSA and HashEdDSA can be used with contexts, which enables domain-separation when signatures are made of different message structures with the same key.
 For EdDSA, the context is an arbitrary byte string between zero and 255 bytes in length.
-Interruptible signature operations use a zero-length context.
+Interruptible signature operations use a zero-length context unless the application sets a context with `psa_sign_iop_set_context()` or `psa_verify_iop_set_context()`.
 
 The development of EdDSA resulted in a total of five distinct algorithms:
 
@@ -686,7 +686,7 @@ The development of EdDSA resulted in a total of five distinct algorithms:
     *   Edwards448: the Ed448 algorithm is computed, with a zero-length context.
         The output signature is a 114-byte string: the concatenation of :math:`R` and :math:`S` as defined by :RFC:`8032#5.2.6`.
 
-    To use a non-zero-length context, use the message-signature functions that accept a context parameter, :code:`psa_sign_message_with_context()` and :code:`psa_verify_message_with_context()`
+    To use a non-zero-length context, use the message-signature functions that accept a context parameter, :code:`psa_sign_message_with_context()` and :code:`psa_verify_message_with_context()`, or call `psa_sign_iop_set_context()` or `psa_verify_iop_set_context()` when using an interruptible signature operation.
     The `psa_sign_message()` and `psa_verify_message()` functions use a zero-length context when computing or verifying signatures.
 
     .. note::
@@ -730,7 +730,7 @@ The development of EdDSA resulted in a total of five distinct algorithms:
     When used to sign or verify a hash, the ``hash`` parameter is the SHA-512 message digest.
 
     The signature functions without a context parameter use a zero-length context when computing or verifying signatures.
-    To use a non-zero-length context, use the signature functions that accept a context parameter, such as :code:`psa_sign_hash_with_context()` or :code:`psa_verify_message_with_context()`
+    To use a non-zero-length context, use the signature functions that accept a context parameter, such as :code:`psa_sign_hash_with_context()` or :code:`psa_verify_message_with_context()`, or call `psa_sign_iop_set_context()` or `psa_verify_iop_set_context()` when using an interruptible signature operation.
     The context parameter can be between zero and 255 bytes in length.
 
     .. subsection:: Usage
@@ -780,7 +780,7 @@ The development of EdDSA resulted in a total of five distinct algorithms:
     When used to sign or verify a hash, the ``hash`` parameter is the truncated SHAKE256 message digest.
 
     The signature functions without a context parameter use a zero-length context when computing or verifying signatures.
-    To use a non-zero-length context, use the signature functions that accept a context parameter, for example, `psa_sign_hash_with_context()` or `psa_verify_message_with_context()`
+    To use a non-zero-length context, use the signature functions that accept a context parameter, for example, `psa_sign_hash_with_context()` or `psa_verify_message_with_context()`, or call `psa_sign_iop_set_context()` or `psa_verify_iop_set_context()` when using an interruptible signature operation.
     The context parameter can be between zero and 255 bytes in length.
 
     .. subsection:: Usage
@@ -919,8 +919,8 @@ All SLH-DSA algorithms can be used with contexts, which enables domain-separatio
 Context values are arbitrary strings between zero and 255 bytes in length.
 
 *   The signature functions without a context parameter provide a zero-length context when computing or verifying SLH-DSA signatures.
-*   To provide a context, use the ``psa_xxxx_with_context()`` signature functions with a context parameter, such as :code:`psa_sign_message_with_context()`.
-*   Interruptible signature operations use a zero-length context.
+*   To provide a context, use the ``psa_xxxx_with_context()`` signature functions with a context parameter, such as :code:`psa_sign_message_with_context()`, or call `psa_sign_iop_set_context()` or `psa_verify_iop_set_context()` when using an interruptible signature operation.
+*   Interruptible signature operations use a zero-length context unless the application sets a context with `psa_sign_iop_set_context()` or `psa_verify_iop_set_context()`.
 
 .. macro:: PSA_ALG_SLH_DSA
     :definition: ((psa_algorithm_t) 0x06004000)
@@ -1271,8 +1271,8 @@ All ML-DSA algorithms can be used with contexts, which enables domain-separation
 Context values are arbitrary strings between zero and 255 bytes in length.
 
 *   The signature functions without a context parameter provide a zero-length context when computing or verifying ML-DSA signatures.
-*   To provide a context, use the ``psa_xxxx_with_context()`` signature functions with a context parameter, such as :code:`psa_sign_message_with_context()`.
-*   Interruptible signature operations use a zero-length context.
+*   To provide a context, use the ``psa_xxxx_with_context()`` signature functions with a context parameter, such as :code:`psa_sign_message_with_context()`, or call `psa_sign_iop_set_context()` or `psa_verify_iop_set_context()` when using an interruptible signature operation.
+*   Interruptible signature operations use a zero-length context unless the application sets a context with `psa_sign_iop_set_context()` or `psa_verify_iop_set_context()`.
 
 .. macro:: PSA_ALG_ML_DSA
     :definition: ((psa_algorithm_t) 0x06004400)
@@ -1821,7 +1821,7 @@ Single-part asymmetric signature functions
         *   For a hash-and-sign signature algorithm, use a `psa_hash_operation_t` multi-part hash operation and then pass the resulting hash to `psa_sign_hash_with_context()`.
             :code:`PSA_ALG_GET_HASH(alg)` can be used to determine the hash algorithm to use.
 
-        Interruptible signature operations use a zero-length context. To use a non-zero-length context, use this function instead.
+        Interruptible signature operations use a zero-length context unless the application calls `psa_sign_iop_set_context()` or `psa_verify_iop_set_context()`.
 
 .. function:: psa_verify_message
 
@@ -1953,7 +1953,7 @@ Single-part asymmetric signature functions
         *   For a hash-and-sign signature algorithm, use a `psa_hash_operation_t` multi-part hash operation and then pass the resulting hash to `psa_verify_hash_with_context()`.
             :code:`PSA_ALG_GET_HASH(alg)` can be used to determine the hash algorithm to use.
 
-        Interruptible signature operations use a zero-length context. To use a non-zero-length context, use this function instead.
+        Interruptible signature operations use a zero-length context unless the application calls `psa_sign_iop_set_context()` or `psa_verify_iop_set_context()`.
 
 .. function:: psa_sign_hash
 
@@ -2800,6 +2800,7 @@ An interruptible asymmetric signature operation is used as follows:
 #.  Initialize the operation object with one of the methods described in the documentation for `psa_sign_iop_t`, for example, `PSA_SIGN_IOP_INIT`.
 #.  Call `psa_sign_iop_setup()` to specify the algorithm and key.
 #.  Call `psa_sign_iop_setup_complete()` to complete the setup, until this function does not return :code:`PSA_OPERATION_INCOMPLETE`.
+#.  Optionally, call `psa_sign_iop_set_context()` to provide a context.
 #.  Either:
 
     1.  Call `psa_sign_iop_hash()` with a pre-computed hash of the message to sign; or
@@ -2970,11 +2971,59 @@ An interruptible asymmetric signature operation is used as follows:
     .. note::
         This is an interruptible function, and must be called repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
 
-    When this function returns successfully, the operation is ready for data input using a call to `psa_sign_iop_hash()` or `psa_sign_iop_update()`.
+    When this function returns successfully, the operation is ready for context or data input using a call to `psa_sign_iop_set_context()`, `psa_sign_iop_hash()`, or `psa_sign_iop_update()`.
     If this function returns :code:`PSA_OPERATION_INCOMPLETE`, setup is not complete, and this function must be called again to continue the operation.
     If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_sign_iop_abort()`.
 
     The amount of calculation performed in a single call to this function is determined by the maximum *ops* setting. See `psa_iop_set_max_ops()`.
+
+.. function:: psa_sign_iop_set_context
+
+    .. summary::
+        Provide a context for an interruptible signature operation.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_sign_iop_t * operation
+        The interruptible signature operation to configure.
+        The operation setup must be complete, with no hash, message, or completion input.
+    .. param:: const uint8_t * context
+        Buffer containing the context value.
+    .. param:: size_t context_length
+        Size of the ``context`` buffer in bytes.
+
+    .. return:: psa_status_t
+    .. retval:: PSA_SUCCESS
+        Success.
+    .. retval:: PSA_ERROR_BAD_STATE
+        The following conditions can result in this error:
+
+        *   The operation state is not valid: setup must be complete, and no call to `psa_sign_iop_set_context()`, `psa_sign_iop_hash()`, `psa_sign_iop_update()`, or `psa_sign_iop_complete()` has been made.
+        *   The library requires initializing by a call to `psa_crypto_init()`.
+    .. retval:: PSA_ERROR_INVALID_ARGUMENT
+        The following conditions can result in this error:
+
+        *   ``context_length`` is not valid for the algorithm and key type.
+        *   ``context`` is not a valid input value for the algorithm and key type.
+    .. retval:: PSA_ERROR_NOT_SUPPORTED
+        The context value is not supported by this implementation.
+    .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
+    .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
+    .. retval:: PSA_ERROR_CORRUPTION_DETECTED
+
+    This function sets the context value in an interruptible signature operation.
+    The application must complete setup by calling `psa_sign_iop_setup_complete()` before calling this function.
+
+    For a signature algorithm that has a context parameter:
+
+    *   If this function is not called, the operation uses the algorithm with a zero-length or empty context.
+    *   To set a non-zero-length context, call this function after `psa_sign_iop_setup_complete()` has returned success and before calling any input or completion function on the operation.
+
+    If a context parameter is not supported by the algorithm, this function call can be omitted, or can be called with a zero-length context.
+
+    The macro `PSA_ALG_SIGN_SUPPORTS_CONTEXT()` can be used to determine if a signature algorithm supports non-zero-length context values.
+
+    If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_sign_iop_abort()`.
 
 .. function:: psa_sign_iop_hash
 
@@ -3172,6 +3221,7 @@ An interruptible asymmetric verification operation is used as follows:
 #.  Initialize the operation object with one of the methods described in the documentation for `psa_verify_iop_t`, for example, `PSA_VERIFY_IOP_INIT`.
 #.  Call `psa_verify_iop_setup()` to specify the algorithm, key, and the signature to verify.
 #.  Call `psa_verify_iop_setup_complete()` to complete the setup, until this function does not return :code:`PSA_OPERATION_INCOMPLETE`.
+#.  Optionally, call `psa_verify_iop_set_context()` to provide a context.
 #.  Either:
 
     1.  Call `psa_verify_iop_hash()` with a pre-computed hash of the message to verify; or
@@ -3349,11 +3399,59 @@ An interruptible asymmetric verification operation is used as follows:
     .. note::
         This is an interruptible function, and must be called repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
 
-    When this function returns successfully, the operation is ready for data input using a call to `psa_verify_iop_hash()` or `psa_verify_iop_update()`.
+    When this function returns successfully, the operation is ready for context or data input using a call to `psa_verify_iop_set_context()`, `psa_verify_iop_hash()`, or `psa_verify_iop_update()`.
     If this function returns :code:`PSA_OPERATION_INCOMPLETE`, setup is not complete, and this function must be called again to continue the operation.
     If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_verify_iop_abort()`.
 
     The amount of calculation performed in a single call to this function is determined by the maximum *ops* setting. See `psa_iop_set_max_ops()`.
+
+.. function:: psa_verify_iop_set_context
+
+    .. summary::
+        Provide a context for an interruptible verification operation.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_verify_iop_t * operation
+        The interruptible verification operation to configure.
+        The operation setup must be complete, with no hash, message, or completion input.
+    .. param:: const uint8_t * context
+        Buffer containing the context value.
+    .. param:: size_t context_length
+        Size of the ``context`` buffer in bytes.
+
+    .. return:: psa_status_t
+    .. retval:: PSA_SUCCESS
+        Success.
+    .. retval:: PSA_ERROR_BAD_STATE
+        The following conditions can result in this error:
+
+        *   The operation state is not valid: setup must be complete, and no call to `psa_verify_iop_set_context()`, `psa_verify_iop_hash()`, `psa_verify_iop_update()`, or `psa_verify_iop_complete()` has been made.
+        *   The library requires initializing by a call to `psa_crypto_init()`.
+    .. retval:: PSA_ERROR_INVALID_ARGUMENT
+        The following conditions can result in this error:
+
+        *   ``context_length`` is not valid for the algorithm and key type.
+        *   ``context`` is not a valid input value for the algorithm and key type.
+    .. retval:: PSA_ERROR_NOT_SUPPORTED
+        The context value is not supported by this implementation.
+    .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
+    .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
+    .. retval:: PSA_ERROR_CORRUPTION_DETECTED
+
+    This function sets the context value in an interruptible verification operation.
+    The application must complete setup by calling `psa_verify_iop_setup_complete()` before calling this function.
+
+    For a signature algorithm that has a context parameter:
+
+    *   If this function is not called, the operation uses the algorithm with a zero-length or empty context.
+    *   To set a non-zero-length context, call this function after `psa_verify_iop_setup_complete()` has returned success and before calling any input or completion function on the operation.
+
+    If a context parameter is not supported by the algorithm, this function call can be omitted, or can be called with a zero-length context.
+
+    The macro `PSA_ALG_SIGN_SUPPORTS_CONTEXT()` can be used to determine if a signature algorithm supports non-zero-length context values.
+
+    If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_verify_iop_abort()`.
 
 .. function:: psa_verify_iop_hash
 
