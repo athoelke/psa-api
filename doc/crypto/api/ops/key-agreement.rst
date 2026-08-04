@@ -578,7 +578,7 @@ An interruptible key-agreement operation is used as follows:
         The operation must be active.
     .. param:: psa_key_id_t * key
         On success, an identifier for the newly created key.
-        `PSA_KEY_ID_NULL` on failure.
+        `PSA_KEY_ID_NULL` if the function returns :code:`PSA_OPERATION_INCOMPLETE` or an error status.
 
     .. return:: psa_status_t
     .. retval:: PSA_SUCCESS
@@ -613,7 +613,7 @@ An interruptible key-agreement operation is used as follows:
     .. warning::
         The shared secret resulting from a key-agreement algorithm such as finite-field Diffie-Hellman or elliptic curve Diffie-Hellman has biases. This makes it unsuitable for use as key material, for example, as an AES key. Instead, it is recommended that a key derivation algorithm is applied to the result, to derive unbiased cryptographic keys.
 
-    If this function returns :code:`PSA_OPERATION_INCOMPLETE`, no key is returned, and this function must be called again to continue the operation.
+    If this function returns :code:`PSA_OPERATION_INCOMPLETE`, ``*key`` is `PSA_KEY_ID_NULL`, and this function must be called again to continue the operation.
     If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_key_agreement_iop_abort()`.
 
     The amount of calculation performed in a single call to this function is determined by the maximum *ops* setting. See `psa_iop_set_max_ops()`.
