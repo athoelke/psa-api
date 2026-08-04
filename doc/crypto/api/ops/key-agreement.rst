@@ -17,7 +17,7 @@ Three functions are provided for a Diffie-Hellman-style key agreement where each
 
 *   Where an application needs direct access to the shared secret, it can call `psa_raw_key_agreement()` instead.
 
-If an application requires bounded execution during a key agreement, it can use an interruptible key-agreement operation.
+If an application requires bounded execution time during a key agreement, it can use an interruptible key-agreement operation.
 See :secref:`interruptible-key-agreement`.
 
 Using `psa_key_agreement()`, `psa_key_derivation_key_agreement()`, or an interruptible key-agreement operation is recommended, as these do not expose the shared secret to the application.
@@ -231,7 +231,7 @@ Standalone key agreement
     .. warning::
         The shared secret resulting from a key-agreement algorithm such as finite field Diffie-Hellman or elliptic curve Diffie-Hellman has biases. This makes it unsuitable for use as key material, for example, as an AES key. Instead, it is recommended that a key-derivation algorithm is applied to the result, to derive unbiased cryptographic keys.
 
-    If an application requires bounded execution during key agreement, it can use an interruptible key-agreement operation.
+    If an application requires bounded execution time during key agreement, it can use an interruptible key-agreement operation.
     See :secref:`interruptible-key-agreement`.
 
 .. function:: psa_raw_key_agreement
@@ -365,7 +365,7 @@ Interruptible key agreement
 
 Most key-agreement algorithms are computationally expensive.
 
-An interruptible key-agreement operation can be used instead of calling `psa_key_agreement()`, in applications that have bounded execution requirements for use cases involving key agreement.
+An interruptible key-agreement operation can be used instead of calling `psa_key_agreement()`, in applications that have bounded execution time requirements for use cases involving key agreement.
 
 An interruptible key-agreement operation is used as follows:
 

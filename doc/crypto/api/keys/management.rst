@@ -237,7 +237,7 @@ When creating a key, the attributes for the new key are specified in a `psa_key_
 
         This function is equivalent to calling `psa_generate_key_custom()` with the production parameters `PSA_CUSTOM_KEY_PARAMETERS_INIT` and ``custom_data_length == 0`` (``custom_data`` is ignored).
 
-    If an application requires bounded execution when generating a key, the implementation might provide support for interruptible key generation.
+    If an application requires bounded execution time when generating a key, the implementation might provide support for interruptible key generation.
     See :secref:`interruptible-generate-key`.
 
 .. function:: psa_generate_key_custom
@@ -726,7 +726,7 @@ Key export
 
     Exporting a public-key object or the public part of a key pair is always permitted, regardless of the key's usage flags.
 
-    If an application requires bounded execution when exporting a public key, it can use an interruptible public-key export operation.
+    If an application requires bounded execution time when exporting a public key, it can use an interruptible public-key export operation.
     See :secref:`interruptible-export-key`.
 
 
@@ -846,7 +846,7 @@ Interruptible key generation
 Generation of some key types can be computationally expensive.
 For example, RSA keys, and elliptic curve public keys.
 
-For such keys, an interruptible key-generation operation can be used instead of calling `psa_generate_key()`, in applications that have bounded execution requirements for use cases that require key generation.
+For such keys, an interruptible key-generation operation can be used instead of calling `psa_generate_key()`, in applications that have bounded execution time requirements for use cases that require key generation.
 
 This operation uses the default production parameters of `psa_generate_key()`. It does not support the custom production parameters accepted by `psa_generate_key_custom()`.
 
@@ -1105,7 +1105,7 @@ Interruptible public-key export
 Extracting a public key from an asymmetric key pair can be computationally expensive.
 For example, computing an elliptic curve public key from the private key.
 
-An interruptible public-key export operation can be used instead of calling `psa_export_public_key()`, in applications that have bounded execution requirements for use cases that require public-key export.
+An interruptible public-key export operation can be used instead of calling `psa_export_public_key()`, in applications that have bounded execution time requirements for use cases that require public-key export.
 
 An interruptible public-key export operation is used as follows:
 
