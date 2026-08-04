@@ -232,7 +232,7 @@ Interruptible operations
 
 Interruptible operations split a computationally expensive operation into a sequence of function calls, each of which limits the computational progress made. They are useful when responsiveness is critical and the environment does not provide suitable multitasking.
 
-Processing a bounded amount of input in each call can meet this need for some operations. For example, a hash can be computed using a multi-part operation to break the computation into smaller blocks. However, a multi-part operation does not bound computation that is independent of the input size, such as asymmetric signature verification.
+Processing a bounded amount of input in each call can meet this need for some operations. For example, a hash can be computed using a multi-part operation to break the computation into smaller blocks. However, a multi-part operation does not bound computation that is independent of the input size, such as calculating a shared secret in key agreement.
 
 .. note::
 
