@@ -848,7 +848,8 @@ For example, RSA keys, and elliptic curve public keys.
 
 For such keys, an interruptible key-generation operation can be used instead of calling `psa_generate_key()`, in applications that have bounded execution time requirements for use cases that require key generation.
 
-This operation uses the default production parameters of `psa_generate_key()`. It does not support the custom production parameters accepted by `psa_generate_key_custom()`.
+By default, this operation uses the default production parameters of `psa_generate_key()`.
+To use custom production parameters, call `psa_generate_key_iop_custom()` after `psa_generate_key_iop_setup()` and before `psa_generate_key_iop_complete()`.
 
 .. note::
     An implementation of the |API| does not need to provide incremental generation for all key types supported by the implementation.
@@ -859,6 +860,7 @@ An interruptible key-generation operation is used as follows:
 1.  Allocate an interruptible key-generation operation object, of type `psa_generate_key_iop_t`, which will be passed to all the functions listed here.
 #.  Initialize the operation object with one of the methods described in the documentation for `psa_generate_key_iop_t`, for example, `PSA_GENERATE_KEY_IOP_INIT`.
 #.  Call `psa_generate_key_iop_setup()` to specify the key attributes.
+#.  Optionally, call `psa_generate_key_iop_custom()` to specify custom production parameters.
 #.  Call `psa_generate_key_iop_complete()` to finish generating the key, until this function does not return :code:`PSA_OPERATION_INCOMPLETE`.
 #.  If an error occurs at any stage, or to terminate the operation early, call `psa_generate_key_iop_abort()`.
 
@@ -972,7 +974,7 @@ An interruptible key-generation operation is used as follows:
     .. return:: psa_status_t
     .. retval:: PSA_SUCCESS
         Success.
-        The interruptible operation must now be completed by calling `psa_generate_key_iop_complete()`.
+        The interruptible operation can be configured with custom production parameters by calling `psa_generate_key_iop_custom()`, or completed by calling `psa_generate_key_iop_complete()`.
     .. retval:: PSA_ERROR_ALREADY_EXISTS
         This is an attempt to create a persistent key, and there is already a persistent key with the given identifier.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
@@ -1017,13 +1019,56 @@ An interruptible key-generation operation is used as follows:
         The modulus is a product of two probabilistic primes between :math:`2^{n-1}` and :math:`2^n` where :math:`n` is the bit size specified in the attributes.
 
     After a successful call to `psa_generate_key_iop_setup()`, the operation is active.
-    The operation can be completed by calling `psa_generate_key_iop_complete()` repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
+    The operation can be configured with custom production parameters by calling `psa_generate_key_iop_custom()`, or completed by calling `psa_generate_key_iop_complete()` repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
     Once active, the application must eventually terminate the operation. The following events terminate an operation:
 
     *   A successful call to `psa_generate_key_iop_complete()`.
     *   A call to `psa_generate_key_iop_abort()`.
 
     If `psa_generate_key_iop_setup()` returns an error, the operation object is unchanged.
+
+.. function:: psa_generate_key_iop_custom
+
+    .. summary::
+        Set custom production parameters for an interruptible key-generation operation.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_generate_key_iop_t * operation
+        The interruptible key-generation operation to configure.
+        The operation must be active, and `psa_generate_key_iop_complete()` must not have been called.
+    .. param:: const psa_custom_key_parameters_t * custom
+        Customized production parameters for the key generation.
+    .. param:: const uint8_t * custom_data
+        A buffer containing additional variable-sized production parameters.
+    .. param:: size_t custom_data_length
+        Length of ``custom_data`` in bytes.
+
+    .. return:: psa_status_t
+    .. retval:: PSA_SUCCESS
+        Success.
+    .. retval:: PSA_ERROR_NOT_SUPPORTED
+        The production parameters are not supported by the implementation.
+    .. retval:: PSA_ERROR_INVALID_ARGUMENT
+        The production parameters are invalid.
+    .. retval:: PSA_ERROR_BAD_STATE
+        The following conditions can result in this error:
+
+        *   The operation state is not valid: it must be active, and `psa_generate_key_iop_complete()` must not have been called.
+        *   The library requires initializing by a call to `psa_crypto_init()`.
+    .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
+    .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
+    .. retval:: PSA_ERROR_CORRUPTION_DETECTED
+
+    This function sets custom production parameters for a key-generation operation.
+    The application must call `psa_generate_key_iop_setup()` before calling this function.
+    It may call this function at most once for an operation.
+
+    If this function is not called, the operation uses the default production parameters `PSA_CUSTOM_KEY_PARAMETERS_INIT` with ``custom_data_length == 0``.
+
+    See the documentation of `psa_custom_key_parameters_t` for a list of non-default production parameters. See the key type definitions in :secref:`key-types` for details of the custom production parameters used for key generation.
+
+    If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_generate_key_iop_abort()`.
 
 .. function:: psa_generate_key_iop_complete
 

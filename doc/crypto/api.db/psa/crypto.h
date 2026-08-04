@@ -669,6 +669,10 @@ psa_status_t psa_generate_key_custom(const psa_key_attributes_t * attributes,
 psa_status_t psa_generate_key_iop_abort(psa_generate_key_iop_t * operation);
 psa_status_t psa_generate_key_iop_complete(psa_generate_key_iop_t * operation,
                                            psa_key_id_t * key);
+psa_status_t psa_generate_key_iop_custom(psa_generate_key_iop_t * operation,
+                                         const psa_custom_key_parameters_t * custom,
+                                         const uint8_t * custom_data,
+                                         size_t custom_data_length);
 uint32_t psa_generate_key_iop_get_num_ops(psa_generate_key_iop_t * operation);
 psa_generate_key_iop_t psa_generate_key_iop_init(void);
 psa_status_t psa_generate_key_iop_setup(psa_generate_key_iop_t * operation,
