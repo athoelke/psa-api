@@ -2799,13 +2799,13 @@ An interruptible asymmetric signature operation is used as follows:
 1.  Allocate an interruptible asymmetric signature operation object, of type `psa_sign_iop_t`, which will be passed to all the functions listed here.
 #.  Initialize the operation object with one of the methods described in the documentation for `psa_sign_iop_t`, for example, `PSA_SIGN_IOP_INIT`.
 #.  Call `psa_sign_iop_setup()` to specify the algorithm and key.
-#.  Call `psa_sign_iop_setup_complete()` to complete the setup, until this function does not return :code:`PSA_OPERATION_INCOMPLETE`.
+#.  Call `psa_sign_iop_setup_complete()` to complete the setup, until this function returns a status code other than :code:`PSA_OPERATION_INCOMPLETE`.
 #.  Optionally, call `psa_sign_iop_set_context()` to provide a context.
 #.  Either:
 
     1.  Call `psa_sign_iop_hash()` with a pre-computed hash of the message to sign; or
     2.  Call `psa_sign_iop_update()` zero, one or more times, passing a fragment of the message each time. The signature that is calculated is that of the concatenation of these fragments, in order.
-#.  Call `psa_sign_iop_complete()` to finish calculating the signature value, until this function does not return :code:`PSA_OPERATION_INCOMPLETE`.
+#.  Call `psa_sign_iop_complete()` to finish calculating the signature value, until this function returns a status code other than :code:`PSA_OPERATION_INCOMPLETE`.
 #.  If an error occurs at any stage, or to terminate the operation early, call `psa_sign_iop_abort()`.
 
 
@@ -3224,13 +3224,13 @@ An interruptible asymmetric verification operation is used as follows:
 1.  Allocate an interruptible asymmetric verification operation object, of type `psa_verify_iop_t`, which will be passed to all the functions listed here.
 #.  Initialize the operation object with one of the methods described in the documentation for `psa_verify_iop_t`, for example, `PSA_VERIFY_IOP_INIT`.
 #.  Call `psa_verify_iop_setup()` to specify the algorithm, key, and the signature to verify.
-#.  Call `psa_verify_iop_setup_complete()` to complete the setup, until this function does not return :code:`PSA_OPERATION_INCOMPLETE`.
+#.  Call `psa_verify_iop_setup_complete()` to complete the setup, until this function returns a status code other than :code:`PSA_OPERATION_INCOMPLETE`.
 #.  Optionally, call `psa_verify_iop_set_context()` to provide a context.
 #.  Either:
 
     1.  Call `psa_verify_iop_hash()` with a pre-computed hash of the message to verify; or
     2.  Call `psa_verify_iop_update()` zero, one or more times, passing a fragment of the message each time. The signature is verified against the concatenation of these fragments, in order.
-#.  Call `psa_verify_iop_complete()` to finish verifying the signature value, until this function does not return :code:`PSA_OPERATION_INCOMPLETE`.
+#.  Call `psa_verify_iop_complete()` to finish verifying the signature value, until this function returns a status code other than :code:`PSA_OPERATION_INCOMPLETE`.
 #.  If an error occurs at any stage, or to terminate the operation early, call `psa_verify_iop_abort()`.
 
 

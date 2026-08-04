@@ -861,7 +861,7 @@ An interruptible key-generation operation is used as follows:
 #.  Initialize the operation object with one of the methods described in the documentation for `psa_generate_key_iop_t`, for example, `PSA_GENERATE_KEY_IOP_INIT`.
 #.  Call `psa_generate_key_iop_setup()` to specify the key attributes.
 #.  Optionally, call `psa_generate_key_iop_custom()` to specify custom production parameters.
-#.  Call `psa_generate_key_iop_complete()` to finish generating the key, until this function does not return :code:`PSA_OPERATION_INCOMPLETE`.
+#.  Call `psa_generate_key_iop_complete()` to finish generating the key, until this function returns a status code other than :code:`PSA_OPERATION_INCOMPLETE`.
 #.  If an error occurs at any stage, or to terminate the operation early, call `psa_generate_key_iop_abort()`.
 
 .. typedef:: /* implementation-defined type */ psa_generate_key_iop_t
@@ -1158,7 +1158,7 @@ An interruptible public-key export operation is used as follows:
 1.  Allocate an interruptible public-key export operation object, of type `psa_export_public_key_iop_t`, which will be passed to all the functions listed here.
 #.  Initialize the operation object with one of the methods described in the documentation for `psa_export_public_key_iop_t`, for example, `PSA_EXPORT_PUBLIC_KEY_IOP_INIT`.
 #.  Call `psa_export_public_key_iop_setup()` to specify the key to export.
-#.  Call `psa_export_public_key_iop_complete()` to finish exporting the key data, until this function does not return :code:`PSA_OPERATION_INCOMPLETE`.
+#.  Call `psa_export_public_key_iop_complete()` to finish exporting the key data, until this function returns a status code other than :code:`PSA_OPERATION_INCOMPLETE`.
 #.  If an error occurs at any stage, or to terminate the operation early, call `psa_export_public_key_iop_abort()`.
 
 .. typedef:: /* implementation-defined type */ psa_export_public_key_iop_t

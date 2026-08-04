@@ -372,7 +372,7 @@ An interruptible key-agreement operation is used as follows:
 1.  Allocate an interruptible key-agreement operation object, of type `psa_key_agreement_iop_t`, which will be passed to all the functions listed here.
 #.  Initialize the operation object with one of the methods described in the documentation for `psa_key_agreement_iop_t`, for example, `PSA_KEY_AGREEMENT_IOP_INIT`.
 #.  Call `psa_key_agreement_iop_setup()` to specify the algorithm, and provide the private key and the peer public key.
-#.  Call `psa_key_agreement_iop_complete()` to finish the key agreement and output the shared secret, until this function does not return :code:`PSA_OPERATION_INCOMPLETE`.
+#.  Call `psa_key_agreement_iop_complete()` to finish the key agreement and output the shared secret, until this function returns a status code other than :code:`PSA_OPERATION_INCOMPLETE`.
 #.  If an error occurs at any stage, or to terminate the operation early, call `psa_key_agreement_iop_abort()`.
 
 
