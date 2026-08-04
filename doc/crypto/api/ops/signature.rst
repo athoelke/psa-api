@@ -2804,7 +2804,7 @@ An interruptible asymmetric signature operation is used as follows:
 #.  Either:
 
     1.  Call `psa_sign_iop_hash()` with a pre-computed hash of the message to sign; or
-    2.  Call `psa_sign_iop_update()` one or more times, passing a fragment of the message each time. The signature that is calculated will that be of the concatenation of these fragments, in order.
+    2.  Call `psa_sign_iop_update()` zero, one or more times, passing a fragment of the message each time. The signature that is calculated is that of the concatenation of these fragments, in order.
 #.  Call `psa_sign_iop_complete()` to finish calculating the signature value, until this function does not return :code:`PSA_OPERATION_INCOMPLETE`.
 #.  If an error occurs at any stage, or to terminate the operation early, call `psa_sign_iop_abort()`.
 
@@ -3137,7 +3137,7 @@ An interruptible asymmetric signature operation is used as follows:
         .. versionadded:: 1.6
 
     .. param:: psa_sign_iop_t * operation
-        The interruptible asymmetric signature operation to use. The operation must be active. It must have hash or message data input, or be in the process of finishing.
+        The interruptible asymmetric signature operation to use. The operation must be active, and setup must be complete.
     .. param:: uint8_t * signature
         Buffer where the signature is to be written.
     .. param:: size_t signature_size
@@ -3154,14 +3154,20 @@ An interruptible asymmetric signature operation is used as follows:
         The first ``(*signature_length)`` bytes of ``signature`` contain the signature value.
     .. retval:: PSA_OPERATION_INCOMPLETE
         The function was interrupted after exhausting the maximum *ops*. The computation is incomplete, and this function must be called again with the same operation object to continue.
+    .. retval:: PSA_ERROR_NOT_PERMITTED
+        If no data has been input to the operation, the key does not have the `PSA_KEY_USAGE_SIGN_MESSAGE` flag.
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: the operation must be active and have hash or message data input, or a previous call to `psa_sign_iop_complete()` must have returned :code:`PSA_OPERATION_INCOMPLETE`.
+        *   The operation state is not valid: the operation must be active, and setup must be complete.
         *   The library requires initializing by a call to `psa_crypto_init()`.
+    .. retval:: PSA_ERROR_INVALID_ARGUMENT
+        If no data has been input to the operation, the algorithm does not allow signing of a message.
     .. retval:: PSA_ERROR_BUFFER_TOO_SMALL
         The size of the ``signature`` buffer is too small.
         `PSA_SIGN_OUTPUT_SIZE()` or `PSA_SIGNATURE_MAX_SIZE` can be used to determine a sufficient buffer size.
+    .. retval:: PSA_ERROR_NOT_SUPPORTED
+        If no data has been input to the operation, the implementation does not support signing of a message.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
@@ -3173,9 +3179,8 @@ An interruptible asymmetric signature operation is used as follows:
     .. note::
         This is an interruptible function, and must be called repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
 
-        To sign the zero-length message, call `psa_sign_iop_update()` once with a zero-length message fragment before calling this function.
-
     When this function returns successfully, the signature is returned in ``signature``, and the operation becomes inactive.
+    If neither a pre-computed hash nor a message fragment has been input, the signature is of the zero-length message.
     If this function returns :code:`PSA_OPERATION_INCOMPLETE`, no signature is returned, and this function must be called again to continue the operation.
     If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_sign_iop_abort()`.
 
@@ -3224,7 +3229,7 @@ An interruptible asymmetric verification operation is used as follows:
 #.  Either:
 
     1.  Call `psa_verify_iop_hash()` with a pre-computed hash of the message to verify; or
-    2.  Call `psa_verify_iop_update()` one or more times, passing a fragment of the message each time. The signature is verified against the concatenation of these fragments, in order.
+    2.  Call `psa_verify_iop_update()` zero, one or more times, passing a fragment of the message each time. The signature is verified against the concatenation of these fragments, in order.
 #.  Call `psa_verify_iop_complete()` to finish verifying the signature value, until this function does not return :code:`PSA_OPERATION_INCOMPLETE`.
 #.  If an error occurs at any stage, or to terminate the operation early, call `psa_verify_iop_abort()`.
 
@@ -3563,7 +3568,7 @@ An interruptible asymmetric verification operation is used as follows:
         .. versionadded:: 1.6
 
     .. param:: psa_verify_iop_t * operation
-        The interruptible verification operation to use. The operation must be active. It must have hash or message data input, or be in the process of finishing.
+        The interruptible verification operation to use. The operation must be active, and setup must be complete.
 
     .. return:: psa_status_t
     .. retval:: PSA_SUCCESS
@@ -3571,11 +3576,17 @@ An interruptible asymmetric verification operation is used as follows:
         The signature is valid.
     .. retval:: PSA_OPERATION_INCOMPLETE
         The function was interrupted after exhausting the maximum *ops*. The computation is incomplete, and this function must be called again with the same operation object to continue.
+    .. retval:: PSA_ERROR_NOT_PERMITTED
+        If no data has been input to the operation, the key does not have the `PSA_KEY_USAGE_VERIFY_MESSAGE` flag.
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: the operation must be active and have hash or message data input, or a previous call to `psa_verify_iop_complete()` must have returned :code:`PSA_OPERATION_INCOMPLETE`.
+        *   The operation state is not valid: the operation must be active, and setup must be complete.
         *   The library requires initializing by a call to `psa_crypto_init()`.
+    .. retval:: PSA_ERROR_INVALID_ARGUMENT
+        If no data has been input to the operation, the algorithm does not allow verification of a message.
+    .. retval:: PSA_ERROR_NOT_SUPPORTED
+        If no data has been input to the operation, the implementation does not support verification of a message.
     .. retval:: PSA_ERROR_INVALID_SIGNATURE
         The signature is not the result of signing the input message, or hash value, with the requested algorithm, using the private key corresponding to the key provided to the operation.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
@@ -3588,9 +3599,8 @@ An interruptible asymmetric verification operation is used as follows:
     .. note::
         This is an interruptible function, and must be called repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
 
-        To verify the signature of the zero-length message, call `psa_verify_iop_update()` once with a zero-length message fragment before calling this function.
-
     When this function returns successfully, the operation becomes inactive.
+    If neither a pre-computed hash nor a message fragment has been input, the signature is verified against the zero-length message.
     If this function returns :code:`PSA_OPERATION_INCOMPLETE`, this function must be called again to continue the operation.
     If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_verify_iop_abort()`.
 
