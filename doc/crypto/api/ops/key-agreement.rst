@@ -556,6 +556,9 @@ An interruptible key-agreement operation is used as follows:
 
     When the interruptible operation completes, the shared secret is output in a key. The key's location, policy, and type are taken from ``attributes``. The size of the key is always the bit-size of the shared secret, rounded up to a whole number of bytes.
 
+    If a persistent key identifier already exists, then it is unspecified whether `psa_key_agreement_iop_setup()` returns :code:`PSA_ERROR_ALREADY_EXISTS`, or whether `psa_key_agreement_iop_complete()` returns this error.
+    Applications must be prepared for either function to report this error.
+
     After a successful call to `psa_key_agreement_iop_setup()`, the operation is active.
     The operation can be completed by calling `psa_key_agreement_iop_complete()` repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
     Once active, the application must eventually terminate the operation.
@@ -605,6 +608,9 @@ An interruptible key-agreement operation is used as follows:
 
     .. note::
         This is an interruptible function, and must be called repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
+
+    If a persistent key identifier already exists, then it is unspecified whether `psa_key_agreement_iop_setup()` returns :code:`PSA_ERROR_ALREADY_EXISTS`, or whether this function returns this error.
+    Applications must be prepared for either function to report this error.
 
     When this function returns successfully, the shared secret is returned as a derivation key in ``key``, and the operation becomes inactive.
     The attributes of the new key are specified in the call to `psa_key_agreement_iop_setup()` used to set up this operation.
