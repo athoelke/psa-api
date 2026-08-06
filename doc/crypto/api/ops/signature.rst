@@ -137,6 +137,8 @@ Some applications need to bound the expensive computation performed in an indivi
 
     These operations are distinct from the multi-part operations and are intended for applications that require bounded execution time. If the algorithm has a context parameter, an interruptible operation uses a zero-length context unless the application calls `psa_sign_iop_set_context()` or `psa_verify_iop_set_context()`.
 
+    Interruptible verification normally receives the signature when the operation is set up. A streaming protocol that provides the signature after the message data can use the deferred-signature verification flow, if the selected algorithm supports it.
+
 See :secref:`interruptible-sign` and :secref:`interruptible-verify`.
 
 .. _rsa-sign-algorithms:
@@ -3235,6 +3237,16 @@ An interruptible asymmetric verification operation is used as follows:
 #.  Call `psa_verify_iop_complete()` to finish verifying the signature value, until this function returns a status code other than :code:`PSA_OPERATION_INCOMPLETE`.
 #.  If an error occurs at any stage, or to terminate the operation early, call `psa_verify_iop_abort()`.
 
+To verify a message received from a streaming protocol that provides the signature after the message data, use the deferred-signature flow instead:
+
+1.  Call `psa_verify_iop_setup_deferred_signature()` to specify the algorithm and key.
+#.  Call `psa_verify_iop_setup_complete()` to complete the setup, until this function returns a status code other than :code:`PSA_OPERATION_INCOMPLETE`.
+#.  Optionally, call `psa_verify_iop_set_context()` to provide a context.
+#.  Call `psa_verify_iop_update()` zero, one or more times, passing a fragment of the message each time.
+#.  Call `psa_verify_iop_set_signature()` to provide the signature, after all message fragments have been passed to the operation.
+#.  Call `psa_verify_iop_complete()` to finish verifying the signature value, until this function returns a status code other than :code:`PSA_OPERATION_INCOMPLETE`.
+#.  If an error occurs at any stage, or to terminate the operation early, call `psa_verify_iop_abort()`.
+
 
 .. typedef:: /* implementation-defined type */ psa_verify_iop_t
 
@@ -3303,8 +3315,8 @@ An interruptible asymmetric verification operation is used as follows:
     .. return:: uint32_t
         Number of *ops* that the operation has taken so far.
 
-    After the interruptible operation has completed, the returned value is the number of *ops* spent on the entire operation. The value is reset to zero by a successful call to either `psa_verify_iop_setup()` or `psa_verify_iop_abort()`.
-    A failed call to `psa_verify_iop_setup()` can also reset the value to zero.
+    After the interruptible operation has completed, the returned value is the number of *ops* spent on the entire operation. The value is reset to zero by a successful call to `psa_verify_iop_setup()`, `psa_verify_iop_setup_deferred_signature()`, or `psa_verify_iop_abort()`.
+    A failed call to either setup function can also reset the value to zero.
 
     This function can be used to tune the value passed to `psa_iop_set_max_ops()`.
 
@@ -3365,6 +3377,8 @@ An interruptible asymmetric verification operation is used as follows:
     .. retval:: PSA_ERROR_DATA_INVALID
 
     This function sets up the verification of an asymmetric signature of a message or pre-computed hash. To calculate an asymmetric signature, use an interruptible asymmetric signature operation, see :secref:`interruptible-sign`.
+    Use this function when the signature is available before the message or hash input. It supports all signature algorithms that are available through the interruptible verification operation.
+    To verify a message whose signature is available only after the message data, use `psa_verify_iop_setup_deferred_signature()` instead.
 
     After a successful call to `psa_verify_iop_setup()`, the operation is in setup state. Setup can be completed by calling `psa_verify_iop_setup_complete()` repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`. Once setup has begun, the application must eventually terminate the operation. The following events terminate an operation:
 
@@ -3372,6 +3386,64 @@ An interruptible asymmetric verification operation is used as follows:
     *   A call to `psa_verify_iop_abort()`.
 
     If `psa_verify_iop_setup()` returns an error, the operation object remains inactive, but its number of *ops* can be reset to zero.
+
+.. function:: psa_verify_iop_setup_deferred_signature
+
+    .. summary::
+        Begin the setup of an interruptible verification operation with a deferred signature.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_verify_iop_t * operation
+        The interruptible verification operation to set up. It must have been initialized as per the documentation for `psa_verify_iop_t` and not yet in use.
+    .. param:: psa_key_id_t key
+        Identifier of the key to use for the operation. It must be an asymmetric key pair or asymmetric public key. The key must permit the usage `PSA_KEY_USAGE_VERIFY_MESSAGE`.
+    .. param:: psa_algorithm_t alg
+        An asymmetric message signature algorithm that supports deferred signatures: a value of type `psa_algorithm_t` such that :code:`PSA_ALG_SIGN_SUPPORTS_DEFERRED_SIGNATURE(alg)` is true.
+
+    .. return:: psa_status_t
+    .. retval:: PSA_SUCCESS
+        Success.
+        The operation setup must now be completed by calling `psa_verify_iop_setup_complete()`.
+    .. retval:: PSA_ERROR_INVALID_HANDLE
+        ``key`` is not a valid key identifier.
+    .. retval:: PSA_ERROR_NOT_PERMITTED
+        The key does not have the `PSA_KEY_USAGE_VERIFY_MESSAGE` flag, or it does not permit the requested algorithm.
+    .. retval:: PSA_ERROR_NOT_SUPPORTED
+        The following conditions can result in this error:
+
+        *   ``alg`` is not supported, is not an asymmetric message signature algorithm, or does not support deferred signatures.
+        *   ``key`` is not supported for use with ``alg``.
+    .. retval:: PSA_ERROR_INVALID_ARGUMENT
+        The following conditions can result in this error:
+
+        *   ``alg`` is not an asymmetric message signature algorithm, or does not support deferred signatures.
+        *   ``key`` is not an asymmetric key pair, or asymmetric public key, that is compatible with ``alg``.
+    .. retval:: PSA_ERROR_BAD_STATE
+        The following conditions can result in this error:
+
+        *   The operation state is not valid: it must be inactive.
+        *   The library requires initializing by a call to `psa_crypto_init()`.
+    .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
+    .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
+    .. retval:: PSA_ERROR_CORRUPTION_DETECTED
+    .. retval:: PSA_ERROR_STORAGE_FAILURE
+    .. retval:: PSA_ERROR_DATA_CORRUPT
+    .. retval:: PSA_ERROR_DATA_INVALID
+
+    This function sets up verification of an asymmetric signature of a message when the signature is received after the message data.
+    It does not accept verification of a pre-computed hash.
+    The application must provide the signature by calling `psa_verify_iop_set_signature()` after all message input, and before calling `psa_verify_iop_complete()`.
+
+    `PSA_ALG_SIGN_SUPPORTS_DEFERRED_SIGNATURE()` can be used to determine whether a signature algorithm supports this flow.
+    An implementation can still return :code:`PSA_ERROR_NOT_SUPPORTED` if it does not support deferred-signature verification for the algorithm.
+
+    After a successful call to `psa_verify_iop_setup_deferred_signature()`, the operation is in setup state. Setup can be completed by calling `psa_verify_iop_setup_complete()` repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`. Once setup has begun, the application must eventually terminate the operation. The following events terminate an operation:
+
+    *   A successful call to `psa_verify_iop_complete()`.
+    *   A call to `psa_verify_iop_abort()`.
+
+    If this function returns an error, the operation object remains inactive, but its number of *ops* can be reset to zero.
 
 .. function:: psa_verify_iop_setup_complete
 
@@ -3407,6 +3479,7 @@ An interruptible asymmetric verification operation is used as follows:
         This is an interruptible function, and must be called repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
 
     When this function returns successfully, the operation is ready for context or data input using a call to `psa_verify_iop_set_context()`, `psa_verify_iop_hash()`, or `psa_verify_iop_update()`.
+    An operation set up with `psa_verify_iop_setup_deferred_signature()` can only accept message input using `psa_verify_iop_update()`.
     If this function returns :code:`PSA_OPERATION_INCOMPLETE`, setup is not complete, and this function must be called again to continue the operation.
     If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_verify_iop_abort()`.
 
@@ -3421,7 +3494,7 @@ An interruptible asymmetric verification operation is used as follows:
 
     .. param:: psa_verify_iop_t * operation
         The interruptible verification operation to configure.
-        The operation setup must be complete, with no hash, message, or completion input.
+        The operation setup must be complete, with no hash, message, signature, or completion input.
     .. param:: const uint8_t * context
         Buffer containing the context value.
     .. param:: size_t context_length
@@ -3433,7 +3506,7 @@ An interruptible asymmetric verification operation is used as follows:
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: setup must be complete, and no call to `psa_verify_iop_set_context()`, `psa_verify_iop_hash()`, `psa_verify_iop_update()`, or `psa_verify_iop_complete()` has been made.
+        *   The operation state is not valid: setup must be complete, and no call to `psa_verify_iop_set_context()`, `psa_verify_iop_hash()`, `psa_verify_iop_update()`, `psa_verify_iop_set_signature()`, or `psa_verify_iop_complete()` has been made.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         The following conditions can result in this error:
@@ -3468,7 +3541,7 @@ An interruptible asymmetric verification operation is used as follows:
         .. versionadded:: 1.6
 
     .. param:: psa_verify_iop_t * operation
-        The interruptible verification operation to use. The operation must have been set up, with no data input, and completion must not have started.
+        The interruptible verification operation to use. The operation must have been set up with `psa_verify_iop_setup()`, with no data input, and completion must not have started.
     .. param:: const uint8_t * hash
         The input whose signature is to be verified. This is usually the hash of a message.
 
@@ -3483,7 +3556,7 @@ An interruptible asymmetric verification operation is used as follows:
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: the operation must be set up, with no data input, and completion must not have started.
+        *   The operation state is not valid: the operation must have been set up with `psa_verify_iop_setup()`, with no data input, and completion must not have started.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_NOT_PERMITTED
         The key does not have the `PSA_KEY_USAGE_VERIFY_HASH` flag.
@@ -3521,7 +3594,7 @@ An interruptible asymmetric verification operation is used as follows:
         .. versionadded:: 1.6
 
     .. param:: psa_verify_iop_t * operation
-        The interruptible verification operation to use. The operation must have been set up, with no hash value input.
+        The interruptible verification operation to use. The operation must have been set up, with no hash value or signature input, and completion must not have started.
     .. param:: const uint8_t * input
         Buffer containing the message fragment to add to the verification.
     .. param:: size_t input_length
@@ -3533,7 +3606,7 @@ An interruptible asymmetric verification operation is used as follows:
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: the operation must be set up, with no pre-computed hash value input.
+        *   The operation state is not valid: the operation must be set up, with no pre-computed hash value or signature input, and completion must not have started.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_NOT_PERMITTED
         The key does not have the `PSA_KEY_USAGE_VERIFY_MESSAGE` flag.
@@ -3564,6 +3637,42 @@ An interruptible asymmetric verification operation is used as follows:
 
     If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_verify_iop_abort()`.
 
+.. function:: psa_verify_iop_set_signature
+
+    .. summary::
+        Provide the signature for a deferred-signature interruptible verification operation.
+
+        .. versionadded:: 1.6
+
+    .. param:: psa_verify_iop_t * operation
+        The interruptible verification operation to use. It must have been set up with `psa_verify_iop_setup_deferred_signature()`, setup must be complete, and completion must not have started.
+    .. param:: const uint8_t * signature
+        Buffer containing the signature to verify.
+    .. param:: size_t signature_length
+        Size of the ``signature`` buffer in bytes.
+
+    .. return:: psa_status_t
+    .. retval:: PSA_SUCCESS
+        Success.
+        The operation is ready for completion.
+    .. retval:: PSA_ERROR_BAD_STATE
+        The following conditions can result in this error:
+
+        *   The operation state is not valid: the operation must have been set up with `psa_verify_iop_setup_deferred_signature()`, setup must be complete, and no call to `psa_verify_iop_set_signature()` or `psa_verify_iop_complete()` may have been made.
+        *   The library requires initializing by a call to `psa_crypto_init()`.
+    .. retval:: PSA_ERROR_INVALID_ARGUMENT
+        ``signature`` is not a valid signature for the algorithm and key.
+    .. retval:: PSA_ERROR_INVALID_SIGNATURE
+        ``signature`` is not a valid signature for the algorithm and key.
+    .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
+    .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
+    .. retval:: PSA_ERROR_CORRUPTION_DETECTED
+
+    The application must call this function after all calls to `psa_verify_iop_update()`, and before the first call to `psa_verify_iop_complete()`.
+    This function provides the signature exactly once. The implementation must consume the signature before this function returns, and must not require the application to provide the signature again to complete the operation.
+
+    If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_verify_iop_abort()`.
+
 .. function:: psa_verify_iop_complete
 
     .. summary::
@@ -3572,7 +3681,7 @@ An interruptible asymmetric verification operation is used as follows:
         .. versionadded:: 1.6
 
     .. param:: psa_verify_iop_t * operation
-        The interruptible verification operation to use. The operation must be active, and setup must be complete.
+        The interruptible verification operation to use. The operation must be active, and setup must be complete. If the operation was set up with `psa_verify_iop_setup_deferred_signature()`, the signature must have been provided with `psa_verify_iop_set_signature()`.
 
     .. return:: psa_status_t
     .. retval:: PSA_SUCCESS
@@ -3585,7 +3694,7 @@ An interruptible asymmetric verification operation is used as follows:
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: the operation must be active, and setup must be complete.
+        *   The operation state is not valid: the operation must be active, setup must be complete, and a deferred-signature operation must have a signature input.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         If no data has been input to the operation, the algorithm does not allow verification of a message.
@@ -3629,7 +3738,7 @@ An interruptible asymmetric verification operation is used as follows:
     .. retval:: PSA_ERROR_BAD_STATE
         The library requires initializing by a call to `psa_crypto_init()`.
 
-    Aborting an operation frees all associated resources except for the ``operation`` structure itself. Once aborted, the operation object can be reused for another operation by calling `psa_verify_iop_setup()` again.
+    Aborting an operation frees all associated resources except for the ``operation`` structure itself. Once aborted, the operation object can be reused for another operation by calling `psa_verify_iop_setup()` or `psa_verify_iop_setup_deferred_signature()`.
 
     This function can be called at any time after the operation object has been initialized as described in `psa_verify_iop_t`.
 
@@ -3709,6 +3818,25 @@ Support macros
         A wildcard signature algorithm policy, using `PSA_ALG_ANY_HASH`, returns the same value as the signature algorithm parameterized with a valid hash algorithm.
 
     This macro identifies signature algorithms that have a context parameter, and can be used with the appropriate functions that support non-zero-length contexts.
+
+.. macro:: PSA_ALG_SIGN_SUPPORTS_DEFERRED_SIGNATURE
+    :definition: /* implementation-defined value */
+
+    .. summary::
+        Whether the specified signature algorithm supports verification with a deferred signature.
+
+        .. versionadded:: 1.6
+
+    .. param:: alg
+        A signature algorithm identifier: a value of type `psa_algorithm_t` such that :code:`PSA_ALG_IS_SIGN_MESSAGE(alg)` is true.
+
+    .. return::
+        ``1`` if ``alg`` is a signature algorithm that can verify a message when the signature is provided after the message input.
+        ``0`` if ``alg`` is a signature algorithm that requires the signature before message input.
+        This macro can return either ``0`` or ``1`` if ``alg`` is not a supported signature algorithm identifier.
+
+    This macro identifies algorithms that can be used with the deferred-signature interruptible verification flow, beginning with `psa_verify_iop_setup_deferred_signature()`.
+    It indicates algorithm compatibility only. An implementation can still return :code:`PSA_ERROR_NOT_SUPPORTED` if it does not support the deferred-signature flow for the algorithm.
 
 .. macro:: PSA_ALG_ANY_HASH
     :definition: ((psa_algorithm_t)0x020000ff)

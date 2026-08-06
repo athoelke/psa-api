@@ -224,6 +224,8 @@ typedef struct psa_custom_key_parameters_t {
 #define PSA_ALG_SHA_512_224 ((psa_algorithm_t)0x0200000c)
 #define PSA_ALG_SHA_512_256 ((psa_algorithm_t)0x0200000d)
 #define PSA_ALG_SIGN_SUPPORTS_CONTEXT(alg) /* implementation-defined value */
+#define PSA_ALG_SIGN_SUPPORTS_DEFERRED_SIGNATURE(alg) \
+    /* implementation-defined value */
 #define PSA_ALG_SLH_DSA ((psa_algorithm_t) 0x06004000)
 #define PSA_ALG_SM3 ((psa_algorithm_t)0x02000014)
 #define PSA_ALG_SP800_108_COUNTER_CMAC ((psa_algorithm_t)0x08000800)
@@ -974,12 +976,18 @@ psa_verify_iop_t psa_verify_iop_init(void);
 psa_status_t psa_verify_iop_set_context(psa_verify_iop_t * operation,
                                         const uint8_t * context,
                                         size_t context_length);
+psa_status_t psa_verify_iop_set_signature(psa_verify_iop_t * operation,
+                                          const uint8_t * signature,
+                                          size_t signature_length);
 psa_status_t psa_verify_iop_setup(psa_verify_iop_t * operation,
                                   psa_key_id_t key,
                                   psa_algorithm_t alg,
                                   const uint8_t * signature,
                                   size_t signature_length);
 psa_status_t psa_verify_iop_setup_complete(psa_verify_iop_t * operation);
+psa_status_t psa_verify_iop_setup_deferred_signature(psa_verify_iop_t * operation,
+                                                     psa_key_id_t key,
+                                                     psa_algorithm_t alg);
 psa_status_t psa_verify_iop_update(psa_verify_iop_t * operation,
                                    const uint8_t * input,
                                    size_t input_length);
