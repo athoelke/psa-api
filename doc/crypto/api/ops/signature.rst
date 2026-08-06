@@ -3107,12 +3107,13 @@ An interruptible asymmetric signature operation is used as follows:
         The following conditions can result in this error:
 
         *   The algorithm does not allow signing of a message.
-        *   The selected algorithm or implementation permits only one message fragment, and `psa_sign_iop_update()` has already been called.
+        *   The selected algorithm permits only one message fragment, and `psa_sign_iop_update()` has already been called.
         *   The total input for the operation is too large for the signature algorithm.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
         The following conditions can result in this error:
 
         *   The implementation does not support signing of a message.
+        *   The selected algorithm or implementation permits only one message fragment, and `psa_sign_iop_update()` has already been called.
         *   The total input for the operation is too large for the implementation.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
@@ -3540,12 +3541,13 @@ An interruptible asymmetric verification operation is used as follows:
         The following conditions can result in this error:
 
         *   The algorithm does not allow verification of a message.
-        *   The selected algorithm or implementation permits only one message fragment, and `psa_verify_iop_update()` has already been called.
+        *   The selected algorithm permits only one message fragment, and `psa_verify_iop_update()` has already been called.
         *   The total input for the operation is too large for the signature algorithm.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
         The following conditions can result in this error:
 
-        *   The implementation does not support signing of a message.
+        *   The implementation does not support verification of a message.
+        *   The selected algorithm or implementation permits only one message fragment, and `psa_verify_iop_update()` has already been called.
         *   The total input for the operation is too large for the implementation.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
