@@ -1012,6 +1012,9 @@ An interruptible key-generation operation is used as follows:
     This function sets up the random generation of a new key.
     The location, policy, type, and size of the key are taken from ``attributes``.
 
+    If a persistent key identifier already exists, then it is unspecified whether `psa_generate_key_iop_setup()` returns :code:`PSA_ERROR_ALREADY_EXISTS`, or whether `psa_generate_key_iop_complete()` returns this error.
+    Applications must be prepared for either function to report this error.
+
     Implementations must reject an attempt to generate a key of size ``0``.
 
     The following type-specific considerations apply:
@@ -1110,6 +1113,9 @@ An interruptible key-generation operation is used as follows:
 
     .. note::
         This is an interruptible function, and must be called repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
+
+    If a persistent key identifier already exists, then it is unspecified whether `psa_generate_key_iop_setup()` returns :code:`PSA_ERROR_ALREADY_EXISTS`, or whether this function returns this error.
+    Applications must be prepared for either function to report this error.
 
     When this function returns successfully, the new key is returned in ``key``, and the operation becomes inactive.
     If this function returns :code:`PSA_OPERATION_INCOMPLETE`, no key is returned, and this function must be called again to continue the operation.
