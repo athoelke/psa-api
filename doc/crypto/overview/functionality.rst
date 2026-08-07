@@ -335,14 +335,14 @@ The interruptible signature and verification APIs are separate from the ordinary
 
 These operations can have more than one step at which the application calls the same function repeatedly until it returns a status other than :code:`PSA_OPERATION_INCOMPLETE`.
 
-:numref:`fig-interruptible-signature` shows the state model used for interruptible asymmetric signature and verification operations.
+:numref:`fig-interruptible-signature` shows the state model used for interruptible signature and verification operations.
 
 .. figure::  /figure/interruptible_operation_complex.*
     :name: fig-interruptible-signature
 
     State model for an interruptible signature operation
 
-The sequence has the common interruptible-operation steps, with a setup phase that can itself require bounded computation and an optional input phase.
+The sequence has the common interruptible-operation steps, with a setup phase that can itself require bounded computation and an optional input phase. The following flow adds detail for an interruptible signature operation. Steps without accompanying text are the same as in the preceding interruptible-operation flow:
 
 1.  **Allocate**
 
@@ -363,8 +363,8 @@ The sequence has the common interruptible-operation steps, with a setup phase th
 
     An application needs to repeat this step until the setup completes with success or an error status.
 
-#.  **Input:** Provide a pre-computed hash or message data to an object in the *input* state.
-    The signature APIs provide a hash-input function and an update function for message data.
+#.  **Input:** Provide data to an object in the *input* state.
+    The interruptible signature and verification APIs provide functions to set the context, input a pre-computed message hash or a message fragment, and provide a deferred signature. See the individual interruptible operations for the specific ordering requirements on input data.
 
     On success, the operation object remains in *input* state.
     On failure, the operation object will enter an *error* state.

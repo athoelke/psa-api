@@ -646,9 +646,9 @@ The development of EdDSA resulted in a total of five distinct algorithms:
         The output signature is a 114-byte string: the concatenation of :math:`R` and :math:`S` as defined by :RFC:`8032#5.2.6`.
 
     .. note::
-        When using an interruptible asymmetric signature operation with this algorithm, it is not possible to fragment the message data when calculating the signature. The message must be passed in a single call to `psa_sign_iop_update()`.
+        When using an interruptible signature operation with this algorithm, it is not possible to fragment the message data when calculating the signature. The message must be passed in a single call to `psa_sign_iop_update()`.
 
-        However, it is possible to fragment the message data when verifying a signature using an interruptible asymmetric verification operation.
+        However, it is possible to fragment the message data when verifying a signature using an interruptible verification operation.
 
     .. note::
         To sign or verify the pre-computed hash of a message using EdDSA, the HashEdDSA algorithms (`PSA_ALG_ED25519PH` and `PSA_ALG_ED448PH`) can be used.
@@ -2794,11 +2794,11 @@ Multi-part asymmetric signature operations
 Interruptible asymmetric signature
 ----------------------------------
 
-The interruptible asymmetric signature operation calculates the signature of a message, or pre-computed hash, in an interruptible manner. For example, this can enable an application to remain responsive in an execution environment that does not provide multi-tasking.
+The interruptible signature operation calculates the signature of a message, or pre-computed hash, in an interruptible manner. For example, this can enable an application to remain responsive in an execution environment that does not provide multi-tasking.
 
-An interruptible asymmetric signature operation is used as follows:
+An interruptible signature operation is used as follows:
 
-1.  Allocate an interruptible asymmetric signature operation object, of type `psa_sign_iop_t`, which will be passed to all the functions listed here.
+1.  Allocate an interruptible signature operation object, of type `psa_sign_iop_t`, which will be passed to all the functions listed here.
 #.  Initialize the operation object with one of the methods described in the documentation for `psa_sign_iop_t`, for example, `PSA_SIGN_IOP_INIT`.
 #.  Call `psa_sign_iop_setup()` to specify the algorithm and key.
 #.  Call `psa_sign_iop_setup_complete()` to complete the setup, until this function returns a status code other than :code:`PSA_OPERATION_INCOMPLETE`.
@@ -2814,11 +2814,11 @@ An interruptible asymmetric signature operation is used as follows:
 .. typedef:: /* implementation-defined type */ psa_sign_iop_t
 
     .. summary::
-        The type of the state data structure for an interruptible asymmetric signature operation.
+        The type of the state data structure for an interruptible signature operation.
 
         .. versionadded:: 1.6
 
-    Before calling any function on an interruptible asymmetric signature operation object, the application must initialize it by any of the following means:
+    Before calling any function on an interruptible signature operation object, the application must initialize it by any of the following means:
 
     *   Set the object to all-bits-zero, for example:
 
@@ -2852,14 +2852,14 @@ An interruptible asymmetric signature operation is used as follows:
     :definition: /* implementation-defined value */
 
     .. summary::
-        This macro evaluates to an initializer for an interruptible asymmetric signature operation object of type `psa_sign_iop_t`.
+        This macro evaluates to an initializer for an interruptible signature operation object of type `psa_sign_iop_t`.
 
         .. versionadded:: 1.6
 
 .. function:: psa_sign_iop_init
 
     .. summary::
-        Return an initial value for an interruptible asymmetric signature operation object.
+        Return an initial value for an interruptible signature operation object.
 
         .. versionadded:: 1.6
 
@@ -2868,12 +2868,12 @@ An interruptible asymmetric signature operation is used as follows:
 .. function:: psa_sign_iop_get_num_ops
 
     .. summary::
-        Get the number of *ops* that an interruptible asymmetric signature operation has taken so far.
+        Get the number of *ops* that an interruptible signature operation has taken so far.
 
         .. versionadded:: 1.6
 
     .. param:: psa_sign_iop_t * operation
-        The interruptible asymmetric signature operation to inspect.
+        The interruptible signature operation to inspect.
 
     .. return:: uint32_t
         Number of *ops* that the operation has taken so far.
@@ -2888,12 +2888,12 @@ An interruptible asymmetric signature operation is used as follows:
 .. function:: psa_sign_iop_setup
 
     .. summary::
-        Begin the setup of an interruptible asymmetric signature operation.
+        Begin the setup of an interruptible signature operation.
 
         .. versionadded:: 1.6
 
     .. param:: psa_sign_iop_t * operation
-        The interruptible asymmetric signature operation to set up. It must have been initialized as per the documentation for `psa_sign_iop_t` and not yet in use.
+        The interruptible signature operation to set up. It must have been initialized as per the documentation for `psa_sign_iop_t` and not yet in use.
     .. param:: psa_key_id_t key
         Identifier of the key to use for the operation. It must be an asymmetric key pair. The key must either permit the usage `PSA_KEY_USAGE_SIGN_HASH` or `PSA_KEY_USAGE_SIGN_MESSAGE`.
     .. param:: psa_algorithm_t alg
@@ -2933,7 +2933,7 @@ An interruptible asymmetric signature operation is used as follows:
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_INSUFFICIENT_ENTROPY
 
-    This function sets up the calculation of an asymmetric signature of a message or pre-computed hash. To verify an asymmetric signature against an expected value, use an interruptible asymmetric verification operation, see :secref:`interruptible-verify`.
+    This function sets up the calculation of an asymmetric signature of a message or pre-computed hash. To verify an asymmetric signature against an expected value, use an interruptible verification operation, see :secref:`interruptible-verify`.
 
     After a successful call to `psa_sign_iop_setup()`, the operation is in setup state. Setup can be completed by calling `psa_sign_iop_setup_complete()` repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`. Once setup has begun, the application must eventually terminate the operation. The following events terminate an operation:
 
@@ -2945,12 +2945,12 @@ An interruptible asymmetric signature operation is used as follows:
 .. function:: psa_sign_iop_setup_complete
 
     .. summary::
-        Finish setting up an interruptible asymmetric signature operation.
+        Finish setting up an interruptible signature operation.
 
         .. versionadded:: 1.6
 
     .. param:: psa_sign_iop_t * operation
-        The interruptible asymmetric signature operation to use. The operation must be in the process of being set up.
+        The interruptible signature operation to use. The operation must be in the process of being set up.
 
     .. return:: psa_status_t
     .. retval:: PSA_SUCCESS
@@ -2975,7 +2975,9 @@ An interruptible asymmetric signature operation is used as follows:
         This is an interruptible function, and must be called repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
 
     When this function returns successfully, the operation is ready for context or data input using a call to `psa_sign_iop_set_context()`, `psa_sign_iop_hash()`, or `psa_sign_iop_update()`.
+
     If this function returns :code:`PSA_OPERATION_INCOMPLETE`, setup is not complete, and this function must be called again to continue the operation.
+
     If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_sign_iop_abort()`.
 
     The amount of calculation performed in a single call to this function is determined by the maximum *ops* setting. See `psa_iop_set_max_ops()`.
@@ -2989,7 +2991,7 @@ An interruptible asymmetric signature operation is used as follows:
 
     .. param:: psa_sign_iop_t * operation
         The interruptible signature operation to configure.
-        The operation setup must be complete, with no hash, message, or completion input.
+        The operation setup must be complete, with no context, hash, or message input, and completion must not have started.
     .. param:: const uint8_t * context
         Buffer containing the context value.
     .. param:: size_t context_length
@@ -3031,12 +3033,12 @@ An interruptible asymmetric signature operation is used as follows:
 .. function:: psa_sign_iop_hash
 
     .. summary::
-        Input a pre-computed hash to an interruptible asymmetric signature operation.
+        Input a pre-computed hash to an interruptible signature operation.
 
         .. versionadded:: 1.6
 
     .. param:: psa_sign_iop_t * operation
-        The interruptible asymmetric signature operation to use. The operation must have been set up, with no data input, and completion must not have started.
+        The interruptible signature operation to use. The operation must have been set up, with no data input, and completion must not have started.
     .. param:: const uint8_t * hash
         The input to sign. This is usually the hash of a message.
 
@@ -3051,7 +3053,7 @@ An interruptible asymmetric signature operation is used as follows:
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: the operation must be set up, with no data input, and completion must not have started.
+        *   The operation state is not valid: setup must be complete, and no call to `psa_sign_iop_hash()`, `psa_sign_iop_update()`, or `psa_sign_iop_complete()` has been made.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_NOT_PERMITTED
         The key does not have the `PSA_KEY_USAGE_SIGN_HASH` flag.
@@ -3084,12 +3086,12 @@ An interruptible asymmetric signature operation is used as follows:
 .. function:: psa_sign_iop_update
 
     .. summary::
-        Add a message fragment to an interruptible asymmetric signature operation.
+        Add a message fragment to an interruptible signature operation.
 
         .. versionadded:: 1.6
 
     .. param:: psa_sign_iop_t * operation
-        The interruptible asymmetric signature operation to use. The operation must have been set up, with no hash value input.
+        The interruptible signature operation to use. The operation must have been set up, with no pre-computed hash value input, and completion must not have started.
     .. param:: const uint8_t * input
         Buffer containing the message fragment to add to the signature calculation.
     .. param:: size_t input_length
@@ -3101,7 +3103,7 @@ An interruptible asymmetric signature operation is used as follows:
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: the operation must be set up, with no pre-computed hash value input.
+        *   The operation state is not valid: setup must be complete, and no call to `psa_sign_iop_hash()` or `psa_sign_iop_complete()` has been made.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_NOT_PERMITTED
         The key does not have the `PSA_KEY_USAGE_SIGN_MESSAGE` flag.
@@ -3136,12 +3138,12 @@ An interruptible asymmetric signature operation is used as follows:
 .. function:: psa_sign_iop_complete
 
     .. summary::
-        Progress an interruptible asymmetric signature calculation.
+        Progress an interruptible signature calculation.
 
         .. versionadded:: 1.6
 
     .. param:: psa_sign_iop_t * operation
-        The interruptible asymmetric signature operation to use. The operation must be active, and setup must be complete.
+        The interruptible signature operation to use. The operation must be active, and setup must be complete.
     .. param:: uint8_t * signature
         Buffer where the signature is to be written.
     .. param:: size_t signature_size
@@ -3185,7 +3187,9 @@ An interruptible asymmetric signature operation is used as follows:
 
     When this function returns successfully, the signature is returned in ``signature``, and the operation becomes inactive.
     If neither a pre-computed hash nor a message fragment has been input, the signature is of the zero-length message.
+
     If this function returns :code:`PSA_OPERATION_INCOMPLETE`, no signature is returned, and this function must be called again to continue the operation.
+
     If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_sign_iop_abort()`.
 
     The amount of calculation performed in a single call to this function is determined by the maximum *ops* setting. See `psa_iop_set_max_ops()`.
@@ -3193,7 +3197,7 @@ An interruptible asymmetric signature operation is used as follows:
 .. function:: psa_sign_iop_abort
 
     .. summary::
-        Abort an interruptible asymmetric signature operation.
+        Abort an interruptible signature operation.
 
         .. versionadded:: 1.6
 
@@ -3221,11 +3225,11 @@ An interruptible asymmetric signature operation is used as follows:
 Interruptible asymmetric verification
 -------------------------------------
 
-The interruptible asymmetric verification operation verifies the signature of a message, or pre-computed hash, in an interruptible manner. For example, this can enable an application to remain responsive in an execution environment that does not provide multi-tasking.
+The interruptible verification operation verifies the signature of a message, or pre-computed hash, in an interruptible manner. For example, this can enable an application to remain responsive in an execution environment that does not provide multi-tasking.
 
-An interruptible asymmetric verification operation is used as follows:
+An interruptible verification operation is used as follows:
 
-1.  Allocate an interruptible asymmetric verification operation object, of type `psa_verify_iop_t`, which will be passed to all the functions listed here.
+1.  Allocate an interruptible verification operation object, of type `psa_verify_iop_t`, which will be passed to all the functions listed here.
 #.  Initialize the operation object with one of the methods described in the documentation for `psa_verify_iop_t`, for example, `PSA_VERIFY_IOP_INIT`.
 #.  Call `psa_verify_iop_setup()` to specify the algorithm, key, and the signature to verify.
 #.  Call `psa_verify_iop_setup_complete()` to complete the setup, until this function returns a status code other than :code:`PSA_OPERATION_INCOMPLETE`.
@@ -3237,7 +3241,7 @@ An interruptible asymmetric verification operation is used as follows:
 #.  Call `psa_verify_iop_complete()` to finish verifying the signature value, until this function returns a status code other than :code:`PSA_OPERATION_INCOMPLETE`.
 #.  If an error occurs at any stage, or to terminate the operation early, call `psa_verify_iop_abort()`.
 
-To verify a message received from a streaming protocol that provides the signature after the message data, use the deferred-signature flow instead. The first two steps are the same as above:
+To verify a message received from a streaming protocol that provides the signature after the message data, use the deferred-signature flow instead. The first two steps are the same as above, and then:
 
 3.  Call `psa_verify_iop_setup_deferred_signature()` to specify the algorithm and key.
 #.  Call `psa_verify_iop_setup_complete()` to complete the setup, until this function returns a status code other than :code:`PSA_OPERATION_INCOMPLETE`.
@@ -3251,11 +3255,11 @@ To verify a message received from a streaming protocol that provides the signatu
 .. typedef:: /* implementation-defined type */ psa_verify_iop_t
 
     .. summary::
-        The type of the state data structure for an interruptible asymmetric verification operation.
+        The type of the state data structure for an interruptible verification operation.
 
         .. versionadded:: 1.6
 
-    Before calling any function on an interruptible asymmetric verification operation object, the application must initialize it by any of the following means:
+    Before calling any function on an interruptible verification operation object, the application must initialize it by any of the following means:
 
     *   Set the object to all-bits-zero, for example:
 
@@ -3289,14 +3293,14 @@ To verify a message received from a streaming protocol that provides the signatu
     :definition: /* implementation-defined value */
 
     .. summary::
-        This macro evaluates to an initializer for an interruptible asymmetric verification operation object of type `psa_verify_iop_t`.
+        This macro evaluates to an initializer for an interruptible verification operation object of type `psa_verify_iop_t`.
 
         .. versionadded:: 1.6
 
 .. function:: psa_verify_iop_init
 
     .. summary::
-        Return an initial value for an interruptible asymmetric verification operation object.
+        Return an initial value for an interruptible verification operation object.
 
         .. versionadded:: 1.6
 
@@ -3305,12 +3309,12 @@ To verify a message received from a streaming protocol that provides the signatu
 .. function:: psa_verify_iop_get_num_ops
 
     .. summary::
-        Get the number of *ops* that an interruptible asymmetric verification operation has taken so far.
+        Get the number of *ops* that an interruptible verification operation has taken so far.
 
         .. versionadded:: 1.6
 
     .. param:: psa_verify_iop_t * operation
-        The interruptible asymmetric verification operation to inspect.
+        The interruptible verification operation to inspect.
 
     .. return:: uint32_t
         Number of *ops* that the operation has taken so far.
@@ -3325,7 +3329,7 @@ To verify a message received from a streaming protocol that provides the signatu
 .. function:: psa_verify_iop_setup
 
     .. summary::
-        Begin the setup of an interruptible asymmetric verification operation.
+        Begin the setup of an interruptible verification operation.
 
         .. versionadded:: 1.6
 
@@ -3376,7 +3380,8 @@ To verify a message received from a streaming protocol that provides the signatu
     .. retval:: PSA_ERROR_DATA_CORRUPT
     .. retval:: PSA_ERROR_DATA_INVALID
 
-    This function sets up the verification of an asymmetric signature of a message or pre-computed hash. To calculate an asymmetric signature, use an interruptible asymmetric signature operation, see :secref:`interruptible-sign`.
+    This function sets up the verification of an asymmetric signature of a message or pre-computed hash. To calculate an asymmetric signature, use an interruptible signature operation, see :secref:`interruptible-sign`.
+
     Use this function when the signature is available before the message or hash input. It supports all signature algorithms that are available through the interruptible verification operation.
     To verify a message whose signature is available only after the message data, use `psa_verify_iop_setup_deferred_signature()` instead.
 
@@ -3399,7 +3404,7 @@ To verify a message received from a streaming protocol that provides the signatu
     .. param:: psa_key_id_t key
         Identifier of the key to use for the operation. It must be an asymmetric key pair or asymmetric public key. The key must permit the usage `PSA_KEY_USAGE_VERIFY_MESSAGE`.
     .. param:: psa_algorithm_t alg
-        An asymmetric message signature algorithm that supports deferred signatures: a value of type `psa_algorithm_t` such that :code:`PSA_ALG_SIGN_SUPPORTS_DEFERRED_SIGNATURE(alg)` is true.
+        An asymmetric message signature algorithm that supports deferred signatures: a value of type `psa_algorithm_t` such that :code:`PSA_ALG_IS_SIGN_MESSAGE(alg)` and :code:`PSA_ALG_SIGN_SUPPORTS_DEFERRED_SIGNATURE(alg)` are true.
 
     .. return:: psa_status_t
     .. retval:: PSA_SUCCESS
@@ -3436,7 +3441,6 @@ To verify a message received from a streaming protocol that provides the signatu
     The application must provide the signature by calling `psa_verify_iop_set_signature()` after all message input, and before calling `psa_verify_iop_complete()`.
 
     `PSA_ALG_SIGN_SUPPORTS_DEFERRED_SIGNATURE()` can be used to determine whether a signature algorithm supports this flow.
-    An implementation can still return :code:`PSA_ERROR_NOT_SUPPORTED` if it does not support deferred-signature verification for the algorithm.
 
     After a successful call to `psa_verify_iop_setup_deferred_signature()`, the operation is in setup state. Setup can be completed by calling `psa_verify_iop_setup_complete()` repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`. Once setup has begun, the application must eventually terminate the operation. The following events terminate an operation:
 
@@ -3448,7 +3452,7 @@ To verify a message received from a streaming protocol that provides the signatu
 .. function:: psa_verify_iop_setup_complete
 
     .. summary::
-        Finish setting up an interruptible asymmetric verification operation.
+        Finish setting up an interruptible verification operation.
 
         .. versionadded:: 1.6
 
@@ -3478,9 +3482,10 @@ To verify a message received from a streaming protocol that provides the signatu
     .. note::
         This is an interruptible function, and must be called repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
 
-    When this function returns successfully, the operation is ready for context or data input using a call to `psa_verify_iop_set_context()`, `psa_verify_iop_hash()`, or `psa_verify_iop_update()`.
-    An operation set up with `psa_verify_iop_setup_deferred_signature()` can only accept message input using `psa_verify_iop_update()`.
+    When this function returns successfully, the operation is ready for the next function in the selected verification flow. Depending on the setup function and the choice of hash or message input, the next call can be `psa_verify_iop_set_context()`, `psa_verify_iop_hash()`, `psa_verify_iop_update()`, `psa_verify_iop_set_signature()`, or `psa_verify_iop_complete()`. See the operation flows at the start of :secref:`interruptible-verify` for the permitted call sequences.
+
     If this function returns :code:`PSA_OPERATION_INCOMPLETE`, setup is not complete, and this function must be called again to continue the operation.
+
     If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_verify_iop_abort()`.
 
     The amount of calculation performed in a single call to this function is determined by the maximum *ops* setting. See `psa_iop_set_max_ops()`.
@@ -3494,7 +3499,7 @@ To verify a message received from a streaming protocol that provides the signatu
 
     .. param:: psa_verify_iop_t * operation
         The interruptible verification operation to configure.
-        The operation setup must be complete, with no hash, message, signature, or completion input.
+        The operation setup must be complete, with no context, hash, message, or deferred signature input, and completion must not have started.
     .. param:: const uint8_t * context
         Buffer containing the context value.
     .. param:: size_t context_length
@@ -3536,7 +3541,7 @@ To verify a message received from a streaming protocol that provides the signatu
 .. function:: psa_verify_iop_hash
 
     .. summary::
-        Input a pre-computed hash to an interruptible asymmetric verification operation.
+        Input a pre-computed hash to an interruptible verification operation.
 
         .. versionadded:: 1.6
 
@@ -3556,7 +3561,7 @@ To verify a message received from a streaming protocol that provides the signatu
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: the operation must have been set up with `psa_verify_iop_setup()`, with no data input, and completion must not have started.
+        *   The operation state is not valid: the operation must have been set up with `psa_verify_iop_setup()`, and no call to `psa_verify_iop_hash()`, `psa_verify_iop_update()`, or `psa_verify_iop_complete()` has been made.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_NOT_PERMITTED
         The key does not have the `PSA_KEY_USAGE_VERIFY_HASH` flag.
@@ -3575,7 +3580,7 @@ To verify a message received from a streaming protocol that provides the signatu
     .. retval:: PSA_ERROR_DATA_CORRUPT
     .. retval:: PSA_ERROR_DATA_INVALID
 
-    The application must complete the setup of the operation before calling this function.
+    The application must complete the setup of the operation before calling this function. A pre-computed hash can only be used with an interruptible verification operation that provides the signature as part of the set up, using `psa_verify_iop_setup()`.
 
     For hash-and-sign signature algorithms, the ``hash`` input to this function is the hash of the message to verify. The algorithm used to calculate this hash is encoded in the signature algorithm. For such algorithms, ``hash_length`` must equal the length of the hash output: :code:`hash_length == PSA_HASH_LENGTH(PSA_ALG_GET_HASH(alg))`.
 
@@ -3589,12 +3594,12 @@ To verify a message received from a streaming protocol that provides the signatu
 .. function:: psa_verify_iop_update
 
     .. summary::
-        Add a message fragment to an interruptible asymmetric verification operation.
+        Add a message fragment to an interruptible verification operation.
 
         .. versionadded:: 1.6
 
     .. param:: psa_verify_iop_t * operation
-        The interruptible verification operation to use. The operation must have been set up, with no hash value or signature input, and completion must not have started.
+        The interruptible verification operation to use. The operation must have been set up, with no pre-computed hash value or signature input, and completion must not have started.
     .. param:: const uint8_t * input
         Buffer containing the message fragment to add to the verification.
     .. param:: size_t input_length
@@ -3606,7 +3611,7 @@ To verify a message received from a streaming protocol that provides the signatu
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: the operation must be set up, with no pre-computed hash value or signature input, and completion must not have started.
+        *   The operation state is not valid: setup must be complete, and no call to `psa_verify_iop_hash()`, `psa_verify_iop_set_signature()`, or `psa_verify_iop_complete()` has been made.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_NOT_PERMITTED
         The key does not have the `PSA_KEY_USAGE_VERIFY_MESSAGE` flag.
@@ -3658,7 +3663,7 @@ To verify a message received from a streaming protocol that provides the signatu
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: the operation must have been set up with `psa_verify_iop_setup_deferred_signature()`, setup must be complete, and no call to `psa_verify_iop_set_signature()` or `psa_verify_iop_complete()` may have been made.
+        *   The operation state is not valid: the operation must have been set up with `psa_verify_iop_setup_deferred_signature()`, setup must be complete, and no call to `psa_verify_iop_set_signature()` or `psa_verify_iop_complete()` has been made.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         ``signature`` is not a valid signature for the algorithm and key.
@@ -3668,15 +3673,16 @@ To verify a message received from a streaming protocol that provides the signatu
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
 
+    The application must complete the setup of the operation before calling this function. This function is for use with the deferred-signature flow, when the operation is set up by calling `psa_verify_iop_setup_deferred_signature()`.
+
     The application must call this function after all calls to `psa_verify_iop_update()`, and before the first call to `psa_verify_iop_complete()`.
-    This function provides the signature exactly once. The implementation must consume the signature before this function returns, and must not require the application to provide the signature again to complete the operation.
 
     If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_verify_iop_abort()`.
 
 .. function:: psa_verify_iop_complete
 
     .. summary::
-        Progress an interruptible asymmetric signature verification.
+        Progress an interruptible signature verification.
 
         .. versionadded:: 1.6
 
@@ -3714,7 +3720,9 @@ To verify a message received from a streaming protocol that provides the signatu
 
     When this function returns successfully, the operation becomes inactive.
     If neither a pre-computed hash nor a message fragment has been input, the signature is verified against the zero-length message.
+
     If this function returns :code:`PSA_OPERATION_INCOMPLETE`, this function must be called again to continue the operation.
+
     If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_verify_iop_abort()`.
 
     The amount of calculation performed in a single call to this function is determined by the maximum *ops* setting. See `psa_iop_set_max_ops()`.
@@ -3722,7 +3730,7 @@ To verify a message received from a streaming protocol that provides the signatu
 .. function:: psa_verify_iop_abort
 
     .. summary::
-        Abort an interruptible asymmetric verification operation.
+        Abort an interruptible verification operation.
 
         .. versionadded:: 1.6
 
@@ -3828,7 +3836,7 @@ Support macros
         .. versionadded:: 1.6
 
     .. param:: alg
-        A signature algorithm identifier: a value of type `psa_algorithm_t` such that :code:`PSA_ALG_IS_SIGN_MESSAGE(alg)` is true.
+        A signature algorithm identifier: a value of type `psa_algorithm_t` such that :code:`PSA_ALG_IS_SIGN(alg)` is true.
 
     .. return::
         ``1`` if ``alg`` is a signature algorithm that can verify a message when the signature is provided after the message input.
