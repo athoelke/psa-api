@@ -3237,9 +3237,9 @@ An interruptible asymmetric verification operation is used as follows:
 #.  Call `psa_verify_iop_complete()` to finish verifying the signature value, until this function returns a status code other than :code:`PSA_OPERATION_INCOMPLETE`.
 #.  If an error occurs at any stage, or to terminate the operation early, call `psa_verify_iop_abort()`.
 
-To verify a message received from a streaming protocol that provides the signature after the message data, use the deferred-signature flow instead:
+To verify a message received from a streaming protocol that provides the signature after the message data, use the deferred-signature flow instead. The first two steps are the same as above:
 
-1.  Call `psa_verify_iop_setup_deferred_signature()` to specify the algorithm and key.
+3.  Call `psa_verify_iop_setup_deferred_signature()` to specify the algorithm and key.
 #.  Call `psa_verify_iop_setup_complete()` to complete the setup, until this function returns a status code other than :code:`PSA_OPERATION_INCOMPLETE`.
 #.  Optionally, call `psa_verify_iop_set_context()` to provide a context.
 #.  Call `psa_verify_iop_update()` zero, one or more times, passing a fragment of the message each time.
