@@ -849,7 +849,7 @@ For example, RSA keys, and elliptic curve public keys.
 For such keys, an interruptible key-generation operation can be used instead of calling `psa_generate_key()`, in applications that have bounded execution time requirements for use cases that require key generation.
 
 By default, this operation uses the default production parameters of `psa_generate_key()`.
-To use custom production parameters, call `psa_generate_key_iop_custom()` after `psa_generate_key_iop_setup()` and before `psa_generate_key_iop_complete()`.
+To use custom production parameters, call `psa_generate_key_iop_custom()` after `psa_generate_key_iop_start()` and before `psa_generate_key_iop_complete()`.
 
 .. note::
     An implementation of the |API| does not need to provide incremental generation for all key types supported by the implementation.
@@ -859,7 +859,7 @@ An interruptible key-generation operation is used as follows:
 
 1.  Allocate an interruptible key-generation operation object, of type `psa_generate_key_iop_t`, which will be passed to all the functions listed here.
 #.  Initialize the operation object with one of the methods described in the documentation for `psa_generate_key_iop_t`, for example, `PSA_GENERATE_KEY_IOP_INIT`.
-#.  Call `psa_generate_key_iop_setup()` to specify the key attributes.
+#.  Call `psa_generate_key_iop_start()` to specify the key attributes.
 #.  Optionally, call `psa_generate_key_iop_custom()` to specify custom production parameters.
 #.  Call `psa_generate_key_iop_complete()` to finish generating the key, until this function returns a status code other than :code:`PSA_OPERATION_INCOMPLETE`.
 #.  If an error occurs at any stage, or to terminate the operation early, call `psa_generate_key_iop_abort()`.
@@ -933,14 +933,14 @@ An interruptible key-generation operation is used as follows:
         Number of *ops* that the operation has taken so far.
 
     After the interruptible operation has completed, the returned value is the number of *ops* spent on the entire operation.
-    The value is reset to zero by a successful call to either `psa_generate_key_iop_setup()` or `psa_generate_key_iop_abort()`.
-    A failed call to `psa_generate_key_iop_setup()` can also reset the value to zero.
+    The value is reset to zero by a successful call to either `psa_generate_key_iop_start()` or `psa_generate_key_iop_abort()`.
+    A failed call to `psa_generate_key_iop_start()` can also reset the value to zero.
 
     This function can be used to tune the value passed to `psa_iop_set_max_ops()`.
 
     The value is undefined if the operation object has not been initialized.
 
-.. function:: psa_generate_key_iop_setup
+.. function:: psa_generate_key_iop_start
 
     .. summary::
         Start an interruptible operation to generate a key or key pair.
@@ -948,7 +948,7 @@ An interruptible key-generation operation is used as follows:
         .. versionadded:: 1.6
 
     .. param:: psa_generate_key_iop_t * operation
-        The interruptible key-generation operation to set up.
+        The interruptible key-generation operation to start.
         It must have been initialized as per the documentation for `psa_generate_key_iop_t`, and be inactive.
     .. param:: const psa_key_attributes_t * attributes
         The attributes for the new key.
@@ -1009,10 +1009,10 @@ An interruptible key-generation operation is used as follows:
     .. retval:: PSA_ERROR_DATA_CORRUPT
     .. retval:: PSA_ERROR_DATA_INVALID
 
-    This function sets up the random generation of a new key.
+    This function starts the random generation of a new key.
     The location, policy, type, and size of the key are taken from ``attributes``.
 
-    If a persistent key identifier already exists, then it is unspecified whether `psa_generate_key_iop_setup()` returns :code:`PSA_ERROR_ALREADY_EXISTS`, or whether `psa_generate_key_iop_complete()` returns this error.
+    If a persistent key identifier already exists, then it is unspecified whether `psa_generate_key_iop_start()` returns :code:`PSA_ERROR_ALREADY_EXISTS`, or whether `psa_generate_key_iop_complete()` returns this error.
     Applications must be prepared for either function to report this error.
 
     Implementations must reject an attempt to generate a key of size ``0``.
@@ -1022,14 +1022,14 @@ An interruptible key-generation operation is used as follows:
     *   For RSA keys (`PSA_KEY_TYPE_RSA_KEY_PAIR`), the public exponent is 65537.
         The modulus is a product of two probabilistic primes between :math:`2^{n-1}` and :math:`2^n` where :math:`n` is the bit size specified in the attributes.
 
-    After a successful call to `psa_generate_key_iop_setup()`, the operation is active.
+    After a successful call to `psa_generate_key_iop_start()`, the operation is active.
     The operation can be configured with custom production parameters by calling `psa_generate_key_iop_custom()`, or completed by calling `psa_generate_key_iop_complete()` repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
     Once active, the application must eventually terminate the operation. The following events terminate an operation:
 
     *   A successful call to `psa_generate_key_iop_complete()`.
     *   A call to `psa_generate_key_iop_abort()`.
 
-    If `psa_generate_key_iop_setup()` returns an error, the operation object remains inactive, but its number of *ops* can be reset to zero.
+    If `psa_generate_key_iop_start()` returns an error, the operation object remains inactive, but its number of *ops* can be reset to zero.
 
 .. function:: psa_generate_key_iop_custom
 
@@ -1065,7 +1065,7 @@ An interruptible key-generation operation is used as follows:
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
 
     This function sets custom production parameters for a key-generation operation.
-    The application must call `psa_generate_key_iop_setup()` before calling this function.
+    The application must call `psa_generate_key_iop_start()` before calling this function.
     It may call this function at most once for an operation.
 
     If this function is not called, the operation uses the default production parameters `PSA_CUSTOM_KEY_PARAMETERS_INIT` with ``custom_data_length == 0``.
@@ -1114,7 +1114,7 @@ An interruptible key-generation operation is used as follows:
     .. note::
         This is an interruptible function, and must be called repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
 
-    If a persistent key identifier already exists, then it is unspecified whether `psa_generate_key_iop_setup()` returns :code:`PSA_ERROR_ALREADY_EXISTS`, or whether this function returns this error.
+    If a persistent key identifier already exists, then it is unspecified whether `psa_generate_key_iop_start()` returns :code:`PSA_ERROR_ALREADY_EXISTS`, or whether this function returns this error.
     Applications must be prepared for either function to report this error.
 
     When this function returns successfully, the new key is returned in ``key``, and the operation becomes inactive.
@@ -1143,11 +1143,11 @@ An interruptible key-generation operation is used as follows:
         The library requires initializing by a call to `psa_crypto_init()`.
 
     Aborting an operation frees all associated resources except for the ``operation`` structure itself.
-    Once aborted, the operation object can be reused for another operation by calling `psa_generate_key_iop_setup()` again.
+    Once aborted, the operation object can be reused for another operation by calling `psa_generate_key_iop_start()` again.
 
     This function can be called at any time after the operation object has been initialized as described in `psa_generate_key_iop_t`.
 
-    In particular, it is valid to call `psa_generate_key_iop_abort()` twice, or to call `psa_generate_key_iop_abort()` on an operation that has not been set up.
+    In particular, it is valid to call `psa_generate_key_iop_abort()` twice, or to call `psa_generate_key_iop_abort()` on an operation that has not been started.
 
 .. _interruptible-export-key:
 
@@ -1163,7 +1163,7 @@ An interruptible public-key export operation is used as follows:
 
 1.  Allocate an interruptible public-key export operation object, of type `psa_export_public_key_iop_t`, which will be passed to all the functions listed here.
 #.  Initialize the operation object with one of the methods described in the documentation for `psa_export_public_key_iop_t`, for example, `PSA_EXPORT_PUBLIC_KEY_IOP_INIT`.
-#.  Call `psa_export_public_key_iop_setup()` to specify the key to export.
+#.  Call `psa_export_public_key_iop_start()` to specify the key to export.
 #.  Call `psa_export_public_key_iop_complete()` to finish exporting the key data, until this function returns a status code other than :code:`PSA_OPERATION_INCOMPLETE`.
 #.  If an error occurs at any stage, or to terminate the operation early, call `psa_export_public_key_iop_abort()`.
 
@@ -1236,14 +1236,14 @@ An interruptible public-key export operation is used as follows:
         Number of *ops* that the operation has taken so far.
 
     After the interruptible operation has completed, the returned value is the number of *ops* spent on the entire operation.
-    The value is reset to zero by a successful call to either `psa_export_public_key_iop_setup()` or `psa_export_public_key_iop_abort()`.
-    A failed call to `psa_export_public_key_iop_setup()` can also reset the value to zero.
+    The value is reset to zero by a successful call to either `psa_export_public_key_iop_start()` or `psa_export_public_key_iop_abort()`.
+    A failed call to `psa_export_public_key_iop_start()` can also reset the value to zero.
 
     This function can be used to tune the value passed to `psa_iop_set_max_ops()`.
 
     The value is undefined if the operation object has not been initialized.
 
-.. function:: psa_export_public_key_iop_setup
+.. function:: psa_export_public_key_iop_start
 
     .. summary::
         Start an interruptible operation to export a public key or the public part of a key pair in binary format.
@@ -1251,7 +1251,7 @@ An interruptible public-key export operation is used as follows:
         .. versionadded:: 1.6
 
     .. param:: psa_export_public_key_iop_t * operation
-        The interruptible public-key export operation to set up.
+        The interruptible public-key export operation to start.
         It must have been initialized as per the documentation for `psa_export_public_key_iop_t`, and be inactive.
     .. param:: psa_key_id_t key
         Identifier of the key to export.
@@ -1281,12 +1281,12 @@ An interruptible public-key export operation is used as follows:
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
 
-    This function sets up the export of a public key in binary format.
+    This function starts the export of a public key in binary format.
     For standard key types, the output format is defined in the relevant *Key format* section in :secref:`key-types`.
 
     Exporting a public key object or the public part of a key pair is always permitted, regardless of the key's usage flags.
 
-    After a successful call to `psa_export_public_key_iop_setup()`, the operation is active.
+    After a successful call to `psa_export_public_key_iop_start()`, the operation is active.
     The operation can be completed by calling `psa_export_public_key_iop_complete()` repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
     Once active, the application must eventually terminate the operation.
     The following events terminate an operation:
@@ -1294,7 +1294,7 @@ An interruptible public-key export operation is used as follows:
     *   A successful call to `psa_export_public_key_iop_complete()`.
     *   A call to `psa_export_public_key_iop_abort()`.
 
-    If `psa_export_public_key_iop_setup()` returns an error, the operation object remains inactive, but its number of *ops* can be reset to zero.
+    If `psa_export_public_key_iop_start()` returns an error, the operation object remains inactive, but its number of *ops* can be reset to zero.
 
 .. function:: psa_export_public_key_iop_complete
 
@@ -1375,8 +1375,8 @@ An interruptible public-key export operation is used as follows:
         The library requires initializing by a call to `psa_crypto_init()`.
 
     Aborting an operation frees all associated resources except for the ``operation`` structure itself.
-    Once aborted, the operation object can be reused for another operation by calling `psa_export_public_key_iop_setup()` again.
+    Once aborted, the operation object can be reused for another operation by calling `psa_export_public_key_iop_start()` again.
 
     This function can be called at any time after the operation object has been initialized as described in `psa_export_public_key_iop_t`.
 
-    In particular, it is valid to call `psa_export_public_key_iop_abort()` twice, or to call `psa_export_public_key_iop_abort()` on an operation that has not been set up.
+    In particular, it is valid to call `psa_export_public_key_iop_abort()` twice, or to call `psa_export_public_key_iop_abort()` on an operation that has not been started.

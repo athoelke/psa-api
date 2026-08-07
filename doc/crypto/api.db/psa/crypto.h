@@ -659,7 +659,7 @@ psa_status_t psa_export_public_key_iop_complete(psa_export_public_key_iop_t * op
                                                 size_t * data_length);
 uint32_t psa_export_public_key_iop_get_num_ops(psa_export_public_key_iop_t * operation);
 psa_export_public_key_iop_t psa_export_public_key_iop_init(void);
-psa_status_t psa_export_public_key_iop_setup(psa_export_public_key_iop_t * operation,
+psa_status_t psa_export_public_key_iop_start(psa_export_public_key_iop_t * operation,
                                              psa_key_id_t key);
 psa_status_t psa_generate_key(const psa_key_attributes_t * attributes,
                               psa_key_id_t * key);
@@ -677,7 +677,7 @@ psa_status_t psa_generate_key_iop_custom(psa_generate_key_iop_t * operation,
                                          size_t custom_data_length);
 uint32_t psa_generate_key_iop_get_num_ops(psa_generate_key_iop_t * operation);
 psa_generate_key_iop_t psa_generate_key_iop_init(void);
-psa_status_t psa_generate_key_iop_setup(psa_generate_key_iop_t * operation,
+psa_status_t psa_generate_key_iop_start(psa_generate_key_iop_t * operation,
                                         const psa_key_attributes_t * attributes);
 psa_status_t psa_generate_random(uint8_t * output,
                                  size_t output_size);
@@ -740,7 +740,7 @@ psa_status_t psa_key_agreement_iop_complete(psa_key_agreement_iop_t * operation,
                                             psa_key_id_t * key);
 uint32_t psa_key_agreement_iop_get_num_ops(psa_key_agreement_iop_t * operation);
 psa_key_agreement_iop_t psa_key_agreement_iop_init(void);
-psa_status_t psa_key_agreement_iop_setup(psa_key_agreement_iop_t * operation,
+psa_status_t psa_key_agreement_iop_start(psa_key_agreement_iop_t * operation,
                                          psa_key_id_t private_key,
                                          const uint8_t * peer_key,
                                          size_t peer_key_length,
@@ -911,10 +911,10 @@ psa_sign_iop_t psa_sign_iop_init(void);
 psa_status_t psa_sign_iop_set_context(psa_sign_iop_t * operation,
                                       const uint8_t * context,
                                       size_t context_length);
-psa_status_t psa_sign_iop_setup(psa_sign_iop_t * operation,
-                                psa_key_id_t key,
-                                psa_algorithm_t alg);
 psa_status_t psa_sign_iop_setup_complete(psa_sign_iop_t * operation);
+psa_status_t psa_sign_iop_setup_start(psa_sign_iop_t * operation,
+                                      psa_key_id_t key,
+                                      psa_algorithm_t alg);
 psa_status_t psa_sign_iop_update(psa_sign_iop_t * operation,
                                  const uint8_t * input,
                                  size_t input_length);
@@ -979,15 +979,15 @@ psa_status_t psa_verify_iop_set_context(psa_verify_iop_t * operation,
 psa_status_t psa_verify_iop_set_signature(psa_verify_iop_t * operation,
                                           const uint8_t * signature,
                                           size_t signature_length);
-psa_status_t psa_verify_iop_setup(psa_verify_iop_t * operation,
-                                  psa_key_id_t key,
-                                  psa_algorithm_t alg,
-                                  const uint8_t * signature,
-                                  size_t signature_length);
 psa_status_t psa_verify_iop_setup_complete(psa_verify_iop_t * operation);
-psa_status_t psa_verify_iop_setup_deferred_signature(psa_verify_iop_t * operation,
-                                                     psa_key_id_t key,
-                                                     psa_algorithm_t alg);
+psa_status_t psa_verify_iop_setup_deferred_signature_start(psa_verify_iop_t * operation,
+                                                           psa_key_id_t key,
+                                                           psa_algorithm_t alg);
+psa_status_t psa_verify_iop_setup_start(psa_verify_iop_t * operation,
+                                        psa_key_id_t key,
+                                        psa_algorithm_t alg,
+                                        const uint8_t * signature,
+                                        size_t signature_length);
 psa_status_t psa_verify_iop_update(psa_verify_iop_t * operation,
                                    const uint8_t * input,
                                    size_t input_length);

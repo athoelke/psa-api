@@ -253,7 +253,7 @@ There are three components in an interruptible operation:
 
     An application can set an overall *maximum ops* value, that limits the *ops* performed within any interruptible function called by that application. The current *maximum ops* value can also be queried. If the *maximum ops* is not set by an application, interruptible functions will not return until the operation is complete.
 
-    Each interruptible operation also provides a function to report the cumulative number of *ops* used by the operation. This value is reset when the operation is aborted, or when an operation object is successfully set up for a new operation. A failed setup can also reset the value. This permits the final value to be queried after an operation has finished successfully.
+    Each interruptible operation also provides a function to report the cumulative number of *ops* used by the operation. This value is reset when the operation is aborted, or when an operation object is successfully started for a new operation. A failed start can also reset the value. This permits the final value to be queried after an operation has finished successfully.
 
 Interruptible operations follow a common pattern of use, which is shown in :numref:`fig-interruptible`.
 
@@ -281,12 +281,12 @@ The typical sequence of actions with an interruptible operation is as follows:
 
     It is an error to initialize an interruptible operation object that is in *active* or *error* states. This can leak memory or other resources.
 
-#.  **Setup:** Start a new interruptible operation on an *inactive* operation object.
-    Each interruptible operation object will define one or more setup functions to start a specific operation.
+#.  **Start:** Start a new interruptible operation on an *inactive* operation object.
+    Each interruptible operation object will define one or more functions that start a specific operation.
 
     The accumulated *ops* value for the operation is reset to zero.
 
-    On success, a setup function will put an interruptible operation object into an *active* state.
+    On success, a start function will put an interruptible operation object into an *active* state.
     On failure, the operation object will remain *inactive*.
 
 #.  **Complete:** To end an interruptible operation, call the applicable completion function.
@@ -306,7 +306,7 @@ The typical sequence of actions with an interruptible operation is as follows:
 
     ``psa_xxx_iop_abort()`` can be called on an *inactive* interruptible operation, and this has no effect.
 
-Once an interruptible operation object is returned to the *inactive* state, it can be reused by calling one of the setup functions again.
+Once an interruptible operation object is returned to the *inactive* state, it can be reused by calling one of the start functions again.
 
 If an interruptible operation object is not initialized before use, the behavior is undefined.
 
@@ -322,7 +322,7 @@ However, this does not permit the following behaviors:
 *   Working with both the original and the copied operation objects.
 
 Each type of interruptible operation can have multiple *active* states.
-Documentation for the specific operation describes the setup and completion functions, and any requirements about their usage and ordering.
+Documentation for the specific operation describes the start and completion functions, and any requirements about their usage and ordering.
 
 See :secref:`interruptible-generate-key` for an example of an interruptible operation.
 
@@ -348,7 +348,7 @@ The sequence has the common interruptible-operation steps, with a setup phase th
 
 #.  **Initialize**
 
-#.  **Begin setup:** Start a new interruptible signature or verification operation on an *inactive* object.
+#.  **Start setup:** Start the setup phase of a new interruptible signature or verification operation on an *inactive* object.
 
     The accumulated *ops* value for the operation is reset to zero.
 

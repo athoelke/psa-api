@@ -371,7 +371,7 @@ An interruptible key-agreement operation is used as follows:
 
 1.  Allocate an interruptible key-agreement operation object, of type `psa_key_agreement_iop_t`, which will be passed to all the functions listed here.
 #.  Initialize the operation object with one of the methods described in the documentation for `psa_key_agreement_iop_t`, for example, `PSA_KEY_AGREEMENT_IOP_INIT`.
-#.  Call `psa_key_agreement_iop_setup()` to specify the algorithm, and provide the private key and the peer public key.
+#.  Call `psa_key_agreement_iop_start()` to specify the algorithm, and provide the private key and the peer public key.
 #.  Call `psa_key_agreement_iop_complete()` to finish the key agreement and output the shared secret, until this function returns a status code other than :code:`PSA_OPERATION_INCOMPLETE`.
 #.  If an error occurs at any stage, or to terminate the operation early, call `psa_key_agreement_iop_abort()`.
 
@@ -445,14 +445,14 @@ An interruptible key-agreement operation is used as follows:
         Number of *ops* that the operation has taken so far.
 
     After the interruptible operation has completed, the returned value is the number of *ops* spent on the entire operation.
-    The value is reset to zero by a successful call to either `psa_key_agreement_iop_setup()` or `psa_key_agreement_iop_abort()`.
-    A failed call to `psa_key_agreement_iop_setup()` can also reset the value to zero.
+    The value is reset to zero by a successful call to either `psa_key_agreement_iop_start()` or `psa_key_agreement_iop_abort()`.
+    A failed call to `psa_key_agreement_iop_start()` can also reset the value to zero.
 
     This function can be used to tune the value passed to `psa_iop_set_max_ops()`.
 
     The value is undefined if the operation object has not been initialized.
 
-.. function:: psa_key_agreement_iop_setup
+.. function:: psa_key_agreement_iop_start
 
     .. summary::
         Start an interruptible operation to perform a key agreement.
@@ -460,7 +460,7 @@ An interruptible key-agreement operation is used as follows:
         .. versionadded:: 1.6
 
     .. param:: psa_key_agreement_iop_t * operation
-        The interruptible key-agreement operation to set up.
+        The interruptible key-agreement operation to start.
         It must have been initialized as per the documentation for `psa_key_agreement_iop_t`, and be inactive.
     .. param:: psa_key_id_t private_key
         Identifier of the private key to use.
@@ -551,15 +551,15 @@ An interruptible key-agreement operation is used as follows:
     .. retval:: PSA_ERROR_DATA_INVALID
     .. retval:: PSA_ERROR_INSUFFICIENT_STORAGE
 
-    This function sets up an interruptible operation to perform a key-agreement.
+    This function starts an interruptible operation to perform a key-agreement.
     A key-agreement algorithm takes two inputs: a private key ``private_key``, and a public key ``peer_key``.
 
     When the interruptible operation completes, the shared secret is output in a key. The key's location, policy, and type are taken from ``attributes``. The size of the key is always the bit-size of the shared secret, rounded up to a whole number of bytes.
 
-    If a persistent key identifier already exists, then it is unspecified whether `psa_key_agreement_iop_setup()` returns :code:`PSA_ERROR_ALREADY_EXISTS`, or whether `psa_key_agreement_iop_complete()` returns this error.
+    If a persistent key identifier already exists, then it is unspecified whether `psa_key_agreement_iop_start()` returns :code:`PSA_ERROR_ALREADY_EXISTS`, or whether `psa_key_agreement_iop_complete()` returns this error.
     Applications must be prepared for either function to report this error.
 
-    After a successful call to `psa_key_agreement_iop_setup()`, the operation is active.
+    After a successful call to `psa_key_agreement_iop_start()`, the operation is active.
     The operation can be completed by calling `psa_key_agreement_iop_complete()` repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
     Once active, the application must eventually terminate the operation.
     The following events terminate an operation:
@@ -567,7 +567,7 @@ An interruptible key-agreement operation is used as follows:
     *   A successful call to `psa_key_agreement_iop_complete()`.
     *   A call to `psa_key_agreement_iop_abort()`.
 
-    If `psa_key_agreement_iop_setup()` returns an error, the operation object remains inactive, but its number of *ops* can be reset to zero.
+    If `psa_key_agreement_iop_start()` returns an error, the operation object remains inactive, but its number of *ops* can be reset to zero.
 
 .. function:: psa_key_agreement_iop_complete
 
@@ -609,11 +609,11 @@ An interruptible key-agreement operation is used as follows:
     .. note::
         This is an interruptible function, and must be called repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
 
-    If a persistent key identifier already exists, then it is unspecified whether `psa_key_agreement_iop_setup()` returns :code:`PSA_ERROR_ALREADY_EXISTS`, or whether this function returns this error.
+    If a persistent key identifier already exists, then it is unspecified whether `psa_key_agreement_iop_start()` returns :code:`PSA_ERROR_ALREADY_EXISTS`, or whether this function returns this error.
     Applications must be prepared for either function to report this error.
 
     When this function returns successfully, the shared secret is returned as a derivation key in ``key``, and the operation becomes inactive.
-    The attributes of the new key are specified in the call to `psa_key_agreement_iop_setup()` used to set up this operation.
+    The attributes of the new key are specified in the call to `psa_key_agreement_iop_start()` used to start this operation.
     This key can be input to a key derivation operation using `psa_key_derivation_input_key()`.
 
     .. warning::
@@ -643,11 +643,11 @@ An interruptible key-agreement operation is used as follows:
     .. retval:: PSA_ERROR_BAD_STATE
         The library requires initializing by a call to `psa_crypto_init()`.
 
-    Aborting an operation frees all associated resources except for the ``operation`` structure itself. Once aborted, the operation object can be reused for another operation by calling `psa_key_agreement_iop_setup()` again.
+    Aborting an operation frees all associated resources except for the ``operation`` structure itself. Once aborted, the operation object can be reused for another operation by calling `psa_key_agreement_iop_start()` again.
 
     This function can be called at any time after the operation object has been initialized as described in `psa_key_agreement_iop_t`.
 
-    In particular, it is valid to call `psa_key_agreement_iop_abort()` twice, or to call `psa_key_agreement_iop_abort()` on an operation that has not been set up.
+    In particular, it is valid to call `psa_key_agreement_iop_abort()` twice, or to call `psa_key_agreement_iop_abort()` on an operation that has not been started.
 
 Support macros
 --------------

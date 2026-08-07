@@ -2,7 +2,7 @@
 ' SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 @startuml
-!include atg-spec.pumh
+!include psa-spec.pumh
 
 skinparam LegendFontSize 12
 
@@ -21,11 +21,11 @@ note as N1
    Operation object starts as
    uninitialised memory
 end note
-inactive --> active: **Setup**
+inactive --> active: **Start**
 active --> active: **Complete**\n//incomplete//
 active --> inactive: **Complete**\n//success//
 error -[#darkred,dashed]r-> inactive: <color:darkred>**Abort**
-inactive -[#darkred,dashed]-> inactive: <color:darkred>**Setup**\n<color:darkred>//fails//
+inactive -[#darkred,dashed]-> inactive: <color:darkred>**Start**\n<color:darkred>//fails//
 active -[#darkred,dashed]-> error: <color:darkred>**Complete**\n<color:darkred>//fails//
 active -[#blue,dotted]l-> inactive: <color:blue>**Abort**
 
