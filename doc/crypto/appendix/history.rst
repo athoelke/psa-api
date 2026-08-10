@@ -15,6 +15,14 @@ This section provides the detailed changes made between published version of the
 Changes in the draft GlobalPlatform publication revision
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Changes to the API
+~~~~~~~~~~~~~~~~~~
+
+*   Added deferred-signature verification for multi-part signature operations, for algorithms identified by `PSA_ALG_SIGN_SUPPORTS_DEFERRED_SIGNATURE()`.
+    This supports streaming protocols that provide the signature after the message data.
+    The flow uses `psa_verify_setup_deferred_signature()` and `psa_verify_finish_with_signature()`.
+    See :secref:`multi-part-signature`.
+
 Clarifications and fixes
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
