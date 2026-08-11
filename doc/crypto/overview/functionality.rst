@@ -245,15 +245,25 @@ Use cases for which the |API| defines interruptible operations include:
 *   Asymmetric signature generation and verification.
 *   Key exchange protocols, including the use of ephemeral key-pairs.
 
-There are three components in an interruptible operation:
+Interruptible operations have three principal components:
 
 *   A specific object type to maintain the state of the operation, in a similar way to multi-part operations. These types are implementation-defined.
 *   A non-error status code, :code:`PSA_OPERATION_INCOMPLETE`, that is returned by some interruptible operation functions to indicate that the computation is incomplete. The same function must be called repeatedly until it returns either a success or an error status.
-*   The concept of a unit of work --- called *ops* --- that can be carried out by an interruptible operation function. The amount of computation done, or time duration, for one *op* is implementation- and function- specific, and can depend on the algorithm inputs, for example, the key size.
+*   The concept of a unit of work --- called *ops* --- that can be carried out by an interruptible operation function.
 
-    An application can set an overall *maximum ops* value, that limits the *ops* performed within any interruptible function called by that application. The current *maximum ops* value can also be queried. If the *maximum ops* is not set by an application, interruptible functions will not return until the operation is complete.
+*ops* limits and accounting
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    Each interruptible operation also provides a function to report the cumulative number of *ops* used by the operation. This value is reset when the operation is aborted, or when an operation object is successfully started for a new operation. A failed start can also reset the value. This permits the final value to be queried after an operation has finished successfully.
+The *maximum ops* value limits the *ops* performed by each call to an interruptible function. An application sets this value by calling `psa_iop_set_max_ops()`, and can query the current value with `psa_iop_get_max_ops()`. If a function exhausts the maximum *ops* before its calculation is complete, it returns :code:`PSA_OPERATION_INCOMPLETE`.
+
+After a successful call to `psa_crypto_init()`, the *maximum ops* value defaults to `PSA_IOP_MAX_OPS_UNLIMITED`. With this default, interruptible functions complete their calculation before returning. An application can set a lower value to bound the computation performed in one function call.
+
+The computation and execution time represented by an *op* have no fixed meaning across implementations or functions. They can depend on the hardware, algorithm, key type, and current stage of the operation. Applications can use the cumulative *ops* count to tune the maximum value for a particular implementation.
+
+The cumulative *ops* count for an interruptible operation can be retrieved by calling the operation's associated ``psa_xxx_iop_get_num_ops()`` function. This count can be queried while the operation is active, or after a successful completion to obtain the count for the entire operation. It is reset when the operation is aborted or when an operation object is successfully started for a new operation. A failed start can also reset the count.
+
+Interruptible operation flow
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Interruptible operations follow a common pattern of use, which is shown in :numref:`fig-interruptible`.
 
