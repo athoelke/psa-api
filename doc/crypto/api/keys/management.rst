@@ -1023,7 +1023,8 @@ An interruptible key-generation operation is used as follows:
         The modulus is a product of two probabilistic primes between :math:`2^{n-1}` and :math:`2^n` where :math:`n` is the bit size specified in the attributes.
 
     After a successful call to `psa_generate_key_iop_start()`, the operation is active.
-    The operation can be configured with custom production parameters by calling `psa_generate_key_iop_custom()`, or completed by calling `psa_generate_key_iop_complete()` repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
+    Before calling `psa_generate_key_iop_complete()`, the application can configure the operation with custom production parameters by calling `psa_generate_key_iop_custom()`.
+    The application must then call `psa_generate_key_iop_complete()` repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
     Once active, the application must eventually terminate the operation. The following events terminate an operation:
 
     *   A successful call to `psa_generate_key_iop_complete()`.
@@ -1040,7 +1041,7 @@ An interruptible key-generation operation is used as follows:
 
     .. param:: psa_generate_key_iop_t * operation
         The interruptible key-generation operation to configure.
-        The operation must be active, and `psa_generate_key_iop_complete()` must not have been called.
+        The operation must be active, and neither `psa_generate_key_iop_custom()` nor `psa_generate_key_iop_complete()` must have been called.
     .. param:: const psa_custom_key_parameters_t * custom
         Customized production parameters for the key generation.
     .. param:: const uint8_t * custom_data
@@ -1058,7 +1059,7 @@ An interruptible key-generation operation is used as follows:
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be active, and `psa_generate_key_iop_complete()` must not have been called.
+        *   The operation state is not valid: it must be active, and neither `psa_generate_key_iop_custom()` nor `psa_generate_key_iop_complete()` must have been called.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
@@ -1071,6 +1072,8 @@ An interruptible key-generation operation is used as follows:
     If this function is not called, the operation uses the default production parameters `PSA_CUSTOM_KEY_PARAMETERS_INIT` with ``custom_data_length == 0``.
 
     See the documentation of `psa_custom_key_parameters_t` for a list of non-default production parameters. See the key type definitions in :secref:`key-types` for details of the custom production parameters used for key generation.
+
+    After a successful call to this function, the application must call `psa_generate_key_iop_complete()` repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
 
     If this function returns an error status, the operation enters an error state and must be aborted by calling `psa_generate_key_iop_abort()`.
 
