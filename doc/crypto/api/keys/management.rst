@@ -1030,7 +1030,11 @@ An interruptible key-generation operation is used as follows:
     *   A successful call to `psa_generate_key_iop_complete()`.
     *   A call to `psa_generate_key_iop_abort()`.
 
-    If `psa_generate_key_iop_start()` returns an error, the operation object remains inactive, but its number of *ops* can be reset to zero.
+    If `psa_generate_key_iop_start()` is called with an operation object that is not inactive, it returns :code:`PSA_ERROR_BAD_STATE` and the operation enters an error state.
+
+    If `psa_generate_key_iop_start()` returns an error when called with an inactive operation object, the operation object remains inactive, but its number of *ops* can be reset to zero.
+
+    To terminate an active operation, or reset an operation in an error state, call `psa_generate_key_iop_abort()`.
 
 .. function:: psa_generate_key_iop_custom
 
@@ -1297,7 +1301,11 @@ An interruptible public-key export operation is used as follows:
     *   A successful call to `psa_export_public_key_iop_complete()`.
     *   A call to `psa_export_public_key_iop_abort()`.
 
-    If `psa_export_public_key_iop_start()` returns an error, the operation object remains inactive, but its number of *ops* can be reset to zero.
+    If `psa_export_public_key_iop_start()` is called with an operation object that is not inactive, it returns :code:`PSA_ERROR_BAD_STATE` and the operation enters an error state.
+
+    If `psa_export_public_key_iop_start()` returns an error when called with an inactive operation object, the operation object remains inactive, but its number of *ops* can be reset to zero.
+
+    To terminate an active operation, or reset an operation in an error state, call `psa_export_public_key_iop_abort()`.
 
 .. function:: psa_export_public_key_iop_complete
 

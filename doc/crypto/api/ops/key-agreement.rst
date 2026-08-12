@@ -567,7 +567,11 @@ An interruptible key-agreement operation is used as follows:
     *   A successful call to `psa_key_agreement_iop_complete()`.
     *   A call to `psa_key_agreement_iop_abort()`.
 
-    If `psa_key_agreement_iop_start()` returns an error, the operation object remains inactive, but its number of *ops* can be reset to zero.
+    If `psa_key_agreement_iop_start()` is called with an operation object that is not inactive, it returns :code:`PSA_ERROR_BAD_STATE` and the operation enters an error state.
+
+    If `psa_key_agreement_iop_start()` returns an error when called with an inactive operation object, the operation object remains inactive, but its number of *ops* can be reset to zero.
+
+    To terminate an active operation, or reset an operation in an error state, call `psa_key_agreement_iop_abort()`.
 
 .. function:: psa_key_agreement_iop_complete
 

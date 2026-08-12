@@ -2940,7 +2940,11 @@ An interruptible signature operation is used as follows:
     *   A successful call to `psa_sign_iop_complete()`.
     *   A call to `psa_sign_iop_abort()`.
 
-    If `psa_sign_iop_setup_start()` returns an error, the operation object remains inactive, but its number of *ops* can be reset to zero.
+    If `psa_sign_iop_setup_start()` is called with an operation object that is not inactive, it returns :code:`PSA_ERROR_BAD_STATE` and the operation enters an error state.
+
+    If `psa_sign_iop_setup_start()` returns an error when called with an inactive operation object, the operation object remains inactive, but its number of *ops* can be reset to zero.
+
+    To terminate an active operation, or reset an operation in an error state, call `psa_sign_iop_abort()`.
 
 .. function:: psa_sign_iop_setup_complete
 
@@ -3390,7 +3394,11 @@ To verify a message received from a streaming protocol that provides the signatu
     *   A successful call to `psa_verify_iop_complete()`.
     *   A call to `psa_verify_iop_abort()`.
 
-    If `psa_verify_iop_setup_start()` returns an error, the operation object remains inactive, but its number of *ops* can be reset to zero.
+    If `psa_verify_iop_setup_start()` is called with an operation object that is not inactive, it returns :code:`PSA_ERROR_BAD_STATE` and the operation enters an error state.
+
+    If `psa_verify_iop_setup_start()` returns an error when called with an inactive operation object, the operation object remains inactive, but its number of *ops* can be reset to zero.
+
+    To terminate an active operation, or reset an operation in an error state, call `psa_verify_iop_abort()`.
 
 .. function:: psa_verify_iop_setup_deferred_signature_start
 
@@ -3447,7 +3455,11 @@ To verify a message received from a streaming protocol that provides the signatu
     *   A successful call to `psa_verify_iop_complete()`.
     *   A call to `psa_verify_iop_abort()`.
 
-    If this function returns an error, the operation object remains inactive, but its number of *ops* can be reset to zero.
+    If `psa_verify_iop_setup_deferred_signature_start()` is called with an operation object that is not inactive, it returns :code:`PSA_ERROR_BAD_STATE` and the operation enters an error state.
+
+    If `psa_verify_iop_setup_deferred_signature_start()` returns an error when called with an inactive operation object, the operation object remains inactive, but its number of *ops* can be reset to zero.
+
+    To terminate an active operation, or reset an operation in an error state, call `psa_verify_iop_abort()`.
 
 .. function:: psa_verify_iop_setup_complete
 
