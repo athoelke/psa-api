@@ -12,7 +12,9 @@ Key management functions
 Key creation
 ------------
 
-New keys can be created in the following ways:
+New keys are created by :term:`key-creation APIs <key-creation API>`.
+
+The following key-creation functions create a key and return its identifier in one call:
 
 *   `psa_import_key()` creates a key from a data buffer provided by the application.
 *   `psa_generate_key()` and `psa_generate_key_custom()` create a key from randomly generated data.
@@ -23,7 +25,12 @@ New keys can be created in the following ways:
 *   `psa_copy_key()` duplicates an existing key with a different lifetime or with a more restrictive usage policy.
 *   `psa_attach_key()` registers implementation-provided key material for use as a volatile key.
 
-When creating a key, the attributes for the new key are specified in a `psa_key_attributes_t` object. Each key creation function defines how it uses the attributes.
+The following interruptible key-creation operations create a key when their completion function returns successfully:
+
+*   `psa_generate_key_iop_start()` and `psa_generate_key_iop_complete()` generate a key from randomly generated data.
+*   `psa_key_agreement_iop_start()` and `psa_key_agreement_iop_complete()` create a key from the shared secret result of a key-agreement process. See :secref:`key-agreement`.
+
+When creating a key, the attributes for the new key are specified in a `psa_key_attributes_t` object. Each key-creation API defines how it uses the attributes.
 
 .. note::
 

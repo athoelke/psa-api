@@ -16,6 +16,12 @@
 
     Application Programming Interface.
 
+.. term:: Key-creation API
+
+    An API that creates a key. A key-creation API is either a key-creation function or an interruptible key-creation operation.
+
+    See :secref:`key-creation`.
+
 .. term:: Cipher
 
     An algorithm used for encryption or decryption with a :term:`symmetric` key.

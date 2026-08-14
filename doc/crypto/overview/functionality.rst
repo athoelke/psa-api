@@ -33,21 +33,7 @@ The key attributes include:
 *   A lifetime that determines when the key material is destroyed, and where it is stored. See :secref:`key-life`.
 *   A policy that determines how the key can be used. See :secref:`key-usage-policies`.
 
-Keys are created using one of the *key creation functions*:
-
-*   `psa_import_key()`
-*   `psa_generate_key()`
-*   `psa_generate_key_custom()`
-*   `psa_key_derivation_output_key()`
-*   `psa_key_derivation_output_key_custom()`
-*   `psa_key_agreement()`
-*   `psa_encapsulate()`
-*   `psa_decapsulate()`
-*   `psa_pake_get_shared_key()`
-*   `psa_copy_key()`
-*   `psa_attach_key()`
-
-These output the key identifier, that is used to access the key in all other parts of the API.
+Keys are created through :term:`key-creation APIs <key-creation API>`. Key-creation functions create a key in a single function call. Interruptible key-creation operations create a key when their completion function succeeds. See :secref:`key-creation` for the key-creation APIs.
 
 All of the key attributes are set when the key is created and cannot be changed without destroying the key first. If the original key permits copying, then the application can specify a different lifetime or restricted policy for the copy of the key.
 
@@ -71,7 +57,7 @@ Key identifiers
 
 Key identifiers are integral values that act as permanent names for persistent keys, or as transient references to volatile keys. Key identifiers are defined by the application for persistent keys, and by the implementation for volatile keys and for built-in keys.
 
-Key identifiers are output from a successful call to one of the key creation functions.
+Key identifiers are output when a key-creation API successfully creates a key.
 
 Valid key identifiers must have distinct values within the same application. If the implementation provides :term:`caller isolation`, then key identifiers are local to each application.
 
