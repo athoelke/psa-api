@@ -12,7 +12,7 @@ Key management functions
 Key creation
 ------------
 
-New keys are created by :term:`key-creation APIs <key-creation API>`.
+New keys are created by a :term:`key-creation API`.
 
 The following key-creation functions create a key and return its identifier in one call:
 
@@ -1019,6 +1019,8 @@ An interruptible key-generation operation is used as follows:
     This function starts the random generation of a new key.
     The location, policy, type, and size of the key are taken from ``attributes``.
 
+    See :secref:`interruptible-key-creation` for the persistent key identifier behavior of an interruptible key-creation operation.
+
     If a persistent key identifier already exists, then it is unspecified whether `psa_generate_key_iop_start()` returns :code:`PSA_ERROR_ALREADY_EXISTS`, or whether `psa_generate_key_iop_complete()` returns this error.
     Applications must be prepared for either function to report this error.
 
@@ -1127,6 +1129,8 @@ An interruptible key-generation operation is used as follows:
 
     .. note::
         This is an interruptible function, and must be called repeatedly, until it returns a status code that is not :code:`PSA_OPERATION_INCOMPLETE`.
+
+    See :secref:`interruptible-key-creation` for the persistent key identifier behavior of an interruptible key-creation operation.
 
     If a persistent key identifier already exists, then it is unspecified whether `psa_generate_key_iop_start()` returns :code:`PSA_ERROR_ALREADY_EXISTS`, or whether this function returns this error.
     Applications must be prepared for either function to report this error.

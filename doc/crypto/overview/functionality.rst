@@ -33,7 +33,7 @@ The key attributes include:
 *   A lifetime that determines when the key material is destroyed, and where it is stored. See :secref:`key-life`.
 *   A policy that determines how the key can be used. See :secref:`key-usage-policies`.
 
-Keys are created through :term:`key-creation APIs <key-creation API>`. Key-creation functions create a key in a single function call. Interruptible key-creation operations create a key when their completion function succeeds. See :secref:`key-creation` for the key-creation APIs.
+Keys are created through a :term:`key-creation API`. Key-creation functions create a key in a single function call. Interruptible key-creation operations create a key when their completion function succeeds. See :secref:`key-creation` for the key-creation APIs.
 
 All of the key attributes are set when the key is created and cannot be changed without destroying the key first. If the original key permits copying, then the application can specify a different lifetime or restricted policy for the copy of the key.
 
@@ -322,10 +322,21 @@ Documentation for the specific operation describes the start and completion func
 
 See :secref:`interruptible-generate-key` for an example of an interruptible operation.
 
+.. _interruptible-key-creation:
+
+Interruptible key creation
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+An interruptible key-creation operation creates a key only when its completion function returns successfully. The implementation must bind the identifier for the new key only when the operation completes successfully. Before then, the identifier does not refer to a partially formed key.
+
+This preserves atomic key creation: a key identifier either refers to a fully formed key or does not refer to a key. Before the completion function returns successfully, the identifier cannot be used to access the key being created by an interruptible operation.
+
+An implementation can check at the start of an interruptible key-creation operation whether an application-provided persistent key identifier already exists. It can report :code:`PSA_ERROR_ALREADY_EXISTS` at this point, or when the completion function is called. Applications must be prepared for either function to report this error.
+
 .. _interruptible-signature-operations:
 
 Interruptible signature operations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The interruptible signature and verification APIs are separate from the ordinary multi-part signature APIs. They provide bounded computation for the setup and completion of an asymmetric signature operation. They also accept message input where the selected algorithm permits it, but this is incidental to their execution-budget purpose.
 
