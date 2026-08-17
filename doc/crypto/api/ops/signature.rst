@@ -2923,7 +2923,7 @@ An interruptible signature operation is used as follows:
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be inactive.
+        *   The operation is not inactive.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
@@ -2965,7 +2965,8 @@ An interruptible signature operation is used as follows:
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: the operation setup must have started, but not yet finished.
+        *   The operation is not active.
+        *   The operation setup has already completed successfully.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
@@ -3007,7 +3008,9 @@ An interruptible signature operation is used as follows:
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: setup must be complete, and no call to `psa_sign_iop_set_context()`, `psa_sign_iop_hash()`, `psa_sign_iop_update()`, or `psa_sign_iop_complete()` has been made.
+        *   The operation is not active.
+        *   The operation setup has not completed successfully.
+        *   `psa_sign_iop_set_context()`, `psa_sign_iop_hash()`, `psa_sign_iop_update()`, or `psa_sign_iop_complete()` has already been called.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         The following conditions can result in this error:
@@ -3057,7 +3060,9 @@ An interruptible signature operation is used as follows:
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: setup must be complete, and no call to `psa_sign_iop_hash()`, `psa_sign_iop_update()`, or `psa_sign_iop_complete()` has been made.
+        *   The operation is not active.
+        *   The operation setup has not completed successfully.
+        *   `psa_sign_iop_hash()`, `psa_sign_iop_update()`, or `psa_sign_iop_complete()` has already been called.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_NOT_PERMITTED
         The key does not have the `PSA_KEY_USAGE_SIGN_HASH` flag.
@@ -3107,7 +3112,9 @@ An interruptible signature operation is used as follows:
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: setup must be complete, and no call to `psa_sign_iop_hash()` or `psa_sign_iop_complete()` has been made.
+        *   The operation is not active.
+        *   The operation setup has not completed successfully.
+        *   `psa_sign_iop_hash()` or `psa_sign_iop_complete()` has already been called.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_NOT_PERMITTED
         The key does not have the `PSA_KEY_USAGE_SIGN_MESSAGE` flag.
@@ -3169,7 +3176,8 @@ An interruptible signature operation is used as follows:
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: the operation must be active, and setup must be complete.
+        *   The operation is not active.
+        *   The operation setup has not completed successfully.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         If no data has been input to the operation, the algorithm does not allow signing of a message.
@@ -3373,7 +3381,7 @@ To verify a message received from a streaming protocol that provides the signatu
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be inactive.
+        *   The operation is not inactive.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_SIGNATURE
         ``signature`` is not a valid signature for the algorithm and key.
@@ -3435,7 +3443,7 @@ To verify a message received from a streaming protocol that provides the signatu
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: it must be inactive.
+        *   The operation is not inactive.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
@@ -3480,7 +3488,8 @@ To verify a message received from a streaming protocol that provides the signatu
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: the operation setup must have started, but not yet finished.
+        *   The operation is not active.
+        *   The operation setup has already completed successfully.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_SIGNATURE
         The signature is not a valid signature for the algorithm and key.
@@ -3523,7 +3532,9 @@ To verify a message received from a streaming protocol that provides the signatu
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: setup must be complete, and no call to `psa_verify_iop_set_context()`, `psa_verify_iop_hash()`, `psa_verify_iop_update()`, `psa_verify_iop_set_signature()`, or `psa_verify_iop_complete()` has been made.
+        *   The operation is not active.
+        *   The operation setup has not completed successfully.
+        *   `psa_verify_iop_set_context()`, `psa_verify_iop_hash()`, `psa_verify_iop_update()`, `psa_verify_iop_set_signature()`, or `psa_verify_iop_complete()` has already been called.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         The following conditions can result in this error:
@@ -3573,7 +3584,10 @@ To verify a message received from a streaming protocol that provides the signatu
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: the operation must have been set up with `psa_verify_iop_setup_start()`, and no call to `psa_verify_iop_hash()`, `psa_verify_iop_update()`, or `psa_verify_iop_complete()` has been made.
+        *   The operation is not active.
+        *   The operation setup has not completed successfully.
+        *   The operation was not set up with `psa_verify_iop_setup_start()`.
+        *   `psa_verify_iop_hash()`, `psa_verify_iop_update()`, or `psa_verify_iop_complete()` has already been called.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_NOT_PERMITTED
         The key does not have the `PSA_KEY_USAGE_VERIFY_HASH` flag.
@@ -3623,7 +3637,9 @@ To verify a message received from a streaming protocol that provides the signatu
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: setup must be complete, and no call to `psa_verify_iop_hash()`, `psa_verify_iop_set_signature()`, or `psa_verify_iop_complete()` has been made.
+        *   The operation is not active.
+        *   The operation setup has not completed successfully.
+        *   `psa_verify_iop_hash()`, `psa_verify_iop_set_signature()`, or `psa_verify_iop_complete()` has already been called.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_NOT_PERMITTED
         The key does not have the `PSA_KEY_USAGE_VERIFY_MESSAGE` flag.
@@ -3675,7 +3691,10 @@ To verify a message received from a streaming protocol that provides the signatu
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: the operation must have been set up with `psa_verify_iop_setup_deferred_signature_start()`, setup must be complete, and no call to `psa_verify_iop_set_signature()` or `psa_verify_iop_complete()` has been made.
+        *   The operation is not active.
+        *   The operation setup has not completed successfully.
+        *   The operation was not set up with `psa_verify_iop_setup_deferred_signature_start()`.
+        *   `psa_verify_iop_set_signature()` or `psa_verify_iop_complete()` has already been called.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         ``signature`` is not a valid signature for the algorithm and key.
@@ -3712,7 +3731,9 @@ To verify a message received from a streaming protocol that provides the signatu
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
-        *   The operation state is not valid: the operation must be active, setup must be complete, and a deferred-signature operation must have a signature input.
+        *   The operation is not active.
+        *   The operation setup has not completed successfully.
+        *   The operation was set up with `psa_verify_iop_setup_deferred_signature_start()` and no signature has been provided.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         If no data has been input to the operation, the algorithm does not allow verification of a message.
