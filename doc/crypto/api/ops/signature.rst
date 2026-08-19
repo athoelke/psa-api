@@ -3063,13 +3063,13 @@ An interruptible signature operation is used as follows:
         *   The operation is not active.
         *   The operation setup has not completed successfully.
         *   `psa_sign_iop_hash()`, `psa_sign_iop_update()`, or `psa_sign_iop_complete()` has already been called.
+        *   The selected algorithm does not allow signing of a pre-computed hash.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_NOT_PERMITTED
         The key does not have the `PSA_KEY_USAGE_SIGN_HASH` flag.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         The following conditions can result in this error:
 
-        *   The algorithm does not allow signing of a pre-computed hash.
         *   ``hash_length`` is not valid for the algorithm and key type.
         *   ``hash`` is not a valid input value for the algorithm and key type.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
@@ -3115,20 +3115,20 @@ An interruptible signature operation is used as follows:
         *   The operation is not active.
         *   The operation setup has not completed successfully.
         *   `psa_sign_iop_hash()` or `psa_sign_iop_complete()` has already been called.
+        *   The selected algorithm does not allow signing of a message.
+        *   The selected algorithm permits only one message fragment, and `psa_sign_iop_update()` has already been called.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_NOT_PERMITTED
         The key does not have the `PSA_KEY_USAGE_SIGN_MESSAGE` flag.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         The following conditions can result in this error:
 
-        *   The algorithm does not allow signing of a message.
-        *   The selected algorithm permits only one message fragment, and `psa_sign_iop_update()` has already been called.
         *   The total input for the operation is too large for the signature algorithm.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
         The following conditions can result in this error:
 
         *   The implementation does not support signing of a message.
-        *   The selected algorithm or implementation permits only one message fragment, and `psa_sign_iop_update()` has already been called.
+        *   The implementation permits only one message fragment, and `psa_sign_iop_update()` has already been called.
         *   The total input for the operation is too large for the implementation.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
@@ -3178,9 +3178,8 @@ An interruptible signature operation is used as follows:
 
         *   The operation is not active.
         *   The operation setup has not completed successfully.
+        *   No pre-computed hash or message fragment has been input, and the selected algorithm does not allow signing of a message.
         *   The library requires initializing by a call to `psa_crypto_init()`.
-    .. retval:: PSA_ERROR_INVALID_ARGUMENT
-        If no data has been input to the operation, the algorithm does not allow signing of a message.
     .. retval:: PSA_ERROR_BUFFER_TOO_SMALL
         The size of the ``signature`` buffer is too small.
         `PSA_SIGN_OUTPUT_SIZE()` or `PSA_SIGNATURE_MAX_SIZE` can be used to determine a sufficient buffer size.
@@ -3583,13 +3582,13 @@ To verify a message received from a streaming protocol that provides the signatu
         *   The operation setup has not completed successfully.
         *   The operation was not set up with `psa_verify_iop_setup_start()`.
         *   `psa_verify_iop_hash()`, `psa_verify_iop_update()`, or `psa_verify_iop_complete()` has already been called.
+        *   The selected algorithm does not allow verification of a pre-computed hash.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_NOT_PERMITTED
         The key does not have the `PSA_KEY_USAGE_VERIFY_HASH` flag.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         The following conditions can result in this error:
 
-        *   The algorithm does not allow verification of a pre-computed hash.
         *   ``hash_length`` is not valid for the algorithm and key type.
         *   ``hash`` is not a valid input value for the algorithm and key type.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
@@ -3635,20 +3634,20 @@ To verify a message received from a streaming protocol that provides the signatu
         *   The operation is not active.
         *   The operation setup has not completed successfully.
         *   `psa_verify_iop_hash()`, `psa_verify_iop_set_signature()`, or `psa_verify_iop_complete()` has already been called.
+        *   The selected algorithm does not allow verification of a message.
+        *   The selected algorithm permits only one message fragment, and `psa_verify_iop_update()` has already been called.
         *   The library requires initializing by a call to `psa_crypto_init()`.
     .. retval:: PSA_ERROR_NOT_PERMITTED
         The key does not have the `PSA_KEY_USAGE_VERIFY_MESSAGE` flag.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         The following conditions can result in this error:
 
-        *   The algorithm does not allow verification of a message.
-        *   The selected algorithm permits only one message fragment, and `psa_verify_iop_update()` has already been called.
         *   The total input for the operation is too large for the signature algorithm.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
         The following conditions can result in this error:
 
         *   The implementation does not support verification of a message.
-        *   The selected algorithm or implementation permits only one message fragment, and `psa_verify_iop_update()` has already been called.
+        *   The implementation permits only one message fragment, and `psa_verify_iop_update()` has already been called.
         *   The total input for the operation is too large for the implementation.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
@@ -3725,9 +3724,8 @@ To verify a message received from a streaming protocol that provides the signatu
         *   The operation is not active.
         *   The operation setup has not completed successfully.
         *   The operation was set up with `psa_verify_iop_setup_deferred_signature_start()` and no signature has been provided.
+        *   No pre-computed hash or message fragment has been input, and the selected algorithm does not allow verification of a message.
         *   The library requires initializing by a call to `psa_crypto_init()`.
-    .. retval:: PSA_ERROR_INVALID_ARGUMENT
-        If no data has been input to the operation, the algorithm does not allow verification of a message.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
         If no data has been input to the operation, the implementation does not support verification of a message.
     .. retval:: PSA_ERROR_INVALID_SIGNATURE
