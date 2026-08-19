@@ -3377,14 +3377,11 @@ To verify a message received from a streaming protocol that provides the signatu
 
         *   ``alg`` is not an asymmetric signature algorithm.
         *   ``key`` is not an asymmetric key pair, or asymmetric public key, that is compatible with ``alg``.
-        *   ``signature`` is not a valid signature for the algorithm and key.
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
         *   The operation is not inactive.
         *   The library requires initializing by a call to `psa_crypto_init()`.
-    .. retval:: PSA_ERROR_INVALID_SIGNATURE
-        ``signature`` is not a valid signature for the algorithm and key.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
@@ -3491,8 +3488,6 @@ To verify a message received from a streaming protocol that provides the signatu
         *   The operation is not active.
         *   The operation setup has already completed successfully.
         *   The library requires initializing by a call to `psa_crypto_init()`.
-    .. retval:: PSA_ERROR_INVALID_SIGNATURE
-        The signature is not a valid signature for the algorithm and key.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
@@ -3696,10 +3691,6 @@ To verify a message received from a streaming protocol that provides the signatu
         *   The operation was not set up with `psa_verify_iop_setup_deferred_signature_start()`.
         *   `psa_verify_iop_set_signature()` or `psa_verify_iop_complete()` has already been called.
         *   The library requires initializing by a call to `psa_crypto_init()`.
-    .. retval:: PSA_ERROR_INVALID_ARGUMENT
-        ``signature`` is not a valid signature for the algorithm and key.
-    .. retval:: PSA_ERROR_INVALID_SIGNATURE
-        ``signature`` is not a valid signature for the algorithm and key.
     .. retval:: PSA_ERROR_INSUFFICIENT_MEMORY
     .. retval:: PSA_ERROR_COMMUNICATION_FAILURE
     .. retval:: PSA_ERROR_CORRUPTION_DETECTED
