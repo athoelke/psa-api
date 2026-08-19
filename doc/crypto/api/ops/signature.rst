@@ -2895,7 +2895,7 @@ An interruptible signature operation is used as follows:
     .. param:: psa_sign_iop_t * operation
         The interruptible signature operation to set up. It must have been initialized as per the documentation for `psa_sign_iop_t` and not yet in use.
     .. param:: psa_key_id_t key
-        Identifier of the key to use for the operation. It must be an asymmetric key pair. The key must either permit the usage `PSA_KEY_USAGE_SIGN_HASH` or `PSA_KEY_USAGE_SIGN_MESSAGE`.
+        Identifier of the key to use for the operation. It must be an asymmetric key pair. The key must permit the usage `PSA_KEY_USAGE_SIGN_MESSAGE`. If the application uses `psa_sign_iop_hash()` to sign a pre-computed hash, the key must also permit the usage `PSA_KEY_USAGE_SIGN_HASH`. This is checked when `psa_sign_iop_hash()` is called.
     .. param:: psa_algorithm_t alg
         An asymmetric signature algorithm: a value of type `psa_algorithm_t` such that :code:`PSA_ALG_IS_SIGN(alg)` is true.
 
@@ -2906,10 +2906,7 @@ An interruptible signature operation is used as follows:
     .. retval:: PSA_ERROR_INVALID_HANDLE
         ``key`` is not a valid key identifier.
     .. retval:: PSA_ERROR_NOT_PERMITTED
-        The following conditions can result in this error:
-
-        *   The key has neither the `PSA_KEY_USAGE_SIGN_HASH` nor the `PSA_KEY_USAGE_SIGN_MESSAGE` usage flag.
-        *   The key does not permit the requested algorithm.
+        The key does not have the `PSA_KEY_USAGE_SIGN_MESSAGE` flag, or it does not permit the requested algorithm.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
         The following conditions can result in this error:
 
@@ -3118,8 +3115,6 @@ An interruptible signature operation is used as follows:
         *   The selected algorithm does not allow signing of a message.
         *   The selected algorithm permits only one message fragment, and `psa_sign_iop_update()` has already been called.
         *   The library requires initializing by a call to `psa_crypto_init()`.
-    .. retval:: PSA_ERROR_NOT_PERMITTED
-        The key does not have the `PSA_KEY_USAGE_SIGN_MESSAGE` flag.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         The following conditions can result in this error:
 
@@ -3171,8 +3166,6 @@ An interruptible signature operation is used as follows:
         The first ``(*signature_length)`` bytes of ``signature`` contain the signature value.
     .. retval:: PSA_OPERATION_INCOMPLETE
         The function was interrupted after exhausting the maximum *ops*. The computation is incomplete, and this function must be called again with the same operation object to continue.
-    .. retval:: PSA_ERROR_NOT_PERMITTED
-        If no data has been input to the operation, the key does not have the `PSA_KEY_USAGE_SIGN_MESSAGE` flag.
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
@@ -3347,7 +3340,7 @@ To verify a message received from a streaming protocol that provides the signatu
     .. param:: psa_verify_iop_t * operation
         The interruptible verification operation to set up. It must have been initialized as per the documentation for `psa_verify_iop_t` and not yet in use.
     .. param:: psa_key_id_t key
-        Identifier of the key to use for the operation. It must be an asymmetric key pair or asymmetric public key. The key must either permit the usage `PSA_KEY_USAGE_VERIFY_HASH` or `PSA_KEY_USAGE_VERIFY_MESSAGE`.
+        Identifier of the key to use for the operation. It must be an asymmetric key pair or asymmetric public key. The key must permit the usage `PSA_KEY_USAGE_VERIFY_MESSAGE`. If the application uses `psa_verify_iop_hash()` to verify a pre-computed hash, the key must also permit the usage `PSA_KEY_USAGE_VERIFY_HASH`. This is checked when `psa_verify_iop_hash()` is called.
     .. param:: psa_algorithm_t alg
         An asymmetric signature algorithm: a value of type `psa_algorithm_t` such that :code:`PSA_ALG_IS_SIGN(alg)` is true.
     .. param:: const uint8_t * signature
@@ -3362,10 +3355,7 @@ To verify a message received from a streaming protocol that provides the signatu
     .. retval:: PSA_ERROR_INVALID_HANDLE
         ``key`` is not a valid key identifier.
     .. retval:: PSA_ERROR_NOT_PERMITTED
-        The following conditions can result in this error:
-
-        *   The key has neither the `PSA_KEY_USAGE_VERIFY_HASH` nor the `PSA_KEY_USAGE_VERIFY_MESSAGE` usage flag.
-        *   The key does not permit the requested algorithm.
+        The key does not have the `PSA_KEY_USAGE_VERIFY_MESSAGE` flag, or it does not permit the requested algorithm.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
         The following conditions can result in this error:
 
@@ -3637,8 +3627,6 @@ To verify a message received from a streaming protocol that provides the signatu
         *   The selected algorithm does not allow verification of a message.
         *   The selected algorithm permits only one message fragment, and `psa_verify_iop_update()` has already been called.
         *   The library requires initializing by a call to `psa_crypto_init()`.
-    .. retval:: PSA_ERROR_NOT_PERMITTED
-        The key does not have the `PSA_KEY_USAGE_VERIFY_MESSAGE` flag.
     .. retval:: PSA_ERROR_INVALID_ARGUMENT
         The following conditions can result in this error:
 
@@ -3716,8 +3704,6 @@ To verify a message received from a streaming protocol that provides the signatu
         The signature is valid.
     .. retval:: PSA_OPERATION_INCOMPLETE
         The function was interrupted after exhausting the maximum *ops*. The computation is incomplete, and this function must be called again with the same operation object to continue.
-    .. retval:: PSA_ERROR_NOT_PERMITTED
-        If no data has been input to the operation, the key does not have the `PSA_KEY_USAGE_VERIFY_MESSAGE` flag.
     .. retval:: PSA_ERROR_BAD_STATE
         The following conditions can result in this error:
 
