@@ -191,6 +191,10 @@ RSA signature algorithms
         *   `PSA_ALG_AES_MMO_ZIGBEE`
         *   `PSA_ALG_ASCON_HASH256`
         *   `PSA_ALG_SHAKE256_512`
+        *   `PSA_ALG_BLAKE2S_HASH256`
+        *   `PSA_ALG_BLAKE2SP_HASH256`
+        *   `PSA_ALG_BLAKE2B_HASH512`
+        *   `PSA_ALG_BLAKE2BP_HASH512`
 
         It is recommended that these hash algorithms are not supported with `PSA_ALG_RSA_PKCS1V15_SIGN`.
         Future versions of the |API| might specify what OID to use.
