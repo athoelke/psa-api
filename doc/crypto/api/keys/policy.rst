@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2018-2025 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. header:: psa/crypto
@@ -228,7 +229,6 @@ The usage flags are encoded in a bitmask, which has the type `psa_key_usage_t`. 
     *   `psa_verify_message_with_context()`
     *   `psa_verify_setup()`
     *   `psa_verify_iop_setup_start()`.
-    *   `psa_verify_iop_setup_deferred_signature_start()`
 
     For a key pair, this concerns the public key.
 

@@ -1,4 +1,5 @@
 ' SPDX-FileCopyrightText: Copyright 2023-2024 Arm Limited and/or its affiliates <open-source-office@arm.com>
+' SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 ' SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 @startuml
@@ -24,7 +25,7 @@ note as N1
    uninitialised memory
 end note
 inactive --> setup: **Setup-start**\n//success//
-setup --> setup: **Setup-complete**\n//incomplete//
+setup --> setup: **Setup-complete**\n//incomplete//\n or **Configure**\n//success//
 setup --> input: **Setup-complete**\n//success//
 input --> input: **Update**\n//success//
 input --> completing: **Complete**\n//incomplete//
@@ -33,7 +34,7 @@ completing --> completing: **Complete**\n//incomplete//
 completing -u-> inactive: **Complete**\n//success//
 error -[#darkred,dashed]r-> inactive: <color:darkred>**Abort**
 inactive -[#darkred,dashed]-> inactive: <color:darkred>**Setup-start**\n<color:darkred>//fails//
-setup -[#darkred,dashed]-> error: <color:darkred>**Setup-complete**\n<color:darkred>//fails//
+setup -[#darkred,dashed]-> error: <color:darkred>**Setup-complete**\n<color:darkred>//fails//\n<color:darkred>or **Configure**\n<color:darkred>//fails//
 input -[#darkred,dashed]-> error: <color:darkred>**Update**\n<color:darkred>//fails//
 input -[#darkred,dashed]-> error: <color:darkred>**Complete**\n<color:darkred>//fails//
 completing -[#darkred,dashed]-> error: <color:darkred>**Complete**\n<color:darkred>//fails//

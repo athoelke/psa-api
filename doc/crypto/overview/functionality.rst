@@ -1,4 +1,5 @@
 .. SPDX-FileCopyrightText: Copyright 2018-2025 Arm Limited and/or its affiliates
+.. SPDX-FileCopyrightText: Copyright 2026 GlobalPlatform
 .. SPDX-License-Identifier: CC-BY-SA-4.0 AND LicenseRef-Patent-license
 
 .. _functionality-overview:
@@ -362,6 +363,11 @@ The sequence has the common interruptible-operation steps, with a setup phase th
     On success, an operation object enters a *setup* state.
     On failure, the operation object will remain *inactive*.
 
+#.  **Configure:** An interruptible operation can have operation-specific configuration steps that can be called while the object is in the *setup* state. For example, an interruptible verification operation can receive an early signature.
+
+    On success, the operation object remains in *setup* state.
+    On failure, the operation object will enter an *error* state.
+
 #.  **Complete setup:** Complete setup on an object in the *setup* state.
 
     If the setup computation is interrupted, the operation remains in *setup* state.
@@ -371,7 +377,7 @@ The sequence has the common interruptible-operation steps, with a setup phase th
     An application needs to repeat this step until the setup completes with success or an error status.
 
 #.  **Input:** Provide data to an object in the *input* state.
-    The interruptible signature and verification APIs provide functions to set the context, input a pre-computed message hash or a message fragment, and provide a deferred signature. See the individual interruptible operations for the specific ordering requirements on input data.
+    The interruptible signature and verification APIs provide functions to set the context, input a pre-computed message hash or a message fragment, and provide a signature. See the individual interruptible operations for the specific ordering requirements on input data.
 
     On success, the operation object remains in *input* state.
     On failure, the operation object will enter an *error* state.
