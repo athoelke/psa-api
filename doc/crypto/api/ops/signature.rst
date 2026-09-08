@@ -2604,6 +2604,8 @@ If an error occurs at any stage, or to terminate the operation early, call `psa_
         ``key`` is not a valid key identifier.
     .. retval:: PSA_ERROR_NOT_PERMITTED
         The key does not have the `PSA_KEY_USAGE_VERIFY_MESSAGE` flag, or it does not permit the requested algorithm.
+    .. retval:: PSA_ERROR_INVALID_SIGNATURE
+        The signature is structurally invalid and cannot be used to perform the verification.
     .. retval:: PSA_ERROR_NOT_SUPPORTED
         The following conditions can result in this error:
 

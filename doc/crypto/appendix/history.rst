@@ -23,6 +23,8 @@ Changes to the API
     The flow uses `psa_verify_setup_deferred_signature()` and `psa_verify_finish_with_signature()`.
     See :secref:`multi-part-signature`.
 
+*   Permitted `psa_verify_setup()` to return :code:`PSA_ERROR_INVALID_SIGNATURE` when the supplied signature is structurally invalid and cannot be used to perform the verification.
+
 Clarifications and fixes
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
