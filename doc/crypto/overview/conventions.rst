@@ -211,6 +211,11 @@ readable, and the implementation must be able to write to a non-buffer output
 parameter and read back the same value, as explained in
 :secref:`stability-of-parameters`.
 
+The implementation accesses memory referenced by a pointer or buffer parameter
+only during the function call. In particular, it must consume input buffers
+before returning and must not access the caller's memory after the function
+returns.
+
 Input buffer sizes
 ^^^^^^^^^^^^^^^^^^
 
